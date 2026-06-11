@@ -22,44 +22,29 @@ export function DashboardFlowSnapshot({
   ];
 
   return (
-    <section className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
-      <div className="mb-5">
-        <h3 className="text-base font-semibold text-slate-900">
-          Business Flow Snapshot
+    <section className="rounded-xl bg-white p-5 shadow-sm ring-1 ring-black/5 md:p-6">
+      <div className="mb-4">
+        <h3 className="text-sm font-black uppercase tracking-wide text-slate-800">
+          Business Flow
         </h3>
-        <p className="mt-0.5 text-sm text-slate-500">
+        <p className="mt-0.5 text-xs text-slate-400">
           Operational record count across the Phase 1 flow.
         </p>
       </div>
-      <div className="flex items-stretch gap-0">
+      <div className="flex items-stretch gap-1">
         {steps.map((step, index) => (
           <div key={step.label} className="flex flex-1 items-stretch">
-            <div className="flex-1 rounded-lg border border-slate-200 bg-slate-50 p-4 transition-all duration-200 hover:border-indigo-200 hover:bg-indigo-50/50 hover:shadow-sm">
-              <div className="mb-3 flex h-6 w-6 items-center justify-center rounded-md bg-indigo-600 text-xs font-bold text-white">
+            <div className="flex-1 rounded-lg bg-slate-50 p-3 ring-1 ring-slate-200 transition-all duration-200 hover:bg-indigo-50/60 hover:ring-indigo-200">
+              <div className="mb-2 flex h-5 w-5 items-center justify-center rounded-md bg-indigo-600 text-[10px] font-black text-white">
                 {index + 1}
               </div>
-              <p className="text-xs font-medium text-slate-500">{step.label}</p>
-              <p className="mt-1.5 text-2xl font-bold tabular-nums text-slate-900">
-                {step.count}
-              </p>
+              <p className="text-[10px] font-semibold text-slate-500">{step.label}</p>
+              <p className="mt-1 text-2xl font-black tabular-nums text-slate-900">{step.count}</p>
             </div>
             {index < steps.length - 1 && (
-              <div className="flex shrink-0 items-center px-1.5">
-                <svg
-                  width="14"
-                  height="14"
-                  viewBox="0 0 14 14"
-                  fill="none"
-                  aria-hidden="true"
-                  className="text-slate-300"
-                >
-                  <path
-                    d="M5 3l4 4-4 4"
-                    stroke="currentColor"
-                    strokeWidth="1.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
+              <div className="flex shrink-0 items-center px-0.5">
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true" className="text-slate-300">
+                  <path d="M4.5 2.5l3 3.5-3 3.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
               </div>
             )}

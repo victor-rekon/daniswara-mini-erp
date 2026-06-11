@@ -10,10 +10,8 @@ const settingsNav = navigationItems.find((i) => i.href === "/settings");
 
 function Sidebar() {
   const pathname = usePathname();
-
   return (
     <aside className="fixed inset-y-0 left-0 hidden w-60 flex-col bg-slate-900 md:flex">
-      {/* Brand */}
       <div className="flex items-center gap-3 border-b border-slate-800 px-4 py-5">
         <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-indigo-500 to-violet-600 shadow-lg">
           <span className="text-sm font-bold text-white">D</span>
@@ -28,7 +26,6 @@ function Sidebar() {
         </div>
       </div>
 
-      {/* Main nav */}
       <nav className="flex-1 overflow-y-auto px-2 py-4">
         <p className="mb-1.5 px-3 text-[10px] font-semibold uppercase tracking-[0.14em] text-slate-600">
           Modules
@@ -57,7 +54,6 @@ function Sidebar() {
         })}
       </nav>
 
-      {/* Bottom */}
       <div className="border-t border-slate-800 px-2 pb-4 pt-3">
         {settingsNav && (
           <Link
@@ -91,7 +87,7 @@ function Sidebar() {
 function MobileNav() {
   const pathname = usePathname();
   return (
-    <nav className="mt-3 flex gap-1.5 overflow-x-auto pb-1 md:hidden">
+    <nav className="mt-3 flex gap-1.5 overflow-x-auto pb-0.5 md:hidden">
       {navigationItems.map((item) => {
         const Icon = item.icon;
         const isActive =
@@ -100,10 +96,10 @@ function MobileNav() {
           <Link
             key={item.href}
             href={item.href}
-            className={`flex shrink-0 items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium transition-all duration-150 ${
+            className={`flex shrink-0 items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-semibold transition-all duration-150 ${
               isActive
-                ? "bg-indigo-600 text-white"
-                : "border border-slate-200 bg-white text-slate-600 hover:border-indigo-200 hover:text-indigo-600"
+                ? "bg-indigo-600 text-white shadow-sm"
+                : "bg-white text-slate-500 shadow-sm ring-1 ring-slate-200 hover:text-indigo-600"
             }`}
           >
             <Icon className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
@@ -123,30 +119,28 @@ type AppShellProps = {
 
 export function AppShell({ title, description, children }: AppShellProps) {
   return (
-    <div className="min-h-screen bg-slate-100 text-slate-950">
+    <div className="min-h-screen bg-[#e8edf4] text-slate-950">
       <Sidebar />
-
       <main className="md:pl-60">
-        <header className="sticky top-0 z-10 border-b border-slate-200 bg-white/95 px-4 py-4 backdrop-blur-sm md:px-8">
+        <header className="sticky top-0 z-10 border-b border-slate-200 bg-white/95 px-4 py-4 shadow-sm backdrop-blur-sm md:px-8">
           <div className="flex items-center justify-between gap-4">
             <div>
-              <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-slate-400">
+              <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-indigo-500">
                 PT Daniswara Gas Indonesia
               </p>
-              <h2 className="mt-0.5 text-xl font-bold text-slate-900">
+              <h2 className="mt-0.5 text-xl font-black tracking-tight text-slate-900">
                 {title}
               </h2>
               {description ? (
-                <p className="mt-0.5 text-sm text-slate-500">{description}</p>
+                <p className="mt-0.5 text-xs text-slate-400">{description}</p>
               ) : null}
             </div>
-            <div className="hidden shrink-0 rounded-full border border-indigo-200 bg-indigo-50 px-3 py-1 text-xs font-semibold text-indigo-600 md:block">
+            <div className="hidden shrink-0 rounded-full bg-indigo-600 px-3 py-1 text-xs font-bold text-white shadow-sm md:block">
               Phase 1
             </div>
           </div>
           <MobileNav />
         </header>
-
         <div className="p-4 md:p-8">{children}</div>
       </main>
     </div>

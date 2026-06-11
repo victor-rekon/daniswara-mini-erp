@@ -6,9 +6,7 @@ type DashboardAttentionPanelProps = {
   summary: DashboardSummary;
 };
 
-export function DashboardAttentionPanel({
-  summary,
-}: DashboardAttentionPanelProps) {
+export function DashboardAttentionPanel({ summary }: DashboardAttentionPanelProps) {
   const items = [
     {
       label: "Customer Outstanding",
@@ -34,44 +32,43 @@ export function DashboardAttentionPanel({
   ];
 
   return (
-    <section className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
-      <div className="mb-5">
-        <h3 className="text-base font-semibold text-slate-900">
+    <section className="rounded-xl bg-white p-5 shadow-sm ring-1 ring-black/5 md:p-6">
+      <div className="mb-4">
+        <h3 className="text-sm font-black uppercase tracking-wide text-slate-800">
           Owner Attention
         </h3>
-        <p className="mt-0.5 text-sm text-slate-500">
+        <p className="mt-0.5 text-xs text-slate-400">
           Items that need management attention.
         </p>
       </div>
-      <div className="grid gap-3 md:grid-cols-3">
+      <div className="grid grid-cols-1 gap-3 md:grid-cols-3">
         {items.map((item) => (
           <div
             key={item.label}
-            className={`rounded-lg border p-4 transition-all duration-200 ${
+            className={`relative overflow-hidden rounded-lg p-4 ring-1 transition-all duration-200 ${
               item.isAlert
-                ? "border-amber-200 bg-amber-50"
-                : "border-emerald-200 bg-emerald-50"
+                ? "bg-amber-50 ring-amber-200"
+                : "bg-emerald-50 ring-emerald-200"
             }`}
           >
-            <div className="mb-3 flex items-start justify-between gap-2">
-              <p className="text-xs font-medium text-slate-600">{item.label}</p>
-              <item.Icon
-                className={`mt-0.5 h-4 w-4 shrink-0 ${
-                  item.isAlert ? "text-amber-500" : "text-emerald-500"
-                }`}
-                aria-hidden="true"
-              />
+            <div className={`absolute inset-y-0 left-0 w-1 ${item.isAlert ? "bg-amber-400" : "bg-emerald-400"}`} />
+            <div className="pl-3">
+              <div className="mb-2 flex items-center justify-between gap-2">
+                <p className="text-[10px] font-bold uppercase tracking-wide text-slate-500">
+                  {item.label}
+                </p>
+                <item.Icon
+                  className={`h-3.5 w-3.5 shrink-0 ${item.isAlert ? "text-amber-500" : "text-emerald-500"}`}
+                  aria-hidden="true"
+                />
+              </div>
+              <p className={`text-xl font-black tabular-nums ${item.isAlert ? "text-amber-800" : "text-emerald-700"}`}>
+                {item.value}
+              </p>
+              <p className="mt-1.5 text-[10px] leading-relaxed text-slate-500">
+                {item.note}
+              </p>
             </div>
-            <p
-              className={`text-xl font-bold tabular-nums ${
-                item.isAlert ? "text-amber-800" : "text-emerald-800"
-              }`}
-            >
-              {item.value}
-            </p>
-            <p className="mt-2 text-xs leading-relaxed text-slate-500">
-              {item.note}
-            </p>
           </div>
         ))}
       </div>
