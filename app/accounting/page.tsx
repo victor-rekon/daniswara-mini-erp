@@ -14,6 +14,8 @@ import type { Branch, ChartOfAccount, Customer, Product } from "@/types/master-d
 import type { ProductionRecord } from "@/types/production";
 import type { DeliveryRecord } from "@/types/sales-delivery";
 
+export const dynamic = "force-dynamic";
+
 export default async function AccountingPage() {
   const supabase = createSupabaseAdmin();
 
