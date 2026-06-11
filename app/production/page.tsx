@@ -7,6 +7,8 @@ import { createSupabaseAdmin } from "@/lib/supabase/admin";
 import type { Branch, Product } from "@/types/master-data";
 import type { ProductionRecord } from "@/types/production";
 
+export const dynamic = "force-dynamic";
+
 export default async function ProductionPage() {
   const supabase = createSupabaseAdmin();
 
