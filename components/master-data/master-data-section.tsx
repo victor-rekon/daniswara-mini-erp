@@ -1,7 +1,9 @@
+import type { ReactNode } from "react";
+
 type MasterDataSectionProps = {
   title: string;
   description: string;
-  children: React.ReactNode;
+  children: ReactNode;
 };
 
 export function MasterDataSection({ title, description, children }: MasterDataSectionProps) {
