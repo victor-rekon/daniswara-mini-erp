@@ -8,6 +8,30 @@ type AppShellProps = {
   children: ReactNode;
 };
 
+function NavigationLinks({ compact = false }: { compact?: boolean }) {
+  return (
+    <nav className={compact ? "flex gap-2 overflow-x-auto pb-1" : "space-y-1"}>
+      {navigationItems.map((item) => {
+        const Icon = item.icon;
+        return (
+          <Link
+            key={item.href}
+            href={item.href}
+            className={
+              compact
+                ? "flex shrink-0 items-center gap-2 rounded-full border border-slate-200 bg-white px-3 py-2 text-xs font-medium text-slate-700 shadow-sm"
+                : "flex items-center gap-3 rounded-xl px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100"
+            }
+          >
+            <Icon className="h-4 w-4" />
+            {item.label}
+          </Link>
+        );
+      })}
+    </nav>
+  );
+}
+
 export function AppShell({ title, description, children }: AppShellProps) {
   return (
     <div className="min-h-screen bg-slate-50 text-slate-950">
@@ -20,21 +44,7 @@ export function AppShell({ title, description, children }: AppShellProps) {
           <p className="mt-1 text-sm text-slate-500">Phase 1 operations dashboard</p>
         </div>
 
-        <nav className="space-y-1">
-          {navigationItems.map((item) => {
-            const Icon = item.icon;
-            return (
-              <Link
-                key={item.href}
-                href={item.href}
-                className="flex items-center gap-3 rounded-xl px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100"
-              >
-                <Icon className="h-4 w-4" />
-                {item.label}
-              </Link>
-            );
-          })}
-        </nav>
+        <NavigationLinks />
       </aside>
 
       <main className="md:pl-72">
@@ -45,6 +55,9 @@ export function AppShell({ title, description, children }: AppShellProps) {
             </p>
             <h2 className="text-2xl font-bold">{title}</h2>
             {description ? <p className="text-sm text-slate-500">{description}</p> : null}
+          </div>
+          <div className="mt-4 md:hidden">
+            <NavigationLinks compact />
           </div>
         </header>
 
