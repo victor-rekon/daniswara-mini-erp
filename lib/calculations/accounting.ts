@@ -1,7 +1,6 @@
-import type { ChartOfAccount } from "@/types/master-data";
 import type { ExpenseRecord, ExpenseView, JournalEntry, JournalLine, JournalView, ProfitLossSummary } from "@/types/accounting";
-import type { Branch } from "@/types/master-data";
 import type { InvoicePaymentView } from "@/types/invoice-payment";
+import type { Branch, ChartOfAccount } from "@/types/master-data";
 import type { ProductionRecordView } from "@/types/production";
 
 type AccountLookup = Record<string, ChartOfAccount>;
