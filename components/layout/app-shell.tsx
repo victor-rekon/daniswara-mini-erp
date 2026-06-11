@@ -1,10 +1,11 @@
+import type { ReactNode } from "react";
 import Link from "next/link";
 import { navigationItems } from "@/lib/constants/navigation";
 
 type AppShellProps = {
   title: string;
   description?: string;
-  children: React.ReactNode;
+  children: ReactNode;
 };
 
 export function AppShell({ title, description, children }: AppShellProps) {
