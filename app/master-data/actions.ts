@@ -4,6 +4,8 @@ import { revalidatePath } from "next/cache";
 import { z } from "zod";
 import { createSupabaseAdmin } from "@/lib/supabase/admin";
 
+const optionalText = z.preprocess((value) => (value === "" ? null : value), z.string().nullable().optional());
+
 const productSchema = z.object({
   product_name: z.string().min(1, "Product name is required"),
   unit: z.string().min(1, "Unit is required"),
@@ -11,14 +13,14 @@ const productSchema = z.object({
 
 const branchSchema = z.object({
   branch_name: z.string().min(1, "Branch name is required"),
-  location: z.string().optional(),
+  location: optionalText,
 });
 
 const customerSchema = z.object({
   customer_name: z.string().min(1, "Customer name is required"),
-  contact: z.string().optional(),
-  branch_id: z.string().optional(),
-  notes: z.string().optional(),
+  contact: optionalText,
+  branch_id: optionalText,
+  notes: optionalText,
 });
 
 const accountSchema = z.object({
