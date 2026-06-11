@@ -32,37 +32,34 @@ export function DashboardAttentionPanel({ summary }: DashboardAttentionPanelProp
   ];
 
   return (
-    <section className="rounded-xl bg-white p-5 shadow-sm ring-1 ring-black/5 md:p-6">
-      <div className="mb-4">
-        <h3 className="text-sm font-black uppercase tracking-wide text-slate-800">
+    <section className="rounded-xl bg-white p-4 shadow-sm ring-1 ring-black/[0.06] md:p-5">
+      <div className="mb-3">
+        <h3 className="text-[11px] font-bold uppercase tracking-wider text-slate-500">
           Owner Attention
         </h3>
-        <p className="mt-0.5 text-xs text-slate-400">
-          Items that need management attention.
-        </p>
       </div>
-      <div className="grid grid-cols-1 gap-3 md:grid-cols-3">
+      <div className="grid grid-cols-1 gap-2 md:grid-cols-3">
         {items.map((item) => (
           <div
             key={item.label}
-            className={`relative overflow-hidden rounded-lg p-4 ring-1 transition-all duration-200 ${
+            className={`relative overflow-hidden rounded-lg p-3.5 ring-1 ${
               item.isAlert
                 ? "bg-amber-50 ring-amber-200"
                 : "bg-emerald-50 ring-emerald-200"
             }`}
           >
-            <div className={`absolute inset-y-0 left-0 w-1 ${item.isAlert ? "bg-amber-400" : "bg-emerald-400"}`} />
+            <div className={`absolute inset-y-0 left-0 w-1 ${item.isAlert ? "bg-[#f59e0b]" : "bg-[#22c55e]"}`} />
             <div className="pl-3">
               <div className="mb-2 flex items-center justify-between gap-2">
                 <p className="text-[10px] font-bold uppercase tracking-wide text-slate-500">
                   {item.label}
                 </p>
                 <item.Icon
-                  className={`h-3.5 w-3.5 shrink-0 ${item.isAlert ? "text-amber-500" : "text-emerald-500"}`}
+                  className={`h-3.5 w-3.5 shrink-0 ${item.isAlert ? "text-[#f59e0b]" : "text-[#22c55e]"}`}
                   aria-hidden="true"
                 />
               </div>
-              <p className={`text-xl font-black tabular-nums ${item.isAlert ? "text-amber-800" : "text-emerald-700"}`}>
+              <p className={`text-xl font-bold tabular-nums ${item.isAlert ? "text-amber-800" : "text-[#15803d]"}`}>
                 {item.value}
               </p>
               <p className="mt-1.5 text-[10px] leading-relaxed text-slate-500">
