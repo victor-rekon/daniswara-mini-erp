@@ -10,6 +10,8 @@ import {
   createProduct,
 } from "./actions";
 
+export const dynamic = "force-dynamic";
+
 export default async function MasterDataPage() {
   const supabase = createSupabaseAdmin();
 
