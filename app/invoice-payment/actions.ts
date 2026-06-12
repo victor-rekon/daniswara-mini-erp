@@ -2,6 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
+import { createActivityLog } from "@/lib/server/activity-log";
 import { createSupabaseAdmin } from "@/lib/supabase/admin";
 
 const optionalText = z.preprocess((value) => (value === "" ? null : value), z.string().nullable().optional());
@@ -53,12 +54,44 @@ export async function createInvoice(formData: FormData) {
   });
 
   const supabase = createSupabaseAdmin();
-  const { error } = await supabase.from("invoices").insert({
-    ...payload,
-    payment_received: 0,
-  });
+
+  const { data: existingInvoice, error: invoiceCheckError } = await supabase
+    .from("invoices")
+    .select("id")
+    .eq("invoice_number", payload.invoice_number)
+    .maybeSingle();
+
+  if (invoiceCheckError) throw new Error(invoiceCheckError.message);
+  if (existingInvoice) throw new Error("Invoice number already exists.");
+
+  if (payload.delivery_record_id) {
+    const { data: existingDeliveryInvoice, error: deliveryInvoiceCheckError } = await supabase
+      .from("invoices")
+      .select("id")
+      .eq("delivery_record_id", payload.delivery_record_id)
+      .maybeSingle();
+
+    if (deliveryInvoiceCheckError) throw new Error(deliveryInvoiceCheckError.message);
+    if (existingDeliveryInvoice) throw new Error("This delivery record already has an invoice.");
+  }
+
+  const { data: invoice, error } = await supabase
+    .from("invoices")
+    .insert({
+      ...payload,
+      payment_received: 0,
+    })
+    .select("id")
+    .single();
 
   if (error) throw new Error(error.message);
+
+  await createActivityLog({
+    module: "invoice_payment",
+    action: "create_invoice",
+    recordId: invoice.id,
+    notes: `Invoice ${payload.invoice_number} created with value ${payload.invoice_value}.`,
+  });
 
   revalidatePath("/invoice-payment");
   revalidatePath("/dashboard");
@@ -74,38 +107,52 @@ export async function createPayment(formData: FormData) {
 
   const supabase = createSupabaseAdmin();
 
-  const { error: paymentError } = await supabase.from("payments").insert(payload);
-  if (paymentError) throw new Error(paymentError.message);
-
   const { data: invoice, error: invoiceError } = await supabase
     .from("invoices")
-    .select("id, invoice_value, due_date")
+    .select("id, invoice_number, invoice_value, due_date")
     .eq("id", payload.invoice_id)
     .single();
 
   if (invoiceError) throw new Error(invoiceError.message);
   if (!invoice) throw new Error("Invoice not found.");
 
-  const { data: payments, error: paymentsError } = await supabase
+  const { data: existingPayments, error: existingPaymentsError } = await supabase
     .from("payments")
     .select("amount")
     .eq("invoice_id", payload.invoice_id);
 
-  if (paymentsError) throw new Error(paymentsError.message);
+  if (existingPaymentsError) throw new Error(existingPaymentsError.message);
 
-  const paidAmount = (payments ?? []).reduce((sum, payment) => sum + Number(payment.amount ?? 0), 0);
+  const currentPaidAmount = (existingPayments ?? []).reduce((sum, payment) => sum + Number(payment.amount ?? 0), 0);
   const invoiceValue = Number(invoice.invoice_value ?? 0);
-  const paymentStatus = resolvePaymentStatus(invoiceValue, paidAmount, invoice.due_date ?? null);
+  const nextPaidAmount = currentPaidAmount + payload.amount;
+
+  if (nextPaidAmount > invoiceValue) {
+    const remaining = Math.max(invoiceValue - currentPaidAmount, 0);
+    throw new Error(`Payment exceeds invoice outstanding amount. Remaining amount is ${remaining}.`);
+  }
+
+  const { error: paymentError } = await supabase.from("payments").insert(payload);
+  if (paymentError) throw new Error(paymentError.message);
+
+  const paymentStatus = resolvePaymentStatus(invoiceValue, nextPaidAmount, invoice.due_date ?? null);
 
   const { error: updateError } = await supabase
     .from("invoices")
     .update({
-      payment_received: paidAmount,
+      payment_received: nextPaidAmount,
       payment_status: paymentStatus,
     })
     .eq("id", payload.invoice_id);
 
   if (updateError) throw new Error(updateError.message);
+
+  await createActivityLog({
+    module: "invoice_payment",
+    action: "create_payment",
+    recordId: payload.invoice_id,
+    notes: `Payment recorded for invoice ${invoice.invoice_number ?? payload.invoice_id}. New status ${paymentStatus}.`,
+  });
 
   revalidatePath("/invoice-payment");
   revalidatePath("/dashboard");
