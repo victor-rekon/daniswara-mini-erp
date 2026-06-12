@@ -1,4 +1,5 @@
 import { AppShell } from "@/components/layout/app-shell";
+import { ModuleCommandBar } from "@/components/commands/module-command-bar";
 import { ExpenseForm } from "@/components/accounting/expense-form";
 import { ExpenseTable } from "@/components/accounting/expense-table";
 import { JournalTable } from "@/components/accounting/journal-table";
@@ -70,11 +71,14 @@ export default async function AccountingPage() {
   const profitLoss = summarizeProfitLoss(invoiceViews, productionViews, expenseViews);
 
   return (
-    <AppShell title="Accounting Light" description="Simple journal, expense input, and management P&L only. Not full accounting or tax system.">
+    <AppShell title="Accounting Light" description="Simple journal, expense input, and management P&L only.">
       <div className="grid gap-3 md:gap-4">
+        <ModuleCommandBar inputLabel="Input Expense / Journal" exportHref="/api/export/accounting" />
         <ProfitLossSummaryCards summary={profitLoss} />
-        <ExpenseForm branches={branches} accounts={accounts} />
-        <ManualJournalForm accounts={accounts} />
+        <section id="input-data" className="grid scroll-mt-24 gap-3 md:gap-4">
+          <ExpenseForm branches={branches} accounts={accounts} />
+          <ManualJournalForm accounts={accounts} />
+        </section>
         <ExpenseTable expenses={expenseViews} />
         <JournalTable journals={journalViews} />
       </div>
