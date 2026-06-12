@@ -1,4 +1,5 @@
 import { AppShell } from "@/components/layout/app-shell";
+import { ModuleCommandBar } from "@/components/commands/module-command-bar";
 import { SalesDeliveryForm } from "@/components/sales-delivery/sales-delivery-form";
 import { SalesDeliverySummaryCards } from "@/components/sales-delivery/sales-delivery-summary-cards";
 import { SalesDeliveryTable } from "@/components/sales-delivery/sales-delivery-table";
@@ -51,8 +52,9 @@ export default async function SalesDeliveryPage() {
   return (
     <AppShell title="Sales & Delivery" description="Customer PO/SO and surat jalan tracking. Sales report follows delivery records.">
       <div className="grid gap-3 md:gap-4">
+        <ModuleCommandBar inputLabel="Input Sales / Surat Jalan" exportHref="/api/export/delivery" />
         <SalesDeliverySummaryCards summary={summary} />
-        <div className="grid gap-3 md:gap-4 xl:grid-cols-[420px_minmax(0,1fr)] xl:items-start">
+        <div id="input-data" className="grid scroll-mt-24 gap-3 md:gap-4 xl:grid-cols-[420px_minmax(0,1fr)] xl:items-start">
           <SalesDeliveryForm branches={branches} customers={customers} products={products} quotations={enrichedQuotations} />
           <SalesDeliveryTable records={records} />
         </div>
