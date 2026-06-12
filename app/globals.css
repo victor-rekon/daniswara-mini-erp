@@ -65,3 +65,24 @@ button {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* ── Depth system: layered shadows + brand glows ──────── */
+.shadow-card {
+  box-shadow:
+    0 1px 2px rgba(26, 36, 86, 0.04),
+    0 8px 20px -12px rgba(26, 36, 86, 0.12);
+}
+.shadow-card-hover {
+  box-shadow:
+    0 2px 4px rgba(26, 36, 86, 0.06),
+    0 16px 32px -16px rgba(26, 36, 86, 0.18);
+}
+.shadow-navy {
+  box-shadow:
+    0 4px 12px -4px rgba(26, 36, 86, 0.35),
+    0 12px 32px -16px rgba(26, 36, 86, 0.45);
+}
+.bg-grain {
+  background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,0.035) 1px, transparent 0);
+  background-size: 22px 22px;
+}

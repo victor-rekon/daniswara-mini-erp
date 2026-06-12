@@ -27,10 +27,10 @@ function BrandMark({ size = 20 }: { size?: number }) {
 function Sidebar() {
   const pathname = usePathname();
   return (
-    <aside className="fixed inset-y-0 left-0 hidden w-60 flex-col bg-[#1a2456] md:flex">
+    <aside className="fixed inset-y-0 left-0 hidden w-60 flex-col bg-gradient-to-b from-[#1f2c63] via-[#1a2456] to-[#161f47] md:flex">
       {/* Brand */}
       <div className="flex items-center gap-3 border-b border-white/10 px-4 py-5">
-        <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-white shadow-sm">
+        <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-white shadow-card ring-1 ring-black/5">
           <BrandMark size={22} />
         </div>
         <div className="min-w-0">
@@ -54,9 +54,9 @@ function Sidebar() {
             <Link
               key={item.href}
               href={item.href}
-              className={`relative mb-0.5 flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors duration-150 active:bg-white/15 ${
+              className={`relative mb-0.5 flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all duration-150 active:bg-white/15 ${
                 isActive
-                  ? "bg-white/10 text-white"
+                  ? "bg-gradient-to-r from-[#d9b25c]/15 via-white/10 to-transparent text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]"
                   : "text-[#9aa3c0] hover:bg-white/5 hover:text-white"
               }`}
             >
@@ -118,7 +118,7 @@ function MobileNav() {
             href={item.href}
             className={`flex shrink-0 cursor-pointer items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs font-semibold transition-colors duration-150 active:scale-95 ${
               isActive
-                ? "bg-gradient-to-br from-[#d9b25c] to-[#c99a2e] text-[#1a2456] shadow-sm"
+                ? "bg-gradient-to-br from-[#e8c878] via-[#d9b25c] to-[#c99a2e] text-[#1a2456] shadow-[0_2px_8px_-2px_rgba(217,178,92,0.6)]"
                 : "bg-white/8 text-[#b9c0d8] active:bg-white/15"
             }`}
           >
@@ -143,10 +143,10 @@ export function AppShell({ title, description, children }: AppShellProps) {
       <Sidebar />
       <main className="md:pl-60">
         {/* Navy header band - brand identity */}
-        <header className="bg-[#1a2456] px-4 pb-4 pt-4 md:rounded-none md:px-8 md:pb-5">
+        <header className="relative z-10 bg-gradient-to-br from-[#1f2c63] via-[#1a2456] to-[#161f47] px-4 pb-4 pt-4 shadow-navy md:rounded-none md:px-8 md:pb-5">
           <div className="flex items-center justify-between gap-4">
             <div className="flex items-center gap-3">
-              <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-white shadow-sm md:hidden">
+              <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-white shadow-card ring-1 ring-black/5 md:hidden">
                 <BrandMark size={22} />
               </div>
               <div>
@@ -163,7 +163,7 @@ export function AppShell({ title, description, children }: AppShellProps) {
                 ) : null}
               </div>
             </div>
-            <div className="shrink-0 rounded-full bg-gradient-to-br from-[#d9b25c] to-[#c99a2e] px-3.5 py-1 text-xs font-bold text-[#1a2456] shadow-sm">
+            <div className="shrink-0 rounded-full bg-gradient-to-br from-[#e8c878] via-[#d9b25c] to-[#c99a2e] px-3.5 py-1 text-xs font-bold text-[#1a2456] shadow-[0_2px_8px_-2px_rgba(217,178,92,0.6)] ring-1 ring-[#fff]/30">
               Phase 1
             </div>
           </div>

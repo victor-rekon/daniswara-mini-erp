@@ -18,15 +18,15 @@ export function DashboardFlowSnapshot({
   ];
 
   return (
-    <section className="rounded-2xl border border-[#e6e8ef] bg-white p-4 shadow-[0_1px_3px_rgba(26,36,86,0.05)] md:p-5">
+    <section className="rounded-2xl border border-[#e6e8ef] bg-white p-4 shadow-card md:p-5">
       <h3 className="mb-3 text-[11px] font-bold uppercase tracking-[0.14em] text-[#233575]">
         Business <span className="text-[#b8860b]">Flow</span>
       </h3>
       <div className="flex items-stretch gap-1.5">
         {steps.map((step, i) => (
           <div key={step.label} className="flex flex-1 items-stretch">
-            <div className="flex-1 cursor-pointer rounded-xl border border-[#e6e8ef] bg-[#fafbfd] px-1 py-3 text-center transition-colors duration-150 hover:border-[#d9b25c]/50 hover:bg-[#fdf9ef] active:scale-[0.97]">
-              <div className="mx-auto mb-1.5 flex h-5 w-5 items-center justify-center rounded-md bg-[#233575] text-[10px] font-extrabold text-[#d9b25c]">
+            <div className="flex-1 cursor-pointer rounded-xl border border-[#e6e8ef] bg-gradient-to-b from-white to-[#fafbfd] px-1 py-3 text-center shadow-[inset_0_1px_0_rgba(255,255,255,0.8)] transition-all duration-200 hover:-translate-y-0.5 hover:border-[#d9b25c]/40 hover:from-[#fdf9ef] hover:to-[#fcf3de] hover:shadow-card active:scale-[0.97] active:translate-y-0">
+              <div className="mx-auto mb-1.5 flex h-5 w-5 items-center justify-center rounded-md bg-gradient-to-br from-[#2f4a9e] to-[#1a2456] text-[10px] font-extrabold text-[#d9b25c] shadow-[0_2px_4px_-1px_rgba(26,36,86,0.4)]">
                 {i + 1}
               </div>
               <p className="text-[9px] font-semibold text-[#7a829b]">{step.label}</p>
