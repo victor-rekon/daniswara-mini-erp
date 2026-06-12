@@ -17,6 +17,11 @@ export const navigationItems = [
     icon: LayoutDashboard,
   },
   {
+    label: "Input Command",
+    href: "/input",
+    icon: ClipboardList,
+  },
+  {
     label: "Production / HPP",
     href: "/production",
     icon: Factory,
