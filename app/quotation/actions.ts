@@ -2,6 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
+import { createActivityLog } from "@/lib/server/activity-log";
 import { createSupabaseAdmin } from "@/lib/supabase/admin";
 
 const optionalText = z.preprocess((value) => (value === "" ? null : value), z.string().nullable().optional());
@@ -37,6 +38,15 @@ export async function createQuotation(formData: FormData) {
 
   const supabase = createSupabaseAdmin();
 
+  const { data: existingQuotation, error: quotationCheckError } = await supabase
+    .from("quotations")
+    .select("id")
+    .eq("quotation_number", payload.quotation_number)
+    .maybeSingle();
+
+  if (quotationCheckError) throw new Error(quotationCheckError.message);
+  if (existingQuotation) throw new Error("Quotation number already exists.");
+
   const { data: quotation, error: quotationError } = await supabase
     .from("quotations")
     .insert({
@@ -61,7 +71,17 @@ export async function createQuotation(formData: FormData) {
     notes: payload.item_notes,
   });
 
-  if (itemError) throw new Error(itemError.message);
+  if (itemError) {
+    await supabase.from("quotations").delete().eq("id", quotation.id);
+    throw new Error(itemError.message);
+  }
+
+  await createActivityLog({
+    module: "quotation",
+    action: "create_quotation",
+    recordId: quotation.id,
+    notes: `Quotation ${payload.quotation_number} created with status ${payload.status}.`,
+  });
 
   revalidatePath("/quotation");
   revalidatePath("/dashboard");
