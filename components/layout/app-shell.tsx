@@ -139,7 +139,7 @@ type AppShellProps = {
 
 export function AppShell({ title, description, children }: AppShellProps) {
   return (
-    <div className="min-h-screen bg-[#f6f7fa] text-[#1a2456]">
+    <div className="min-h-screen overflow-x-hidden bg-[#f6f7fa] text-[#1a2456]">
       <Sidebar />
       <main className="md:pl-60">
         {/* Navy header band - brand identity */}
@@ -170,7 +170,7 @@ export function AppShell({ title, description, children }: AppShellProps) {
           <MobileNav />
         </header>
 
-        <div className="p-3 md:p-6">{children}</div>
+        <div className="min-w-0 overflow-x-auto p-3 md:p-6">{children}</div>
       </main>
     </div>
   );
