@@ -1,4 +1,5 @@
 import { AppShell } from "@/components/layout/app-shell";
+import { ModuleCommandBar } from "@/components/commands/module-command-bar";
 import { ProductionForm } from "@/components/production/production-form";
 import { ProductionRecordsTable } from "@/components/production/production-records-table";
 import { ProductionSummaryCards } from "@/components/production/production-summary-cards";
@@ -40,8 +41,11 @@ export default async function ProductionPage() {
       description="Production input, losses/susut, and basic HPP management report. Not full costing/accounting."
     >
       <div className="grid gap-6">
+        <ModuleCommandBar inputLabel="Input Production" exportHref="/api/export/production" />
         <ProductionSummaryCards summary={summary} />
-        <ProductionForm branches={branches} products={products} />
+        <section id="input-data" className="scroll-mt-24">
+          <ProductionForm branches={branches} products={products} />
+        </section>
         <ProductionRecordsTable records={enrichedRecords} />
       </div>
     </AppShell>
