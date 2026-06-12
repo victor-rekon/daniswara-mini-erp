@@ -2,6 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
+import { createActivityLog } from "@/lib/server/activity-log";
 import { createSupabaseAdmin } from "@/lib/supabase/admin";
 
 const productionSchema = z.object({
@@ -36,9 +37,34 @@ export async function createProductionRecord(formData: FormData) {
   }
 
   const supabase = createSupabaseAdmin();
-  const { error } = await supabase.from("production_records").insert(payload);
+
+  if (payload.batch_code) {
+    const { data: existingBatch, error: batchCheckError } = await supabase
+      .from("production_records")
+      .select("id")
+      .eq("product_id", payload.product_id)
+      .eq("production_date", payload.production_date)
+      .eq("batch_code", payload.batch_code)
+      .maybeSingle();
+
+    if (batchCheckError) throw new Error(batchCheckError.message);
+    if (existingBatch) throw new Error("Batch code already exists for this product and production date.");
+  }
+
+  const { data, error } = await supabase
+    .from("production_records")
+    .insert(payload)
+    .select("id")
+    .single();
 
   if (error) throw new Error(error.message);
+
+  await createActivityLog({
+    module: "production",
+    action: "create_production_record",
+    recordId: data.id,
+    notes: `Production date ${payload.production_date}, produced ${payload.quantity_produced} ${payload.unit}, losses ${payload.losses_quantity}.`,
+  });
 
   revalidatePath("/production");
   revalidatePath("/dashboard");
