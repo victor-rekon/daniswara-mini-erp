@@ -122,9 +122,9 @@ type AppShellProps = {
 
 export function AppShell({ title, description, children }: AppShellProps) {
   return (
-    <div className="min-h-screen bg-slate-100 text-slate-950">
+    <div className="min-h-screen overflow-x-hidden bg-slate-100 text-slate-950">
       <Sidebar />
-      <main className="md:pl-60">
+      <main className="min-w-0 md:ml-60">
         {/* Header — skill: sticky, clear hierarchy, brand color label */}
         <header className="sticky top-0 z-10 border-b border-slate-200 bg-white/96 px-4 py-3.5 shadow-sm backdrop-blur-sm md:px-8">
           <div className="flex items-center justify-between gap-4">
@@ -147,7 +147,7 @@ export function AppShell({ title, description, children }: AppShellProps) {
         </header>
 
         {/* skill: compact 12px grid gap for data-dense layout */}
-        <div className="p-3 md:p-6">{children}</div>
+        <div className="min-w-0 p-3 md:p-6">{children}</div>
       </main>
     </div>
   );
