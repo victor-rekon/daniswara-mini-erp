@@ -147,7 +147,7 @@ export function AppShell({ title, description, children }: AppShellProps) {
         </header>
 
         {/* skill: compact 12px grid gap for data-dense layout */}
-        <div className="min-w-0 p-3 md:p-6">{children}</div>
+        <div className="min-w-0 overflow-x-auto p-3 md:p-6">{children}</div>
       </main>
     </div>
   );
