@@ -54,7 +54,7 @@ export default async function SalesDeliveryPage() {
       <div className="grid gap-3 md:gap-4">
         <ModuleCommandBar inputLabel="Input Sales / Surat Jalan" exportHref="/api/export/delivery" />
         <SalesDeliverySummaryCards summary={summary} />
-        <div id="input-data" className="grid scroll-mt-24 gap-3 md:gap-4 xl:grid-cols-[420px_minmax(0,1fr)] xl:items-start">
+        <div id="input-data" className="grid scroll-mt-24 gap-3 md:gap-4 lg:grid-cols-[360px_minmax(0,1fr)] lg:items-start">
           <SalesDeliveryForm branches={branches} customers={customers} products={products} quotations={enrichedQuotations} />
           <SalesDeliveryTable records={records} />
         </div>

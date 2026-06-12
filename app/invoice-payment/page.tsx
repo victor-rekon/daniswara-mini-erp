@@ -47,11 +47,13 @@ export default async function InvoicePaymentPage() {
       <div className="grid gap-3 md:gap-4">
         <ModuleCommandBar inputLabel="Input Invoice / Payment" exportHref="/api/export/invoice-payment" />
         <InvoicePaymentSummaryCards summary={summary} />
-        <section id="input-data" className="grid scroll-mt-24 gap-3 md:gap-4">
-          <InvoiceForm branches={branches} customers={customers} deliveries={deliveries} />
-          <PaymentForm invoices={enrichedInvoices} />
-        </section>
-        <InvoicePaymentTable invoices={enrichedInvoices} />
+        <div className="grid gap-3 md:gap-4 lg:grid-cols-[360px_minmax(0,1fr)] lg:items-start">
+          <section id="input-data" className="grid scroll-mt-24 gap-3 md:gap-4">
+            <InvoiceForm branches={branches} customers={customers} deliveries={deliveries} />
+            <PaymentForm invoices={enrichedInvoices} />
+          </section>
+          <InvoicePaymentTable invoices={enrichedInvoices} />
+        </div>
       </div>
     </AppShell>
   );

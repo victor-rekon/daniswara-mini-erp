@@ -43,7 +43,7 @@ export default async function ProductionPage() {
       <div className="grid gap-3 md:gap-4">
         <ModuleCommandBar inputLabel="Input Production" exportHref="/api/export/production" />
         <ProductionSummaryCards summary={summary} />
-        <div className="grid gap-3 md:gap-4 xl:grid-cols-[420px_minmax(0,1fr)] xl:items-start">
+        <div className="grid gap-3 md:gap-4 lg:grid-cols-[360px_minmax(0,1fr)] lg:items-start">
           <section id="input-data" className="scroll-mt-24">
             <ProductionForm branches={branches} products={products} />
           </section>

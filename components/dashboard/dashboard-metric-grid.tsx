@@ -44,7 +44,7 @@ type DashboardMetricGridProps = {
 
 export function DashboardMetricGrid({ metrics }: DashboardMetricGridProps) {
   return (
-    <div className="grid grid-cols-2 gap-2.5 md:grid-cols-2 md:gap-3 xl:grid-cols-4">
+    <div className="grid grid-cols-2 gap-2.5 md:grid-cols-2 md:gap-3 lg:grid-cols-4">
       {metrics.map((metric) => {
         const v = getVariant(metric.label);
         return (

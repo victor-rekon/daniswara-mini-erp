@@ -16,7 +16,7 @@ export function SalesDeliverySummaryCards({ summary }: { summary: SalesDeliveryS
     { label: "Sales Value",       value: fmtCur(summary.total_sales_value),      stripe: "bg-gradient-to-r from-[#c99a2e] to-[#d9b25c]", val: "text-[#b8860b]" },
   ];
   return (
-    <div className="grid grid-cols-2 gap-2.5 md:grid-cols-4 md:gap-3 xl:grid-cols-7">
+    <div className="grid grid-cols-2 gap-2.5 md:grid-cols-4 md:gap-3 lg:grid-cols-7">
       {cards.map((c) => (
         <div key={c.label} className={CARD}>
           <div className={`absolute inset-x-0 top-0 h-[2.5px] ${c.stripe}`} />

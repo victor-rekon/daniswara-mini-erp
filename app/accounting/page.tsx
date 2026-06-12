@@ -75,7 +75,7 @@ export default async function AccountingPage() {
       <div className="grid gap-3 md:gap-4">
         <ModuleCommandBar inputLabel="Input Expense / Journal" exportHref="/api/export/accounting" />
         <ProfitLossSummaryCards summary={profitLoss} />
-        <div className="grid gap-3 md:gap-4 xl:grid-cols-[420px_minmax(0,1fr)] xl:items-start">
+        <div className="grid gap-3 md:gap-4 lg:grid-cols-[360px_minmax(0,1fr)] lg:items-start">
           <section id="input-data" className="grid scroll-mt-24 gap-3 md:gap-4">
             <ExpenseForm branches={branches} accounts={accounts} />
             <ManualJournalForm accounts={accounts} />
