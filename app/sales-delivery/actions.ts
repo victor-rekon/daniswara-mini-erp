@@ -2,6 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
+import { createActivityLog } from "@/lib/server/activity-log";
 import { createSupabaseAdmin } from "@/lib/supabase/admin";
 
 const optionalText = z.preprocess((value) => (value === "" ? null : value), z.string().nullable().optional());
@@ -77,6 +78,26 @@ export async function createSalesDelivery(formData: FormData) {
   const statuses = resolveStatuses(payload.quantity, payload.quantity_delivered);
   const supabase = createSupabaseAdmin();
 
+  const { data: existingSuratJalan, error: suratJalanCheckError } = await supabase
+    .from("delivery_records")
+    .select("id")
+    .eq("surat_jalan_number", payload.surat_jalan_number)
+    .maybeSingle();
+
+  if (suratJalanCheckError) throw new Error(suratJalanCheckError.message);
+  if (existingSuratJalan) throw new Error("Surat jalan number already exists.");
+
+  if (payload.so_number) {
+    const { data: existingSalesOrder, error: salesOrderCheckError } = await supabase
+      .from("sales_records")
+      .select("id")
+      .eq("so_number", payload.so_number)
+      .maybeSingle();
+
+    if (salesOrderCheckError) throw new Error(salesOrderCheckError.message);
+    if (existingSalesOrder) throw new Error("Sales order number already exists.");
+  }
+
   const { data: salesRecord, error: salesError } = await supabase
     .from("sales_records")
     .insert({
@@ -99,23 +120,37 @@ export async function createSalesDelivery(formData: FormData) {
   if (salesError) throw new Error(salesError.message);
   if (!salesRecord?.id) throw new Error("Sales record was not created.");
 
-  const { error: deliveryError } = await supabase.from("delivery_records").insert({
-    branch_id: payload.branch_id,
-    sales_record_id: salesRecord.id,
-    so_number: payload.so_number,
-    customer_po_number: payload.customer_po_number,
-    surat_jalan_number: payload.surat_jalan_number,
-    delivery_date: payload.delivery_date,
-    customer_id: payload.customer_id,
-    product_id: payload.product_id,
-    quantity_delivered: payload.quantity_delivered,
-    quantity_pending: statuses.pending,
-    delivery_status: statuses.delivery_status,
-    receiver: payload.receiver,
-    notes: payload.notes,
-  });
+  const { data: deliveryRecord, error: deliveryError } = await supabase
+    .from("delivery_records")
+    .insert({
+      branch_id: payload.branch_id,
+      sales_record_id: salesRecord.id,
+      so_number: payload.so_number,
+      customer_po_number: payload.customer_po_number,
+      surat_jalan_number: payload.surat_jalan_number,
+      delivery_date: payload.delivery_date,
+      customer_id: payload.customer_id,
+      product_id: payload.product_id,
+      quantity_delivered: payload.quantity_delivered,
+      quantity_pending: statuses.pending,
+      delivery_status: statuses.delivery_status,
+      receiver: payload.receiver,
+      notes: payload.notes,
+    })
+    .select("id")
+    .single();
 
-  if (deliveryError) throw new Error(deliveryError.message);
+  if (deliveryError) {
+    await supabase.from("sales_records").delete().eq("id", salesRecord.id);
+    throw new Error(deliveryError.message);
+  }
+
+  await createActivityLog({
+    module: "sales_delivery",
+    action: "create_sales_delivery",
+    recordId: deliveryRecord.id,
+    notes: `SO ${payload.so_number ?? "-"}, SJ ${payload.surat_jalan_number}, status ${statuses.delivery_status}.`,
+  });
 
   revalidatePath("/sales-delivery");
   revalidatePath("/dashboard");
