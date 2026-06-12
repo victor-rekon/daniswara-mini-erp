@@ -2,6 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
+import { createActivityLog } from "@/lib/server/activity-log";
 import { createSupabaseAdmin } from "@/lib/supabase/admin";
 
 const optionalText = z.preprocess((value) => (value === "" ? null : value), z.string().nullable().optional());
@@ -36,9 +37,20 @@ export async function createExpense(formData: FormData) {
   });
 
   const supabase = createSupabaseAdmin();
-  const { error } = await supabase.from("expense_records").insert(payload);
+  const { data, error } = await supabase
+    .from("expense_records")
+    .insert(payload)
+    .select("id")
+    .single();
 
   if (error) throw new Error(error.message);
+
+  await createActivityLog({
+    module: "accounting",
+    action: "create_expense",
+    recordId: data.id,
+    notes: `Expense ${payload.description} recorded with amount ${payload.amount}.`,
+  });
 
   revalidatePath("/accounting");
   revalidatePath("/dashboard");
@@ -92,7 +104,17 @@ export async function createManualJournal(formData: FormData) {
     },
   ]);
 
-  if (linesError) throw new Error(linesError.message);
+  if (linesError) {
+    await supabase.from("journal_entries").delete().eq("id", entry.id);
+    throw new Error(linesError.message);
+  }
+
+  await createActivityLog({
+    module: "accounting",
+    action: "create_manual_journal",
+    recordId: entry.id,
+    notes: `Manual journal recorded for amount ${payload.amount}.`,
+  });
 
   revalidatePath("/accounting");
   revalidatePath("/dashboard");
