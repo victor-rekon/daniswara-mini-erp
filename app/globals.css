@@ -1,15 +1,16 @@
 @import "tailwindcss";
 
-/* Skill: Financial Dashboard + Analytics Dashboard color system */
+/* -- Daniswara brand tokens (from logo) ----------------- */
 :root {
-  --background: #f1f5f9;
-  --foreground: #0f172a;
-  --primary: #1e40af;
-  --primary-light: #3b82f6;
-  --profit: #22c55e;
-  --loss: #ef4444;
-  --warning: #f59e0b;
-  --neutral: #94a3b8;
+  --navy-900: #1a2456;
+  --navy-700: #233575;
+  --navy-500: #2f4a9e;
+  --blue-400: #2b6cb8;
+  --gold-500: #b8860b;
+  --gold-400: #c99a2e;
+  --gold-300: #d9b25c;
+  --background: #f6f7fa;
+  --foreground: #1a2456;
 }
 
 body {
@@ -19,6 +20,19 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+/* -- Instant tap response: kill 300ms delay + grey flash -- */
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+a,
+button,
+[role="button"],
+input,
+select,
+label {
+  touch-action: manipulation;
 }
 
 input,
@@ -36,9 +50,18 @@ button {
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: #cbd5e1;
+  background: #c5cad9;
   border-radius: 2px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #94a3b8;
+  background: #9aa3c0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
 }

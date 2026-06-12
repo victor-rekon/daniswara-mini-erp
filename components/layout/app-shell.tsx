@@ -8,28 +8,42 @@ import { navigationItems } from "@/lib/constants/navigation";
 const mainNav = navigationItems.filter((i) => i.href !== "/settings");
 const settingsNav = navigationItems.find((i) => i.href === "/settings");
 
+/* Daniswara flame-drop mark (navy + gold, from company logo) */
+function BrandMark({ size = 20 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path
+        d="M9.5 21c-3.3 0-6-2.6-6-5.9 0-2.6 1.7-4.8 3.4-6.9.9 1.6 2.3 2.4 2.3 2.4S8 7.2 9.9 4.5C11 3 12.4 2 12.4 2s-.5 2.6.7 4.6c-2.5 2.8-3.9 5-3.9 7.8 0 2.7 1.5 5 3.7 6.2-1 .3-2.2.4-3.4.4z"
+        fill="#2b6cb8"
+      />
+      <path
+        d="M14.2 21.4c2.7-1.1 4.3-3.4 4.3-6.2 0-3.4-2.5-5.6-4.4-8.4-1.4-2-1.1-4.8-1.1-4.8s2.9 1.5 4.8 4.3c1.9 2.7 3.2 5.2 3.2 8.2 0 3.8-2.9 6.9-6.8 6.9z"
+        fill="#c99a2e"
+      />
+    </svg>
+  );
+}
+
 function Sidebar() {
   const pathname = usePathname();
   return (
-    <aside className="fixed inset-y-0 left-0 hidden w-60 flex-col bg-[#0f172a] md:flex">
-      {/* Brand — skill: Financial Dashboard, trust dark blue */}
-      <div className="flex items-center gap-3 border-b border-white/8 px-4 py-5">
-        <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[#1e40af] shadow-lg">
-          <span className="text-sm font-bold text-white">D</span>
+    <aside className="fixed inset-y-0 left-0 hidden w-60 flex-col bg-[#1a2456] md:flex">
+      {/* Brand */}
+      <div className="flex items-center gap-3 border-b border-white/10 px-4 py-5">
+        <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-white shadow-sm">
+          <BrandMark size={22} />
         </div>
         <div className="min-w-0">
-          <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-[#3b82f6]">
+          <p className="truncate text-sm font-bold text-white">Daniswara ERP</p>
+          <p className="text-[9px] font-semibold uppercase tracking-[0.22em] text-[#d9b25c]">
             SistemBeres
-          </p>
-          <p className="truncate text-sm font-semibold text-white">
-            Daniswara ERP
           </p>
         </div>
       </div>
 
       {/* Nav */}
       <nav className="flex-1 overflow-y-auto px-2 py-4">
-        <p className="mb-2 px-3 text-[10px] font-semibold uppercase tracking-[0.16em] text-slate-600">
+        <p className="mb-2 px-3 text-[10px] font-semibold uppercase tracking-[0.16em] text-[#5a6594]">
           Modules
         </p>
         {mainNav.map((item) => {
@@ -40,16 +54,19 @@ function Sidebar() {
             <Link
               key={item.href}
               href={item.href}
-              className={`relative mb-0.5 flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all duration-150 ${
+              className={`relative mb-0.5 flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors duration-150 active:bg-white/15 ${
                 isActive
-                  ? "bg-[#1e40af]/25 text-white"
-                  : "text-slate-400 hover:bg-white/6 hover:text-slate-200"
+                  ? "bg-white/10 text-white"
+                  : "text-[#9aa3c0] hover:bg-white/5 hover:text-white"
               }`}
             >
               {isActive && (
-                <span className="absolute left-0 inset-y-[7px] w-[3px] rounded-r-full bg-[#3b82f6]" />
+                <span className="absolute left-0 inset-y-[7px] w-[3px] rounded-r-full bg-[#d9b25c]" />
               )}
-              <Icon className="h-4 w-4 shrink-0" aria-hidden="true" />
+              <Icon
+                className={`h-4 w-4 shrink-0 ${isActive ? "text-[#d9b25c]" : ""}`}
+                aria-hidden="true"
+              />
               {item.label}
             </Link>
           );
@@ -57,28 +74,28 @@ function Sidebar() {
       </nav>
 
       {/* Bottom */}
-      <div className="border-t border-white/8 px-2 pb-4 pt-3">
+      <div className="border-t border-white/10 px-2 pb-4 pt-3">
         {settingsNav && (
           <Link
             href={settingsNav.href}
-            className={`relative mb-2 flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all duration-150 ${
+            className={`relative mb-2 flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors duration-150 active:bg-white/15 ${
               pathname === settingsNav.href
-                ? "bg-[#1e40af]/25 text-white"
-                : "text-slate-400 hover:bg-white/6 hover:text-slate-200"
+                ? "bg-white/10 text-white"
+                : "text-[#9aa3c0] hover:bg-white/5 hover:text-white"
             }`}
           >
             {pathname === settingsNav.href && (
-              <span className="absolute left-0 inset-y-[7px] w-[3px] rounded-r-full bg-[#3b82f6]" />
+              <span className="absolute left-0 inset-y-[7px] w-[3px] rounded-r-full bg-[#d9b25c]" />
             )}
             <settingsNav.icon className="h-4 w-4 shrink-0" aria-hidden="true" />
             Settings
           </Link>
         )}
         <div className="rounded-lg bg-white/5 px-3 py-2.5">
-          <p className="text-[10px] font-semibold text-slate-400">
+          <p className="text-[10px] font-semibold text-[#9aa3c0]">
             PT Daniswara Gas Indonesia
           </p>
-          <p className="mt-0.5 text-[10px] text-slate-600">
+          <p className="mt-0.5 text-[10px] text-[#5a6594]">
             Phase 1 &middot; Operations
           </p>
         </div>
@@ -90,7 +107,7 @@ function Sidebar() {
 function MobileNav() {
   const pathname = usePathname();
   return (
-    <nav className="mt-3 flex gap-1.5 overflow-x-auto pb-0.5 md:hidden">
+    <nav className="mt-3.5 flex gap-1.5 overflow-x-auto pb-0.5 md:hidden [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
       {navigationItems.map((item) => {
         const Icon = item.icon;
         const isActive =
@@ -99,10 +116,10 @@ function MobileNav() {
           <Link
             key={item.href}
             href={item.href}
-            className={`flex shrink-0 cursor-pointer items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-semibold transition-all duration-150 ${
+            className={`flex shrink-0 cursor-pointer items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs font-semibold transition-colors duration-150 active:scale-95 ${
               isActive
-                ? "bg-[#1e40af] text-white shadow-sm"
-                : "bg-white text-slate-500 shadow-sm ring-1 ring-slate-200 hover:text-[#1e40af]"
+                ? "bg-gradient-to-br from-[#d9b25c] to-[#c99a2e] text-[#1a2456] shadow-sm"
+                : "bg-white/8 text-[#b9c0d8] active:bg-white/15"
             }`}
           >
             <Icon className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
@@ -122,32 +139,38 @@ type AppShellProps = {
 
 export function AppShell({ title, description, children }: AppShellProps) {
   return (
-    <div className="min-h-screen overflow-x-hidden bg-slate-100 text-slate-950">
+    <div className="min-h-screen bg-[#f6f7fa] text-[#1a2456]">
       <Sidebar />
-      <main className="min-w-0 md:ml-60">
-        {/* Header — skill: sticky, clear hierarchy, brand color label */}
-        <header className="sticky top-0 z-10 border-b border-slate-200 bg-white/96 px-4 py-3.5 shadow-sm backdrop-blur-sm md:px-8">
+      <main className="md:pl-60">
+        {/* Navy header band - brand identity */}
+        <header className="bg-[#1a2456] px-4 pb-4 pt-4 md:rounded-none md:px-8 md:pb-5">
           <div className="flex items-center justify-between gap-4">
-            <div>
-              <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-[#1e40af]">
-                PT Daniswara Gas Indonesia
-              </p>
-              <h2 className="mt-0.5 text-[20px] font-bold leading-tight tracking-tight text-slate-900">
-                {title}
-              </h2>
-              {description ? (
-                <p className="mt-0.5 text-xs text-slate-400">{description}</p>
-              ) : null}
+            <div className="flex items-center gap-3">
+              <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-white shadow-sm md:hidden">
+                <BrandMark size={22} />
+              </div>
+              <div>
+                <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#d9b25c]">
+                  PT Daniswara Gas Indonesia
+                </p>
+                <h2 className="mt-0.5 text-xl font-bold leading-tight tracking-tight text-white">
+                  {title}
+                </h2>
+                {description ? (
+                  <p className="mt-0.5 hidden text-xs text-[#9aa3c0] md:block">
+                    {description}
+                  </p>
+                ) : null}
+              </div>
             </div>
-            <div className="hidden shrink-0 rounded-full bg-[#1e40af] px-3.5 py-1 text-xs font-bold text-white shadow-sm md:block">
+            <div className="shrink-0 rounded-full bg-gradient-to-br from-[#d9b25c] to-[#c99a2e] px-3.5 py-1 text-xs font-bold text-[#1a2456] shadow-sm">
               Phase 1
             </div>
           </div>
           <MobileNav />
         </header>
 
-        {/* skill: compact 12px grid gap for data-dense layout */}
-        <div className="min-w-0 overflow-x-auto p-3 md:p-6">{children}</div>
+        <div className="p-3 md:p-6">{children}</div>
       </main>
     </div>
   );
