@@ -1,4 +1,5 @@
 import { AppShell } from "@/components/layout/app-shell";
+import { ModuleCommandBar } from "@/components/commands/module-command-bar";
 import { QuotationForm } from "@/components/quotation/quotation-form";
 import { QuotationSummaryCards } from "@/components/quotation/quotation-summary-cards";
 import { QuotationTable } from "@/components/quotation/quotation-table";
@@ -54,8 +55,11 @@ export default async function QuotationPage() {
       description="Simple quotation tracking. No approval, versioning, e-signature, or complex PDF template in Phase 1."
     >
       <div className="grid gap-6">
+        <ModuleCommandBar inputLabel="Input Quotation" exportHref="/api/export/quotation" />
         <QuotationSummaryCards summary={summary} />
-        <QuotationForm branches={branches} customers={customers} products={products} />
+        <section id="input-data" className="scroll-mt-24">
+          <QuotationForm branches={branches} customers={customers} products={products} />
+        </section>
         <QuotationTable quotations={enrichedQuotations} />
       </div>
     </AppShell>
