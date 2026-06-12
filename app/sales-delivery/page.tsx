@@ -14,13 +14,23 @@ export const dynamic = "force-dynamic";
 export default async function SalesDeliveryPage() {
   const supabase = createSupabaseAdmin();
 
-  const branchesResult = await supabase.from("branches").select("*").order("created_at", { ascending: false });
-  const customersResult = await supabase.from("customers").select("*").order("created_at", { ascending: false });
-  const productsResult = await supabase.from("products").select("*").order("created_at", { ascending: false });
-  const quotationsResult = await supabase.from("quotations").select("*").order("quotation_date", { ascending: false });
-  const quotationItemsResult = await supabase.from("quotation_items").select("*");
-  const salesResult = await supabase.from("sales_records").select("*").order("sales_date", { ascending: false }).limit(100);
-  const deliveriesResult = await supabase.from("delivery_records").select("*");
+  const [
+    branchesResult,
+    customersResult,
+    productsResult,
+    quotationsResult,
+    quotationItemsResult,
+    salesResult,
+    deliveriesResult
+  ] = await Promise.all([
+    supabase.from("branches").select("*").order("created_at", { ascending: false }),
+    supabase.from("customers").select("*").order("created_at", { ascending: false }),
+    supabase.from("products").select("*").order("created_at", { ascending: false }),
+    supabase.from("quotations").select("*").order("quotation_date", { ascending: false }),
+    supabase.from("quotation_items").select("*"),
+    supabase.from("sales_records").select("*").order("sales_date", { ascending: false }).limit(100),
+    supabase.from("delivery_records").select("*"),
+  ]);
 
   const branches = (branchesResult.data ?? []) as Branch[];
   const customers = (customersResult.data ?? []) as Customer[];
@@ -40,10 +50,12 @@ export default async function SalesDeliveryPage() {
 
   return (
     <AppShell title="Sales & Delivery" description="Customer PO/SO and surat jalan tracking. Sales report follows delivery records.">
-      <div className="grid gap-6">
+      <div className="grid gap-3 md:gap-4">
         <SalesDeliverySummaryCards summary={summary} />
-        <SalesDeliveryForm branches={branches} customers={customers} products={products} quotations={enrichedQuotations} />
-        <SalesDeliveryTable records={records} />
+        <div className="grid gap-3 md:gap-4 xl:grid-cols-[420px_minmax(0,1fr)] xl:items-start">
+          <SalesDeliveryForm branches={branches} customers={customers} products={products} quotations={enrichedQuotations} />
+          <SalesDeliveryTable records={records} />
+        </div>
       </div>
     </AppShell>
   );

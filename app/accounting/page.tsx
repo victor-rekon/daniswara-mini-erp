@@ -19,17 +19,31 @@ export const dynamic = "force-dynamic";
 export default async function AccountingPage() {
   const supabase = createSupabaseAdmin();
 
-  const branchesResult = await supabase.from("branches").select("*").order("created_at", { ascending: false });
-  const accountsResult = await supabase.from("chart_of_accounts").select("*").order("account_code", { ascending: true });
-  const customersResult = await supabase.from("customers").select("*");
-  const productsResult = await supabase.from("products").select("*");
-  const expensesResult = await supabase.from("expense_records").select("*").order("expense_date", { ascending: false }).limit(100);
-  const journalsResult = await supabase.from("journal_entries").select("*").order("journal_date", { ascending: false }).limit(100);
-  const journalLinesResult = await supabase.from("journal_lines").select("*");
-  const invoicesResult = await supabase.from("invoices").select("*").order("invoice_date", { ascending: false });
-  const paymentsResult = await supabase.from("payments").select("*");
-  const deliveriesResult = await supabase.from("delivery_records").select("*");
-  const productionResult = await supabase.from("production_records").select("*").order("production_date", { ascending: false });
+  const [
+    branchesResult,
+    accountsResult,
+    customersResult,
+    productsResult,
+    expensesResult,
+    journalsResult,
+    journalLinesResult,
+    invoicesResult,
+    paymentsResult,
+    deliveriesResult,
+    productionResult
+  ] = await Promise.all([
+    supabase.from("branches").select("*").order("created_at", { ascending: false }),
+    supabase.from("chart_of_accounts").select("*").order("account_code", { ascending: true }),
+    supabase.from("customers").select("*"),
+    supabase.from("products").select("*"),
+    supabase.from("expense_records").select("*").order("expense_date", { ascending: false }).limit(100),
+    supabase.from("journal_entries").select("*").order("journal_date", { ascending: false }).limit(100),
+    supabase.from("journal_lines").select("*"),
+    supabase.from("invoices").select("*").order("invoice_date", { ascending: false }),
+    supabase.from("payments").select("*"),
+    supabase.from("delivery_records").select("*"),
+    supabase.from("production_records").select("*").order("production_date", { ascending: false }),
+  ]);
 
   const branches = (branchesResult.data ?? []) as Branch[];
   const accounts = (accountsResult.data ?? []) as ChartOfAccount[];
@@ -57,7 +71,7 @@ export default async function AccountingPage() {
 
   return (
     <AppShell title="Accounting Light" description="Simple journal, expense input, and management P&L only. Not full accounting or tax system.">
-      <div className="grid gap-6">
+      <div className="grid gap-3 md:gap-4">
         <ProfitLossSummaryCards summary={profitLoss} />
         <ExpenseForm branches={branches} accounts={accounts} />
         <ManualJournalForm accounts={accounts} />

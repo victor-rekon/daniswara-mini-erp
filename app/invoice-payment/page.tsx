@@ -14,11 +14,19 @@ export const dynamic = "force-dynamic";
 export default async function InvoicePaymentPage() {
   const supabase = createSupabaseAdmin();
 
-  const branchesResult = await supabase.from("branches").select("*").order("created_at", { ascending: false });
-  const customersResult = await supabase.from("customers").select("*").order("created_at", { ascending: false });
-  const deliveriesResult = await supabase.from("delivery_records").select("*").order("delivery_date", { ascending: false });
-  const invoicesResult = await supabase.from("invoices").select("*").order("invoice_date", { ascending: false }).limit(100);
-  const paymentsResult = await supabase.from("payments").select("*").order("payment_date", { ascending: false });
+  const [
+    branchesResult,
+    customersResult,
+    deliveriesResult,
+    invoicesResult,
+    paymentsResult
+  ] = await Promise.all([
+    supabase.from("branches").select("*").order("created_at", { ascending: false }),
+    supabase.from("customers").select("*").order("created_at", { ascending: false }),
+    supabase.from("delivery_records").select("*").order("delivery_date", { ascending: false }),
+    supabase.from("invoices").select("*").order("invoice_date", { ascending: false }).limit(100),
+    supabase.from("payments").select("*").order("payment_date", { ascending: false }),
+  ]);
 
   const branches = (branchesResult.data ?? []) as Branch[];
   const customers = (customersResult.data ?? []) as Customer[];
@@ -35,7 +43,7 @@ export default async function InvoicePaymentPage() {
 
   return (
     <AppShell title="Invoice & Payment" description="Invoice, payment received, customer outstanding, and overdue tracking.">
-      <div className="grid gap-6">
+      <div className="grid gap-3 md:gap-4">
         <InvoicePaymentSummaryCards summary={summary} />
         <InvoiceForm branches={branches} customers={customers} deliveries={deliveries} />
         <PaymentForm invoices={enrichedInvoices} />

@@ -21,18 +21,33 @@ export const dynamic = "force-dynamic";
 export default async function DashboardPage() {
   const supabase = createSupabaseAdmin();
 
-  const branchesResult = await supabase.from("branches").select("*");
-  const customersResult = await supabase.from("customers").select("*");
-  const productsResult = await supabase.from("products").select("*");
-  const accountsResult = await supabase.from("chart_of_accounts").select("*");
-  const productionResult = await supabase.from("production_records").select("*");
-  const quotationsResult = await supabase.from("quotations").select("*");
-  const quotationItemsResult = await supabase.from("quotation_items").select("*");
-  const salesResult = await supabase.from("sales_records").select("*");
-  const deliveriesResult = await supabase.from("delivery_records").select("*");
-  const invoicesResult = await supabase.from("invoices").select("*");
-  const paymentsResult = await supabase.from("payments").select("*");
-  const expensesResult = await supabase.from("expense_records").select("*");
+  const [
+    branchesResult,
+    customersResult,
+    productsResult,
+    accountsResult,
+    productionResult,
+    quotationsResult,
+    quotationItemsResult,
+    salesResult,
+    deliveriesResult,
+    invoicesResult,
+    paymentsResult,
+    expensesResult
+  ] = await Promise.all([
+    supabase.from("branches").select("*"),
+    supabase.from("customers").select("*"),
+    supabase.from("products").select("*"),
+    supabase.from("chart_of_accounts").select("*"),
+    supabase.from("production_records").select("*"),
+    supabase.from("quotations").select("*"),
+    supabase.from("quotation_items").select("*"),
+    supabase.from("sales_records").select("*"),
+    supabase.from("delivery_records").select("*"),
+    supabase.from("invoices").select("*"),
+    supabase.from("payments").select("*"),
+    supabase.from("expense_records").select("*"),
+  ]);
 
   const branches = (branchesResult.data ?? []) as Branch[];
   const customers = (customersResult.data ?? []) as Customer[];
@@ -87,7 +102,7 @@ export default async function DashboardPage() {
 
   return (
     <AppShell title="Owner Dashboard" description="High-level operational summary. Every number is traceable to source module data.">
-      <div className="grid gap-6">
+      <div className="grid gap-3 md:gap-4">
         <DashboardMetricGrid metrics={metrics} />
         <DashboardAttentionPanel summary={summary} />
         <DashboardFlowSnapshot
