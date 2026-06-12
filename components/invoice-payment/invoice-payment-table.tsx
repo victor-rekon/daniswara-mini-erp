@@ -38,44 +38,44 @@ export function InvoicePaymentTable({ invoices }: InvoicePaymentTableProps) {
       </div>
 
       <div className="overflow-x-auto rounded-xl border border-slate-200">
-        <table className="w-full min-w-[1160px] text-left text-sm">
+        <table className="w-full min-w-[951px] text-left text-sm">
           <thead className="bg-slate-50 text-slate-500">
             <tr>
-              <th className="px-4 py-3 font-medium">Invoice</th>
-              <th className="px-4 py-3 font-medium">Invoice Date</th>
-              <th className="px-4 py-3 font-medium">Due Date</th>
-              <th className="px-4 py-3 font-medium">Customer</th>
-              <th className="px-4 py-3 font-medium">Branch</th>
-              <th className="px-4 py-3 font-medium">Surat Jalan</th>
-              <th className="px-4 py-3 font-medium">SO</th>
-              <th className="px-4 py-3 font-medium">Customer PO</th>
-              <th className="px-4 py-3 font-medium">Invoice Value</th>
-              <th className="px-4 py-3 font-medium">Paid</th>
-              <th className="px-4 py-3 font-medium">Outstanding</th>
-              <th className="px-4 py-3 font-medium">Status</th>
-              <th className="px-4 py-3 font-medium">Notes</th>
+              <th className="px-3 py-2 font-medium">Invoice</th>
+              <th className="px-3 py-2 font-medium">Invoice Date</th>
+              <th className="px-3 py-2 font-medium">Due Date</th>
+              <th className="px-3 py-2 font-medium">Customer</th>
+              <th className="px-3 py-2 font-medium">Branch</th>
+              <th className="px-3 py-2 font-medium">Surat Jalan</th>
+              <th className="px-3 py-2 font-medium">SO</th>
+              <th className="px-3 py-2 font-medium">Customer PO</th>
+              <th className="px-3 py-2 font-medium">Invoice Value</th>
+              <th className="px-3 py-2 font-medium">Paid</th>
+              <th className="px-3 py-2 font-medium">Outstanding</th>
+              <th className="px-3 py-2 font-medium">Status</th>
+              <th className="px-3 py-2 font-medium">Notes</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-slate-200">
             {invoices.map((invoice) => (
               <tr key={invoice.id}>
-                <td className="px-4 py-3 font-semibold text-slate-800">{invoice.invoice_number}</td>
-                <td className="px-4 py-3 text-slate-700">{invoice.invoice_date}</td>
-                <td className="px-4 py-3 text-slate-700">{invoice.due_date ?? "-"}</td>
-                <td className="px-4 py-3 text-slate-700">{invoice.customer_name}</td>
-                <td className="px-4 py-3 text-slate-700">{invoice.branch_name}</td>
-                <td className="px-4 py-3 text-slate-700">{invoice.surat_jalan_number}</td>
-                <td className="px-4 py-3 text-slate-700">{invoice.so_number ?? "-"}</td>
-                <td className="px-4 py-3 text-slate-700">{invoice.customer_po_number ?? "-"}</td>
-                <td className="px-4 py-3 text-slate-700">{formatCurrency(invoice.invoice_value)}</td>
-                <td className="px-4 py-3 text-slate-700">{formatCurrency(invoice.actual_payment_received)}</td>
-                <td className="px-4 py-3 font-semibold text-slate-800">{formatCurrency(invoice.actual_outstanding_amount)}</td>
-                <td className="px-4 py-3">
+                <td className="px-3 py-2 font-semibold text-slate-800">{invoice.invoice_number}</td>
+                <td className="px-3 py-2 text-slate-700">{invoice.invoice_date}</td>
+                <td className="px-3 py-2 text-slate-700">{invoice.due_date ?? "-"}</td>
+                <td className="px-3 py-2 text-slate-700">{invoice.customer_name}</td>
+                <td className="px-3 py-2 text-slate-700">{invoice.branch_name}</td>
+                <td className="px-3 py-2 text-slate-700">{invoice.surat_jalan_number}</td>
+                <td className="px-3 py-2 text-slate-700">{invoice.so_number ?? "-"}</td>
+                <td className="px-3 py-2 text-slate-700">{invoice.customer_po_number ?? "-"}</td>
+                <td className="px-3 py-2 text-slate-700">{formatCurrency(invoice.invoice_value)}</td>
+                <td className="px-3 py-2 text-slate-700">{formatCurrency(invoice.actual_payment_received)}</td>
+                <td className="px-3 py-2 font-semibold text-slate-800">{formatCurrency(invoice.actual_outstanding_amount)}</td>
+                <td className="px-3 py-2">
                   <span className={`rounded-full px-3 py-1 text-xs font-semibold ${statusClassName[invoice.payment_status]}`}>
                     {invoice.payment_status}
                   </span>
                 </td>
-                <td className="px-4 py-3 text-slate-700">{invoice.notes ?? "-"}</td>
+                <td className="px-3 py-2 text-slate-700">{invoice.notes ?? "-"}</td>
               </tr>
             ))}
           </tbody>

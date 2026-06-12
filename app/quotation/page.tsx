@@ -54,13 +54,15 @@ export default async function QuotationPage() {
       title="Quotation"
       description="Simple quotation tracking. No approval, versioning, e-signature, or complex PDF template in Phase 1."
     >
-      <div className="grid gap-6">
+      <div className="grid gap-3 md:gap-4">
         <ModuleCommandBar inputLabel="Input Quotation" exportHref="/api/export/quotation" />
         <QuotationSummaryCards summary={summary} />
-        <section id="input-data" className="scroll-mt-24">
-          <QuotationForm branches={branches} customers={customers} products={products} />
-        </section>
-        <QuotationTable quotations={enrichedQuotations} />
+        <div className="grid gap-3 md:gap-4 xl:grid-cols-[420px_minmax(0,1fr)] xl:items-start">
+          <section id="input-data" className="scroll-mt-24">
+            <QuotationForm branches={branches} customers={customers} products={products} />
+          </section>
+          <QuotationTable quotations={enrichedQuotations} />
+        </div>
       </div>
     </AppShell>
   );

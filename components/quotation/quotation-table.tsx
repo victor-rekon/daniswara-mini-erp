@@ -47,38 +47,38 @@ export function QuotationTable({ quotations }: QuotationTableProps) {
       </div>
 
       <div className="overflow-x-auto rounded-xl border border-slate-200">
-        <table className="w-full min-w-[1080px] text-left text-sm">
+        <table className="w-full min-w-[885px] text-left text-sm">
           <thead className="bg-slate-50 text-slate-500">
             <tr>
-              <th className="px-4 py-3 font-medium">Number</th>
-              <th className="px-4 py-3 font-medium">Date</th>
-              <th className="px-4 py-3 font-medium">Customer</th>
-              <th className="px-4 py-3 font-medium">Branch</th>
-              <th className="px-4 py-3 font-medium">Product Summary</th>
-              <th className="px-4 py-3 font-medium">Items</th>
-              <th className="px-4 py-3 font-medium">Qty</th>
-              <th className="px-4 py-3 font-medium">Total</th>
-              <th className="px-4 py-3 font-medium">Status</th>
-              <th className="px-4 py-3 font-medium">Notes</th>
+              <th className="px-3 py-2 font-medium">Number</th>
+              <th className="px-3 py-2 font-medium">Date</th>
+              <th className="px-3 py-2 font-medium">Customer</th>
+              <th className="px-3 py-2 font-medium">Branch</th>
+              <th className="px-3 py-2 font-medium">Product Summary</th>
+              <th className="px-3 py-2 font-medium">Items</th>
+              <th className="px-3 py-2 font-medium">Qty</th>
+              <th className="px-3 py-2 font-medium">Total</th>
+              <th className="px-3 py-2 font-medium">Status</th>
+              <th className="px-3 py-2 font-medium">Notes</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-slate-200">
             {quotations.map((quotation) => (
               <tr key={quotation.id}>
-                <td className="px-4 py-3 font-semibold text-slate-800">{quotation.quotation_number}</td>
-                <td className="px-4 py-3 text-slate-700">{quotation.quotation_date}</td>
-                <td className="px-4 py-3 text-slate-700">{quotation.customer_name}</td>
-                <td className="px-4 py-3 text-slate-700">{quotation.branch_name}</td>
-                <td className="px-4 py-3 text-slate-700">{quotation.product_summary}</td>
-                <td className="px-4 py-3 text-slate-700">{quotation.item_count}</td>
-                <td className="px-4 py-3 text-slate-700">{formatNumber(quotation.total_quantity)}</td>
-                <td className="px-4 py-3 text-slate-700">{formatCurrency(quotation.quotation_total)}</td>
-                <td className="px-4 py-3">
+                <td className="px-3 py-2 font-semibold text-slate-800">{quotation.quotation_number}</td>
+                <td className="px-3 py-2 text-slate-700">{quotation.quotation_date}</td>
+                <td className="px-3 py-2 text-slate-700">{quotation.customer_name}</td>
+                <td className="px-3 py-2 text-slate-700">{quotation.branch_name}</td>
+                <td className="px-3 py-2 text-slate-700">{quotation.product_summary}</td>
+                <td className="px-3 py-2 text-slate-700">{quotation.item_count}</td>
+                <td className="px-3 py-2 text-slate-700">{formatNumber(quotation.total_quantity)}</td>
+                <td className="px-3 py-2 text-slate-700">{formatCurrency(quotation.quotation_total)}</td>
+                <td className="px-3 py-2">
                   <span className={`rounded-full px-3 py-1 text-xs font-semibold ${statusClassName[quotation.status]}`}>
                     {quotation.status}
                   </span>
                 </td>
-                <td className="px-4 py-3 text-slate-700">{quotation.notes ?? "-"}</td>
+                <td className="px-3 py-2 text-slate-700">{quotation.notes ?? "-"}</td>
               </tr>
             ))}
           </tbody>

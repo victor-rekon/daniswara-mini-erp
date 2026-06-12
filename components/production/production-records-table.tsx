@@ -40,38 +40,38 @@ export function ProductionRecordsTable({ records }: ProductionRecordsTableProps)
       </div>
 
       <div className="overflow-x-auto rounded-xl border border-slate-200">
-        <table className="w-full min-w-[960px] text-left text-sm">
+        <table className="w-full min-w-[787px] text-left text-sm">
           <thead className="bg-slate-50 text-slate-500">
             <tr>
-              <th className="px-4 py-3 font-medium">Date</th>
-              <th className="px-4 py-3 font-medium">Branch</th>
-              <th className="px-4 py-3 font-medium">Product</th>
-              <th className="px-4 py-3 font-medium">Batch</th>
-              <th className="px-4 py-3 font-medium">Produced</th>
-              <th className="px-4 py-3 font-medium">Losses</th>
-              <th className="px-4 py-3 font-medium">Net Qty</th>
-              <th className="px-4 py-3 font-medium">Losses %</th>
-              <th className="px-4 py-3 font-medium">HPP Base</th>
-              <th className="px-4 py-3 font-medium">HPP / Unit</th>
-              <th className="px-4 py-3 font-medium">Notes</th>
+              <th className="px-3 py-2 font-medium">Date</th>
+              <th className="px-3 py-2 font-medium">Branch</th>
+              <th className="px-3 py-2 font-medium">Product</th>
+              <th className="px-3 py-2 font-medium">Batch</th>
+              <th className="px-3 py-2 font-medium">Produced</th>
+              <th className="px-3 py-2 font-medium">Losses</th>
+              <th className="px-3 py-2 font-medium">Net Qty</th>
+              <th className="px-3 py-2 font-medium">Losses %</th>
+              <th className="px-3 py-2 font-medium">HPP Base</th>
+              <th className="px-3 py-2 font-medium">HPP / Unit</th>
+              <th className="px-3 py-2 font-medium">Notes</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-slate-200">
             {records.map((record) => (
               <tr key={record.id}>
-                <td className="px-4 py-3 text-slate-700">{record.production_date}</td>
-                <td className="px-4 py-3 text-slate-700">{record.branch_name}</td>
-                <td className="px-4 py-3 text-slate-700">{record.product_name}</td>
-                <td className="px-4 py-3 text-slate-700">{record.batch_code ?? "-"}</td>
-                <td className="px-4 py-3 text-slate-700">
+                <td className="px-3 py-2 text-slate-700">{record.production_date}</td>
+                <td className="px-3 py-2 text-slate-700">{record.branch_name}</td>
+                <td className="px-3 py-2 text-slate-700">{record.product_name}</td>
+                <td className="px-3 py-2 text-slate-700">{record.batch_code ?? "-"}</td>
+                <td className="px-3 py-2 text-slate-700">
                   {formatNumber(record.quantity_produced)} {record.unit}
                 </td>
-                <td className="px-4 py-3 text-slate-700">{formatNumber(record.losses_quantity)}</td>
-                <td className="px-4 py-3 text-slate-700">{formatNumber(record.net_quantity)}</td>
-                <td className="px-4 py-3 text-slate-700">{formatNumber(record.losses_percentage)}%</td>
-                <td className="px-4 py-3 text-slate-700">{formatCurrency(record.hpp_base_cost)}</td>
-                <td className="px-4 py-3 text-slate-700">{formatCurrency(record.hpp_per_unit)}</td>
-                <td className="px-4 py-3 text-slate-700">{record.notes ?? "-"}</td>
+                <td className="px-3 py-2 text-slate-700">{formatNumber(record.losses_quantity)}</td>
+                <td className="px-3 py-2 text-slate-700">{formatNumber(record.net_quantity)}</td>
+                <td className="px-3 py-2 text-slate-700">{formatNumber(record.losses_percentage)}%</td>
+                <td className="px-3 py-2 text-slate-700">{formatCurrency(record.hpp_base_cost)}</td>
+                <td className="px-3 py-2 text-slate-700">{formatCurrency(record.hpp_per_unit)}</td>
+                <td className="px-3 py-2 text-slate-700">{record.notes ?? "-"}</td>
               </tr>
             ))}
           </tbody>

@@ -20,11 +20,11 @@ export function MasterDataTable<T extends { id?: string }>({
 
   return (
     <div className="overflow-x-auto rounded-xl border border-slate-200">
-      <table className="w-full min-w-[640px] text-left text-sm">
+      <table className="w-full min-w-[524px] text-left text-sm">
         <thead className="bg-slate-50 text-slate-500">
           <tr>
             {columns.map((column) => (
-              <th key={String(column.key)} className="px-4 py-3 font-medium">
+              <th key={String(column.key)} className="px-3 py-2 font-medium">
                 {column.label}
               </th>
             ))}
@@ -36,7 +36,7 @@ export function MasterDataTable<T extends { id?: string }>({
               {columns.map((column) => {
                 const value = row[column.key];
                 return (
-                  <td key={String(column.key)} className="px-4 py-3 text-slate-700">
+                  <td key={String(column.key)} className="px-3 py-2 text-slate-700">
                     {value === null || value === undefined || value === "" ? "-" : String(value)}
                   </td>
                 );

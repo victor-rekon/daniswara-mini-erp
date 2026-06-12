@@ -39,9 +39,9 @@ export default async function MasterDataPage() {
       title="Master Data"
       description="Shared data used across production, sales, delivery, invoice, and accounting modules. Build this first."
     >
-      <div className="grid gap-6">
+      <div className="grid gap-3 md:gap-4">
         <ModuleCommandBar inputLabel="Input Master Data" />
-        <div id="input-data" className="grid scroll-mt-24 gap-6">
+        <div id="input-data" className="grid scroll-mt-24 gap-3 md:gap-4 lg:grid-cols-2 lg:items-start">
           <MasterDataSection
             title="Branches"
             description="Simple branch list only. No complex multi-branch accounting in Phase 1."

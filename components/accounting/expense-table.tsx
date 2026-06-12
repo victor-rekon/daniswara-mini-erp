@@ -30,26 +30,26 @@ export function ExpenseTable({ expenses }: ExpenseTableProps) {
       </div>
 
       <div className="overflow-x-auto rounded-xl border border-slate-200">
-        <table className="w-full min-w-[860px] text-left text-sm">
+        <table className="w-full min-w-[705px] text-left text-sm">
           <thead className="bg-slate-50 text-slate-500">
             <tr>
-              <th className="px-4 py-3 font-medium">Date</th>
-              <th className="px-4 py-3 font-medium">Branch</th>
-              <th className="px-4 py-3 font-medium">Account</th>
-              <th className="px-4 py-3 font-medium">Description</th>
-              <th className="px-4 py-3 font-medium">Amount</th>
-              <th className="px-4 py-3 font-medium">Notes</th>
+              <th className="px-3 py-2 font-medium">Date</th>
+              <th className="px-3 py-2 font-medium">Branch</th>
+              <th className="px-3 py-2 font-medium">Account</th>
+              <th className="px-3 py-2 font-medium">Description</th>
+              <th className="px-3 py-2 font-medium">Amount</th>
+              <th className="px-3 py-2 font-medium">Notes</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-slate-200">
             {expenses.map((expense) => (
               <tr key={expense.id}>
-                <td className="px-4 py-3 text-slate-700">{expense.expense_date}</td>
-                <td className="px-4 py-3 text-slate-700">{expense.branch_name}</td>
-                <td className="px-4 py-3 text-slate-700">{expense.account_code} — {expense.account_name}</td>
-                <td className="px-4 py-3 text-slate-700">{expense.description}</td>
-                <td className="px-4 py-3 font-semibold text-slate-800">{formatCurrency(expense.amount)}</td>
-                <td className="px-4 py-3 text-slate-700">{expense.notes ?? "-"}</td>
+                <td className="px-3 py-2 text-slate-700">{expense.expense_date}</td>
+                <td className="px-3 py-2 text-slate-700">{expense.branch_name}</td>
+                <td className="px-3 py-2 text-slate-700">{expense.account_code} — {expense.account_name}</td>
+                <td className="px-3 py-2 text-slate-700">{expense.description}</td>
+                <td className="px-3 py-2 font-semibold text-slate-800">{formatCurrency(expense.amount)}</td>
+                <td className="px-3 py-2 text-slate-700">{expense.notes ?? "-"}</td>
               </tr>
             ))}
           </tbody>

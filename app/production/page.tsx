@@ -40,13 +40,15 @@ export default async function ProductionPage() {
       title="Production / HPP"
       description="Production input, losses/susut, and basic HPP management report. Not full costing/accounting."
     >
-      <div className="grid gap-6">
+      <div className="grid gap-3 md:gap-4">
         <ModuleCommandBar inputLabel="Input Production" exportHref="/api/export/production" />
         <ProductionSummaryCards summary={summary} />
-        <section id="input-data" className="scroll-mt-24">
-          <ProductionForm branches={branches} products={products} />
-        </section>
-        <ProductionRecordsTable records={enrichedRecords} />
+        <div className="grid gap-3 md:gap-4 xl:grid-cols-[420px_minmax(0,1fr)] xl:items-start">
+          <section id="input-data" className="scroll-mt-24">
+            <ProductionForm branches={branches} products={products} />
+          </section>
+          <ProductionRecordsTable records={enrichedRecords} />
+        </div>
       </div>
     </AppShell>
   );
