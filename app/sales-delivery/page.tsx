@@ -9,7 +9,7 @@ import type { Branch, Customer, Product } from "@/types/master-data";
 import type { Quotation, QuotationItem } from "@/types/quotation";
 import type { DeliveryRecord, SalesRecord } from "@/types/sales-delivery";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 30;
 
 export default async function SalesDeliveryPage() {
   const supabase = createSupabaseAdmin();

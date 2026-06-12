@@ -7,7 +7,7 @@ import { createSupabaseAdmin } from "@/lib/supabase/admin";
 import type { Branch, Customer, Product } from "@/types/master-data";
 import type { Quotation, QuotationItem } from "@/types/quotation";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 30;
 
 export default async function QuotationPage() {
   const supabase = createSupabaseAdmin();

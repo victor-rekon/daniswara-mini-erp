@@ -10,7 +10,7 @@ import {
   createProduct,
 } from "./actions";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 30;
 
 export default async function MasterDataPage() {
   const supabase = createSupabaseAdmin();

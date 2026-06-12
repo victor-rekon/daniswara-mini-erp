@@ -9,7 +9,7 @@ import type { Branch, Customer } from "@/types/master-data";
 import type { InvoiceRecord, PaymentRecord } from "@/types/invoice-payment";
 import type { DeliveryRecord } from "@/types/sales-delivery";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 30;
 
 export default async function InvoicePaymentPage() {
   const supabase = createSupabaseAdmin();

@@ -16,7 +16,7 @@ import type { ProductionRecord } from "@/types/production";
 import type { Quotation, QuotationItem } from "@/types/quotation";
 import type { DeliveryRecord, SalesRecord } from "@/types/sales-delivery";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 30;
 
 export default async function DashboardPage() {
   const supabase = createSupabaseAdmin();
