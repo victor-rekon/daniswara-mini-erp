@@ -1,4 +1,5 @@
 import { AppShell } from "@/components/layout/app-shell";
+import { ModuleCommandBar } from "@/components/commands/module-command-bar";
 import { InvoiceForm } from "@/components/invoice-payment/invoice-form";
 import { InvoicePaymentSummaryCards } from "@/components/invoice-payment/invoice-payment-summary-cards";
 import { InvoicePaymentTable } from "@/components/invoice-payment/invoice-payment-table";
@@ -44,9 +45,12 @@ export default async function InvoicePaymentPage() {
   return (
     <AppShell title="Invoice & Payment" description="Invoice, payment received, customer outstanding, and overdue tracking.">
       <div className="grid gap-3 md:gap-4">
+        <ModuleCommandBar inputLabel="Input Invoice / Payment" exportHref="/api/export/invoice-payment" />
         <InvoicePaymentSummaryCards summary={summary} />
-        <InvoiceForm branches={branches} customers={customers} deliveries={deliveries} />
-        <PaymentForm invoices={enrichedInvoices} />
+        <section id="input-data" className="grid scroll-mt-24 gap-3 md:gap-4">
+          <InvoiceForm branches={branches} customers={customers} deliveries={deliveries} />
+          <PaymentForm invoices={enrichedInvoices} />
+        </section>
         <InvoicePaymentTable invoices={enrichedInvoices} />
       </div>
     </AppShell>
