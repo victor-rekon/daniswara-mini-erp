@@ -2,7 +2,6 @@ import { AppShell } from "@/components/layout/app-shell";
 import { DashboardAttentionPanel } from "@/components/dashboard/dashboard-attention-panel";
 import { DashboardFlowSnapshot } from "@/components/dashboard/dashboard-flow-snapshot";
 import { DashboardMetricGrid } from "@/components/dashboard/dashboard-metric-grid";
-import { InputCommandPanel } from "@/components/commands/input-command-panel";
 import { enrichExpenses, summarizeProfitLoss } from "@/lib/calculations/accounting";
 import { buildDashboardMetrics, buildDashboardSummary } from "@/lib/calculations/dashboard";
 import { enrichInvoices, summarizeInvoices } from "@/lib/calculations/invoice-payment";
@@ -104,7 +103,6 @@ export default async function DashboardPage() {
   return (
     <AppShell title="Owner Dashboard" description="High-level operational summary. Every number is traceable to source module data.">
       <div className="grid gap-3 md:gap-4">
-        <InputCommandPanel />
         <DashboardMetricGrid metrics={metrics} />
         <DashboardAttentionPanel summary={summary} />
         <DashboardFlowSnapshot
