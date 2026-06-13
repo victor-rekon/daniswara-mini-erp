@@ -1,6 +1,7 @@
 "use client";
 
 import type { ReactNode } from "react";
+import { useEffect, useRef } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { navigationItems } from "@/lib/constants/navigation";
@@ -106,8 +107,21 @@ function Sidebar() {
 
 function MobileNav() {
   const pathname = usePathname();
+  const activeRef = useRef<HTMLAnchorElement>(null);
+
+  // Center the active pill on mount / route change so the user never has to
+  // re-scroll the command bar after navigating.
+  useEffect(() => {
+    const el = activeRef.current;
+    if (el) {
+      el.scrollIntoView({ inline: "center", block: "nearest" });
+    }
+  }, [pathname]);
+
   return (
-    <nav className="mt-3.5 flex gap-1.5 overflow-x-auto pb-0.5 md:hidden [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+    <nav
+      className="mt-3.5 flex gap-1.5 overflow-x-auto pb-0.5 md:hidden [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+    >
       {navigationItems.map((item) => {
         const Icon = item.icon;
         const isActive =
@@ -115,6 +129,7 @@ function MobileNav() {
         return (
           <Link
             key={item.href}
+            ref={isActive ? activeRef : undefined}
             href={item.href}
             className={`flex shrink-0 cursor-pointer items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs font-semibold transition-colors duration-150 active:scale-95 ${
               isActive
