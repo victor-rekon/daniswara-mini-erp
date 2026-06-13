@@ -23,13 +23,13 @@ export function ProfitLossSummaryCards({ summary }: { summary: ProfitLossSummary
       <p className="mb-4 mt-1 text-[10px] text-[#64748b]">
         Simple management report only. Must be validated by accounting team.
       </p>
-      <div className="grid grid-cols-2 gap-2.5 md:grid-cols-5 md:gap-3">
+      <div className="grid grid-cols-2 gap-2.5 md:grid-cols-3 md:gap-3 xl:grid-cols-5">
         {cards.map((c) => (
-          <div key={c.label} className="relative cursor-pointer overflow-hidden rounded-[14px] border border-[rgba(255,255,255,0.08)] bg-[#161a26] transition-[transform,box-shadow] duration-150 hover:-translate-y-0.5 hover:shadow-md active:scale-[0.98]">
+          <div key={c.label} className="relative min-w-0 cursor-pointer overflow-hidden rounded-[14px] border border-[rgba(255,255,255,0.08)] bg-[#161a26] transition-[transform,box-shadow] duration-150 hover:-translate-y-0.5 hover:shadow-md active:scale-[0.98]">
             <div className={`absolute inset-x-0 top-0 h-[2.5px] ${c.stripe}`} />
-            <div className="px-3.5 pb-3 pt-3.5">
+            <div className="min-w-0 px-3.5 pb-3 pt-3.5">
               <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-[#94a3b8]">{c.label}</p>
-              <p className={`mt-1.5 text-base font-bold tabular-nums leading-tight tracking-tight ${c.val}`}>{c.value}</p>
+              <p className={`mt-1.5 whitespace-normal break-words text-sm font-bold tabular-nums leading-tight tracking-tight [overflow-wrap:anywhere] md:text-base ${c.val}`}>{c.value}</p>
             </div>
           </div>
         ))}
