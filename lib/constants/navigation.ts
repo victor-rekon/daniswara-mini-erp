@@ -6,6 +6,7 @@ import {
   LayoutDashboard,
   ReceiptText,
   Settings,
+  ShieldCheck,
   TableProperties,
   Truck,
 } from "lucide-react";
@@ -50,6 +51,11 @@ export const navigationItems = [
     label: "Reports",
     href: "/reports",
     icon: BarChart3,
+  },
+  {
+    label: "System Status",
+    href: "/system-status",
+    icon: ShieldCheck,
   },
   {
     label: "Master Data",
