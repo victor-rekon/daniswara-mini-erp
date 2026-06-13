@@ -9,7 +9,7 @@
   --gold-500: #e8c878;
   --gold-400: #c99a2e;
   --gold-300: #d9b25c;
-  --background: #07080d;
+  --background: #06070b;
   --foreground: #e9ecf3;
 }
 
@@ -18,17 +18,27 @@ html {
 }
 
 body {
-  /* Elegant black with a faint navy radial glow for depth, not flat black */
+  /* Deep black with layered navy + gold glow — quiet, expensive depth */
   background:
-    radial-gradient(ellipse 1200px 800px at 15% -10%, rgba(47, 74, 158, 0.16), transparent 60%),
-    radial-gradient(ellipse 900px 700px at 100% 0%, rgba(217, 178, 92, 0.05), transparent 55%),
+    radial-gradient(ellipse 1100px 720px at 12% -12%, rgba(47, 74, 158, 0.18), transparent 58%),
+    radial-gradient(ellipse 820px 620px at 105% 4%, rgba(217, 178, 92, 0.06), transparent 52%),
+    radial-gradient(ellipse 1000px 900px at 50% 120%, rgba(47, 74, 158, 0.07), transparent 60%),
     var(--background);
   background-attachment: fixed;
   color: var(--foreground);
   font-family: var(--font-lexend), var(--font-inter), system-ui, -apple-system,
     sans-serif;
+  font-feature-settings: "tnum" 1, "cv01" 1, "ss01" 1;
+  letter-spacing: -0.01em;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* Numeric values feel more 'financial' with tabular lining figures */
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
 }
 
 /* -- Instant tap response: kill 300ms delay + grey flash -- */
@@ -51,11 +61,19 @@ button {
   font: inherit;
 }
 
-/* Date/time picker icon needs to be visible on dark inputs */
 input[type="date"]::-webkit-calendar-picker-indicator,
 input[type="time"]::-webkit-calendar-picker-indicator {
   filter: invert(1) brightness(1.6);
   opacity: 0.7;
+}
+
+/* Inputs: refined focus ring in gold */
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: none;
+  border-color: rgba(217, 178, 92, 0.5);
+  box-shadow: 0 0 0 3px rgba(217, 178, 92, 0.1);
 }
 
 ::-webkit-scrollbar {
@@ -66,11 +84,11 @@ input[type="time"]::-webkit-calendar-picker-indicator {
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.14);
   border-radius: 2px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.28);
+  background: rgba(255, 255, 255, 0.26);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -82,25 +100,44 @@ input[type="time"]::-webkit-calendar-picker-indicator {
   }
 }
 
-/* -- Depth system: layered shadows + brand glows on black -- */
+/* -- Depth system: refined layered shadows on black -------- */
 .shadow-card {
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.04),
-    0 1px 2px rgba(0, 0, 0, 0.6),
-    0 12px 28px -16px rgba(0, 0, 0, 0.65);
+    inset 0 1px 0 rgba(255, 255, 255, 0.05),
+    0 1px 1px rgba(0, 0, 0, 0.5),
+    0 10px 30px -18px rgba(0, 0, 0, 0.7);
 }
 .shadow-card-hover {
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.06),
-    0 2px 4px rgba(0, 0, 0, 0.7),
-    0 20px 40px -18px rgba(0, 0, 0, 0.75),
-    0 0 0 1px rgba(217, 178, 92, 0.12);
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 2px 4px rgba(0, 0, 0, 0.6),
+    0 24px 48px -24px rgba(0, 0, 0, 0.8),
+    0 0 0 1px rgba(217, 178, 92, 0.14);
 }
 .shadow-navy {
   box-shadow:
-    0 4px 16px -4px rgba(0, 0, 0, 0.6),
-    0 16px 40px -16px rgba(0, 0, 0, 0.7);
+    0 6px 20px -6px rgba(0, 0, 0, 0.55),
+    0 20px 48px -20px rgba(0, 0, 0, 0.7);
 }
+
+/* Hairline gold divider — a quiet luxury signature */
+.rule-gold {
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(217, 178, 92, 0.35),
+    transparent
+  );
+}
+
+/* Surface panel: faint top sheen so cards catch 'light' */
+.surface {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.025), transparent 40%),
+    #11141d;
+}
+
 .bg-grain {
   background-image: radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.035) 1px, transparent 0);
   background-size: 22px 22px;

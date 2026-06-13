@@ -32,8 +32,8 @@ export function DashboardAttentionPanel({ summary }: DashboardAttentionPanelProp
   ];
 
   return (
-    <section className="rounded-2xl border border-[rgba(255,255,255,0.08)] bg-[#12151f] p-4 shadow-card md:p-5">
-      <h3 className="mb-3 text-[11px] font-bold uppercase tracking-[0.14em] text-[#e2e8f0]">
+    <section className="rounded-2xl border border-white/[0.07] surface p-5 shadow-card md:p-6">
+      <h3 className="mb-4 text-[11px] font-semibold uppercase tracking-[0.2em] text-[#d9e0ee]">
         Owner <span className="text-[#e8c878]">Attention</span>
       </h3>
       <div className="grid grid-cols-1 gap-2 md:grid-cols-3">
@@ -42,8 +42,8 @@ export function DashboardAttentionPanel({ summary }: DashboardAttentionPanelProp
             key={item.label}
             className={`relative flex items-start gap-3 overflow-hidden rounded-xl border p-3.5 transition-shadow duration-200 ${
               item.isAlert
-                ? "border-[#d9b25c]/25 bg-gradient-to-br from-[#d9b25c]/[0.10] to-[#c99a2e]/[0.06] shadow-[inset_0_1px_0_rgba(255,255,255,0.6),0_2px_8px_-4px_rgba(217,178,92,0.25)]"
-                : "border-emerald-400/25 bg-gradient-to-br from-emerald-400/[0.10] to-emerald-400/[0.05] shadow-[inset_0_1px_0_rgba(255,255,255,0.6),0_2px_8px_-4px_rgba(21,128,61,0.15)]"
+                ? "border-[#d9b25c]/25 bg-gradient-to-br from-[#d9b25c]/[0.10] to-[#c99a2e]/[0.06] shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_2px_8px_-4px_rgba(217,178,92,0.25)]"
+                : "border-emerald-400/25 bg-gradient-to-br from-emerald-400/[0.10] to-emerald-400/[0.05] shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_2px_8px_-4px_rgba(21,128,61,0.15)]"
             }`}
           >
             <div

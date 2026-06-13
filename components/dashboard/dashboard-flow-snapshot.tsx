@@ -18,19 +18,19 @@ export function DashboardFlowSnapshot({
   ];
 
   return (
-    <section className="rounded-2xl border border-[rgba(255,255,255,0.08)] bg-[#12151f] p-4 shadow-card md:p-5">
-      <h3 className="mb-3 text-[11px] font-bold uppercase tracking-[0.14em] text-[#e2e8f0]">
+    <section className="rounded-2xl border border-white/[0.07] surface p-5 shadow-card md:p-6">
+      <h3 className="mb-4 text-[11px] font-semibold uppercase tracking-[0.2em] text-[#d9e0ee]">
         Business <span className="text-[#e8c878]">Flow</span>
       </h3>
       <div className="flex items-stretch gap-1.5">
         {steps.map((step, i) => (
           <div key={step.label} className="flex flex-1 items-stretch">
-            <div className="flex-1 cursor-pointer rounded-xl border border-[rgba(255,255,255,0.08)] bg-gradient-to-b from-white to-[#161a26] px-1 py-3 text-center shadow-[inset_0_1px_0_rgba(255,255,255,0.8)] transition-all duration-200 hover:-translate-y-0.5 hover:border-[#d9b25c]/40 hover:from-[#fdf9ef] hover:to-[#fcf3de] hover:shadow-card active:scale-[0.97] active:translate-y-0">
-              <div className="mx-auto mb-1.5 flex h-5 w-5 items-center justify-center rounded-md bg-gradient-to-br from-[#2f4a9e] to-[#1a2456] text-[10px] font-extrabold text-[#d9b25c] shadow-[0_2px_4px_-1px_rgba(26,36,86,0.4)]">
+            <div className="flex-1 cursor-pointer rounded-xl border border-white/[0.07] bg-white/[0.03] px-1 py-3.5 text-center transition-all duration-200 hover:-translate-y-0.5 hover:border-[#d9b25c]/30 hover:bg-[#d9b25c]/[0.06] active:scale-[0.97] active:translate-y-0">
+              <div className="mx-auto mb-2 flex h-6 w-6 items-center justify-center rounded-lg border border-[#d9b25c]/20 bg-[#1a2456] text-[10px] font-bold text-[#e8c878]">
                 {i + 1}
               </div>
-              <p className="text-[9px] font-semibold text-[#94a3b8]">{step.label}</p>
-              <p className="mt-0.5 text-base font-bold tabular-nums text-[#e2e8f0]">{step.count}</p>
+              <p className="text-[9px] font-medium uppercase tracking-wider text-[#8a93a8]">{step.label}</p>
+              <p className="mt-1 text-lg font-semibold tabular-nums text-[#f1f4fa]">{step.count}</p>
             </div>
             {i < steps.length - 1 && (
               <div className="flex shrink-0 items-center px-0.5">

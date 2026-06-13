@@ -5,7 +5,7 @@ type ModuleCommandBarProps = {
 
 export function ModuleCommandBar({ inputLabel, exportHref }: ModuleCommandBarProps) {
   return (
-    <section className="rounded-2xl border border-[rgba(255,255,255,0.08)] bg-[#12151f] p-3 shadow-card md:p-4">
+    <section className="rounded-2xl border border-white/[0.07] surface p-4 shadow-card md:p-5">
       <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
         <div>
           <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#e8c878]">Module Command</p>

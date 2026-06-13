@@ -28,23 +28,23 @@ function BrandMark({ size = 20 }: { size?: number }) {
 function Sidebar() {
   const pathname = usePathname();
   return (
-    <aside className="fixed inset-y-0 left-0 hidden w-60 flex-col bg-gradient-to-b from-[#1f2c63] via-[#1a2456] to-[#161f47] md:flex">
+    <aside className="fixed inset-y-0 left-0 hidden w-60 flex-col bg-gradient-to-b from-[#141b42] via-[#0f1530] to-[#0a0e22] shadow-[inset_-1px_0_0_rgba(255,255,255,0.05)] md:flex">
       {/* Brand */}
-      <div className="flex items-center gap-3 border-b border-white/10 px-4 py-5">
+      <div className="flex items-center gap-3 border-b border-white/[0.07] px-5 py-[18px]">
         <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-white shadow-card ring-1 ring-white/10">
           <BrandMark size={22} />
         </div>
         <div className="min-w-0">
-          <p className="truncate text-sm font-bold text-white">Daniswara ERP</p>
-          <p className="text-[9px] font-semibold uppercase tracking-[0.22em] text-[#d9b25c]">
+          <p className="truncate text-sm font-semibold tracking-tight text-white">Daniswara ERP</p>
+          <p className="text-[9px] font-semibold uppercase tracking-[0.28em] text-[#d9b25c]">
             SistemBeres
           </p>
         </div>
       </div>
 
       {/* Nav */}
-      <nav className="flex-1 overflow-y-auto px-2 py-4">
-        <p className="mb-2 px-3 text-[10px] font-semibold uppercase tracking-[0.16em] text-[#64748b]">
+      <nav className="flex-1 overflow-y-auto px-3 py-5">
+        <p className="mb-3 px-2 text-[9px] font-semibold uppercase tracking-[0.24em] text-[#5d6788]">
           Modules
         </p>
         {mainNav.map((item) => {
@@ -55,14 +55,14 @@ function Sidebar() {
             <Link
               key={item.href}
               href={item.href}
-              className={`relative mb-0.5 flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all duration-150 active:bg-white/15 ${
+              className={`relative mb-1 flex items-center gap-3 rounded-xl px-3 py-2.5 text-[13px] font-medium transition-all duration-200 active:bg-white/[0.12] ${
                 isActive
-                  ? "bg-gradient-to-r from-[#d9b25c]/15 via-white/10 to-transparent text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]"
-                  : "text-[#9aa3c0] hover:bg-white/5 hover:text-white"
+                  ? "bg-gradient-to-r from-[#d9b25c]/[0.14] to-transparent text-white"
+                  : "text-[#97a0bb] hover:bg-white/[0.04] hover:text-white"
               }`}
             >
               {isActive && (
-                <span className="absolute left-0 inset-y-[7px] w-[3px] rounded-r-full bg-[#d9b25c]" />
+                <span className="absolute left-0 inset-y-1.5 w-[2.5px] rounded-r-full bg-gradient-to-b from-[#e8c878] to-[#c99a2e]" />
               )}
               <Icon
                 className={`h-4 w-4 shrink-0 ${isActive ? "text-[#d9b25c]" : ""}`}
@@ -86,17 +86,17 @@ function Sidebar() {
             }`}
           >
             {pathname === settingsNav.href && (
-              <span className="absolute left-0 inset-y-[7px] w-[3px] rounded-r-full bg-[#d9b25c]" />
+              <span className="absolute left-0 inset-y-1.5 w-[2.5px] rounded-r-full bg-gradient-to-b from-[#e8c878] to-[#c99a2e]" />
             )}
             <settingsNav.icon className="h-4 w-4 shrink-0" aria-hidden="true" />
             Settings
           </Link>
         )}
-        <div className="rounded-lg bg-white/5 px-3 py-2.5">
-          <p className="text-[10px] font-semibold text-[#9aa3c0]">
+        <div className="rounded-xl border border-white/[0.06] bg-white/[0.03] px-3.5 py-3">
+          <p className="text-[10px] font-medium text-[#97a0bb]">
             PT Daniswara Gas Indonesia
           </p>
-          <p className="mt-0.5 text-[10px] text-[#64748b]">
+          <p className="mt-0.5 text-[9px] uppercase tracking-[0.14em] text-[#5d6788]">
             Phase 1 &middot; Operations
           </p>
         </div>
@@ -120,7 +120,7 @@ function MobileNav() {
 
   return (
     <nav
-      className="mt-3.5 flex gap-1.5 overflow-x-auto pb-0.5 md:hidden [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+      className="mt-4 flex gap-1.5 overflow-x-auto pb-0.5 md:hidden [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
     >
       {navigationItems.map((item) => {
         const Icon = item.icon;
@@ -131,10 +131,10 @@ function MobileNav() {
             key={item.href}
             ref={isActive ? activeRef : undefined}
             href={item.href}
-            className={`flex shrink-0 cursor-pointer items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs font-semibold transition-colors duration-150 active:scale-95 ${
+            className={`flex shrink-0 cursor-pointer items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs font-medium transition-all duration-200 active:scale-95 ${
               isActive
-                ? "bg-gradient-to-br from-[#e8c878] via-[#d9b25c] to-[#c99a2e] text-[#1a2456] shadow-[0_2px_8px_-2px_rgba(217,178,92,0.6)]"
-                : "bg-white/8 text-[#b9c0d8] active:bg-white/15"
+                ? "bg-gradient-to-br from-[#e8c878] to-[#c99a2e] font-semibold text-[#141b42] shadow-[0_2px_10px_-2px_rgba(217,178,92,0.55)]"
+                : "border border-white/[0.07] bg-white/[0.04] text-[#aeb6cf] active:bg-white/[0.1]"
             }`}
           >
             <Icon className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
@@ -158,34 +158,35 @@ export function AppShell({ title, description, children }: AppShellProps) {
       <Sidebar />
       <main className="md:pl-60">
         {/* Navy header band - brand identity */}
-        <header className="relative z-10 bg-gradient-to-br from-[#1f2c63] via-[#1a2456] to-[#161f47] px-4 pb-4 pt-4 shadow-navy md:rounded-none md:px-8 md:pb-5">
+        <header className="relative z-10 border-b border-white/[0.06] bg-gradient-to-br from-[#141b42] via-[#0f1530] to-[#0a0e22] px-4 pb-4 pt-4 shadow-navy md:px-8 md:pb-5 md:pt-5">
           <div className="flex items-center justify-between gap-4">
             <div className="flex items-center gap-3">
               <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-white shadow-card ring-1 ring-white/10 md:hidden">
                 <BrandMark size={22} />
               </div>
               <div>
-                <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#d9b25c]">
+                <p className="text-[10px] font-semibold uppercase tracking-[0.26em] text-[#d9b25c]">
                   PT Daniswara Gas Indonesia
                 </p>
-                <h2 className="mt-0.5 text-xl font-bold leading-tight tracking-tight text-white">
+                <h2 className="mt-1 text-[22px] font-semibold leading-tight tracking-tight text-white md:text-2xl">
                   {title}
                 </h2>
                 {description ? (
-                  <p className="mt-0.5 hidden text-xs text-[#9aa3c0] md:block">
+                  <p className="mt-1 hidden max-w-xl text-xs leading-relaxed text-[#8b95b3] md:block">
                     {description}
                   </p>
                 ) : null}
               </div>
             </div>
-            <div className="shrink-0 rounded-full bg-gradient-to-br from-[#e8c878] via-[#d9b25c] to-[#c99a2e] px-3.5 py-1 text-xs font-bold text-[#1a2456] shadow-[0_2px_8px_-2px_rgba(217,178,92,0.6)] ring-1 ring-[#fff]/30">
+            <div className="flex shrink-0 items-center gap-1.5 rounded-full border border-[#d9b25c]/30 bg-[#d9b25c]/[0.08] px-3 py-1 text-[11px] font-semibold tracking-wide text-[#e8c878]">
+              <span className="h-1.5 w-1.5 rounded-full bg-[#e8c878] shadow-[0_0_6px_rgba(232,200,120,0.8)]" />
               Phase 1
             </div>
           </div>
           <MobileNav />
         </header>
 
-        <div className="min-w-0 overflow-x-hidden p-2.5 md:p-6">{children}</div>
+        <div className="min-w-0 overflow-x-hidden p-3 md:p-7 lg:p-8">{children}</div>
       </main>
     </div>
   );
