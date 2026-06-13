@@ -17,22 +17,22 @@ export function QuotationForm({ branches, customers, products }: QuotationFormPr
         </p>
       </div>
 
-      <form action={createQuotation} className="grid gap-3 md:grid-cols-2 xl:grid-cols-4">
+      <form action={createQuotation} className="grid grid-cols-2 gap-2.5 md:grid-cols-2 xl:grid-cols-4">
         <input
           name="quotation_number"
           placeholder="Quotation number"
-          className="rounded-xl border border-slate-200 px-3 py-2"
+          className="rounded-xl border border-slate-200 px-2.5 py-2 text-sm"
           required
         />
 
         <input
           name="quotation_date"
           type="date"
-          className="rounded-xl border border-slate-200 px-3 py-2"
+          className="rounded-xl border border-slate-200 px-2.5 py-2 text-sm"
           required
         />
 
-        <select name="branch_id" className="rounded-xl border border-slate-200 px-3 py-2">
+        <select name="branch_id" className="rounded-xl border border-slate-200 px-2.5 py-2 text-sm">
           <option value="">No branch</option>
           {branches.map((branch) => (
             <option key={branch.id} value={branch.id}>
@@ -41,7 +41,7 @@ export function QuotationForm({ branches, customers, products }: QuotationFormPr
           ))}
         </select>
 
-        <select name="customer_id" className="rounded-xl border border-slate-200 px-3 py-2" required>
+        <select name="customer_id" className="rounded-xl border border-slate-200 px-2.5 py-2 text-sm" required>
           <option value="">Select customer</option>
           {customers.map((customer) => (
             <option key={customer.id} value={customer.id}>
@@ -50,7 +50,7 @@ export function QuotationForm({ branches, customers, products }: QuotationFormPr
           ))}
         </select>
 
-        <select name="product_id" className="rounded-xl border border-slate-200 px-3 py-2" required>
+        <select name="product_id" className="rounded-xl border border-slate-200 px-2.5 py-2 text-sm" required>
           <option value="">Select product</option>
           {products.map((product) => (
             <option key={product.id} value={product.id}>
@@ -65,7 +65,7 @@ export function QuotationForm({ branches, customers, products }: QuotationFormPr
           min="0.01"
           step="0.01"
           placeholder="Quantity"
-          className="rounded-xl border border-slate-200 px-3 py-2"
+          className="rounded-xl border border-slate-200 px-2.5 py-2 text-sm"
           required
         />
 
@@ -75,11 +75,11 @@ export function QuotationForm({ branches, customers, products }: QuotationFormPr
           min="0"
           step="0.01"
           placeholder="Selling price"
-          className="rounded-xl border border-slate-200 px-3 py-2"
+          className="rounded-xl border border-slate-200 px-2.5 py-2 text-sm"
           required
         />
 
-        <select name="status" className="rounded-xl border border-slate-200 px-3 py-2" defaultValue="draft">
+        <select name="status" className="rounded-xl border border-slate-200 px-2.5 py-2 text-sm" defaultValue="draft">
           <option value="draft">Draft</option>
           <option value="sent">Sent</option>
           <option value="accepted">Accepted</option>
@@ -89,18 +89,18 @@ export function QuotationForm({ branches, customers, products }: QuotationFormPr
         <input
           name="item_notes"
           placeholder="Item notes"
-          className="rounded-xl border border-slate-200 px-3 py-2 xl:col-span-2"
+          className="rounded-xl border border-slate-200 px-2.5 py-2 text-sm col-span-2 xl:col-span-2"
         />
 
         <input
           name="notes"
           placeholder="Quotation notes"
-          className="rounded-xl border border-slate-200 px-3 py-2"
+          className="rounded-xl border border-slate-200 px-2.5 py-2 text-sm"
         />
 
         <button
           type="submit"
-          className="rounded-xl bg-slate-950 px-4 py-2 text-sm font-semibold text-white"
+          className="rounded-xl bg-slate-950 px-4 py-2 text-sm font-semibold text-white col-span-2"
         >
           Save Quotation
         </button>

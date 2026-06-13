@@ -107,7 +107,7 @@ function Sidebar() {
 function MobileNav() {
   const pathname = usePathname();
   return (
-    <nav className="mt-3.5 flex gap-1.5 overflow-x-auto pb-0.5 md:hidden [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+    <nav className="mt-2.5 flex gap-1.5 overflow-x-auto pb-0.5 md:hidden [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
       {navigationItems.map((item) => {
         const Icon = item.icon;
         const isActive =
@@ -116,7 +116,7 @@ function MobileNav() {
           <Link
             key={item.href}
             href={item.href}
-            className={`flex shrink-0 cursor-pointer items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs font-semibold transition-colors duration-150 active:scale-95 ${
+            className={`flex shrink-0 cursor-pointer items-center gap-1.5 rounded-full px-3 py-1 text-[11px] font-semibold transition-colors duration-150 active:scale-95 ${
               isActive
                 ? "bg-gradient-to-br from-[#e8c878] via-[#d9b25c] to-[#c99a2e] text-[#1a2456] shadow-[0_2px_8px_-2px_rgba(217,178,92,0.6)]"
                 : "bg-white/8 text-[#b9c0d8] active:bg-white/15"
@@ -143,7 +143,7 @@ export function AppShell({ title, description, children }: AppShellProps) {
       <Sidebar />
       <main className="md:pl-60">
         {/* Navy header band - brand identity */}
-        <header className="relative z-10 bg-gradient-to-br from-[#1f2c63] via-[#1a2456] to-[#161f47] px-4 pb-4 pt-4 shadow-navy md:rounded-none md:px-8 md:pb-5">
+        <header className="relative z-10 bg-gradient-to-br from-[#1f2c63] via-[#1a2456] to-[#161f47] px-3 pb-3 pt-3 shadow-navy md:rounded-none md:px-8 md:pb-5 md:pt-4">
           <div className="flex items-center justify-between gap-4">
             <div className="flex items-center gap-3">
               <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-white shadow-card ring-1 ring-black/5 md:hidden">
@@ -170,7 +170,7 @@ export function AppShell({ title, description, children }: AppShellProps) {
           <MobileNav />
         </header>
 
-        <div className="min-w-0 overflow-x-auto p-3 md:p-6">{children}</div>
+        <div className="min-w-0 overflow-x-auto p-2.5 md:p-6">{children}</div>
       </main>
     </div>
   );

@@ -15,13 +15,13 @@ export function ProductionSummaryCards({ summary }: { summary: ProductionSummary
     { label: "Avg HPP / Unit",      value: fmtCur(summary.average_hpp_per_unit), stripe: "bg-gradient-to-r from-[#c99a2e] to-[#d9b25c]", val: "text-[#b8860b]" },
   ];
   return (
-    <div className="grid grid-cols-2 gap-2.5 md:grid-cols-3 md:gap-3 lg:grid-cols-6">
+    <div className="grid grid-cols-2 gap-2 md:gap-3 md:grid-cols-3 md:gap-3 lg:grid-cols-6">
       {cards.map((c) => (
         <div key={c.label} className={CARD}>
           <div className={`absolute inset-x-0 top-0 h-[2.5px] ${c.stripe}`} />
-          <div className="px-3.5 pb-3 pt-3.5">
+          <div className="px-2.5 pb-2 pt-2.5 md:px-3.5 md:pb-3 md:pt-3.5">
             <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-[#7a829b]">{c.label}</p>
-            <p className={`mt-1.5 text-lg font-bold tabular-nums leading-tight tracking-tight ${c.val}`}>{c.value}</p>
+            <p className={`mt-1 text-base font-bold md:mt-1.5 md:text-lg tabular-nums leading-tight tracking-tight ${c.val}`}>{c.value}</p>
           </div>
         </div>
       ))}

@@ -44,7 +44,7 @@ type DashboardMetricGridProps = {
 
 export function DashboardMetricGrid({ metrics }: DashboardMetricGridProps) {
   return (
-    <div className="grid grid-cols-2 gap-2.5 md:grid-cols-2 md:gap-3 lg:grid-cols-4">
+    <div className="grid grid-cols-2 gap-2 md:gap-3 lg:grid-cols-4">
       {metrics.map((metric) => {
         const v = getVariant(metric.label);
         return (
@@ -56,14 +56,14 @@ export function DashboardMetricGrid({ metrics }: DashboardMetricGridProps) {
               className={`pointer-events-none absolute -right-6 -top-6 h-24 w-24 rounded-full bg-gradient-to-br ${glow[v]} to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100`}
             />
             <div className={`absolute inset-x-0 top-0 h-[3px] ${stripe[v]}`} />
-            <div className="relative px-3.5 pb-3 pt-3.5">
+            <div className="relative px-2.5 pb-2 pt-2.5 md:px-3.5 md:pb-3 md:pt-3.5">
               <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-[#7a829b]">
                 {metric.label}
               </p>
-              <p className={`mt-1.5 text-lg font-bold tabular-nums leading-tight tracking-tight ${valColor[v]}`}>
+              <p className={`mt-1 text-base font-bold md:mt-1.5 md:text-lg tabular-nums leading-tight tracking-tight ${valColor[v]}`}>
                 {metric.value}
               </p>
-              <p className="mt-1 text-[10px] leading-snug text-[#a4aabe]">
+              <p className="mt-0.5 hidden text-[10px] leading-snug text-[#a4aabe] md:mt-1 md:block">
                 {metric.helper}
               </p>
             </div>

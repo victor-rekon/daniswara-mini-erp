@@ -23,8 +23,8 @@ export function PaymentForm({ invoices }: PaymentFormProps) {
         <p className="mt-1 text-sm text-slate-500">Manual payment input only. No bank mutation or auto-reconciliation in Phase 1.</p>
       </div>
 
-      <form action={createPayment} className="grid gap-3 md:grid-cols-2 xl:grid-cols-4">
-        <select name="invoice_id" className="rounded-xl border border-slate-200 px-3 py-2" required>
+      <form action={createPayment} className="grid grid-cols-2 gap-2.5 md:grid-cols-2 xl:grid-cols-4">
+        <select name="invoice_id" className="rounded-xl border border-slate-200 px-2.5 py-2 text-sm" required>
           <option value="">Select invoice</option>
           {openInvoices.map((invoice) => (
             <option key={invoice.id} value={invoice.id}>
@@ -33,11 +33,11 @@ export function PaymentForm({ invoices }: PaymentFormProps) {
           ))}
         </select>
 
-        <input name="payment_date" type="date" className="rounded-xl border border-slate-200 px-3 py-2" required />
-        <input name="amount" type="number" min="0.01" step="0.01" placeholder="Payment amount" className="rounded-xl border border-slate-200 px-3 py-2" required />
-        <input name="notes" placeholder="Payment notes" className="rounded-xl border border-slate-200 px-3 py-2" />
+        <input name="payment_date" type="date" className="rounded-xl border border-slate-200 px-2.5 py-2 text-sm" required />
+        <input name="amount" type="number" min="0.01" step="0.01" placeholder="Payment amount" className="rounded-xl border border-slate-200 px-2.5 py-2 text-sm" required />
+        <input name="notes" placeholder="Payment notes" className="rounded-xl border border-slate-200 px-2.5 py-2 text-sm" />
 
-        <button type="submit" className="rounded-xl bg-slate-950 px-4 py-2 text-sm font-semibold text-white xl:col-start-4">
+        <button type="submit" className="rounded-xl bg-slate-950 px-4 py-2 text-sm font-semibold text-white col-span-2 xl:col-span-1 xl:col-start-4">
           Save Payment
         </button>
       </form>

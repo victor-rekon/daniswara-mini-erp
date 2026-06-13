@@ -19,11 +19,11 @@ export function SalesDeliveryForm({ branches, customers, products, quotations }:
         </p>
       </div>
 
-      <form action={createSalesDelivery} className="grid gap-3 md:grid-cols-2 xl:grid-cols-4">
-        <input name="sales_date" type="date" className="rounded-xl border border-slate-200 px-3 py-2" required />
-        <input name="delivery_date" type="date" className="rounded-xl border border-slate-200 px-3 py-2" required />
+      <form action={createSalesDelivery} className="grid grid-cols-2 gap-2.5 md:grid-cols-2 xl:grid-cols-4">
+        <input name="sales_date" type="date" className="rounded-xl border border-slate-200 px-2.5 py-2 text-sm" required />
+        <input name="delivery_date" type="date" className="rounded-xl border border-slate-200 px-2.5 py-2 text-sm" required />
 
-        <select name="branch_id" className="rounded-xl border border-slate-200 px-3 py-2">
+        <select name="branch_id" className="rounded-xl border border-slate-200 px-2.5 py-2 text-sm">
           <option value="">No branch</option>
           {branches.map((branch) => (
             <option key={branch.id} value={branch.id}>
@@ -32,7 +32,7 @@ export function SalesDeliveryForm({ branches, customers, products, quotations }:
           ))}
         </select>
 
-        <select name="customer_id" className="rounded-xl border border-slate-200 px-3 py-2" required>
+        <select name="customer_id" className="rounded-xl border border-slate-200 px-2.5 py-2 text-sm" required>
           <option value="">Select customer</option>
           {customers.map((customer) => (
             <option key={customer.id} value={customer.id}>
@@ -41,7 +41,7 @@ export function SalesDeliveryForm({ branches, customers, products, quotations }:
           ))}
         </select>
 
-        <select name="quotation_id" className="rounded-xl border border-slate-200 px-3 py-2">
+        <select name="quotation_id" className="rounded-xl border border-slate-200 px-2.5 py-2 text-sm">
           <option value="">No quotation link</option>
           {quotations.map((quotation) => (
             <option key={quotation.id} value={quotation.id}>
@@ -50,16 +50,16 @@ export function SalesDeliveryForm({ branches, customers, products, quotations }:
           ))}
         </select>
 
-        <input name="so_number" placeholder="SO number" className="rounded-xl border border-slate-200 px-3 py-2" />
-        <input name="customer_po_number" placeholder="Customer PO number" className="rounded-xl border border-slate-200 px-3 py-2" />
+        <input name="so_number" placeholder="SO number" className="rounded-xl border border-slate-200 px-2.5 py-2 text-sm" />
+        <input name="customer_po_number" placeholder="Customer PO number" className="rounded-xl border border-slate-200 px-2.5 py-2 text-sm" />
         <input
           name="surat_jalan_number"
           placeholder="Surat jalan number"
-          className="rounded-xl border border-slate-200 px-3 py-2"
+          className="rounded-xl border border-slate-200 px-2.5 py-2 text-sm"
           required
         />
 
-        <select name="product_id" className="rounded-xl border border-slate-200 px-3 py-2" required>
+        <select name="product_id" className="rounded-xl border border-slate-200 px-2.5 py-2 text-sm" required>
           <option value="">Select product</option>
           {products.map((product) => (
             <option key={product.id} value={product.id}>
@@ -74,7 +74,7 @@ export function SalesDeliveryForm({ branches, customers, products, quotations }:
           min="0.01"
           step="0.01"
           placeholder="Ordered qty"
-          className="rounded-xl border border-slate-200 px-3 py-2"
+          className="rounded-xl border border-slate-200 px-2.5 py-2 text-sm"
           required
         />
 
@@ -84,7 +84,7 @@ export function SalesDeliveryForm({ branches, customers, products, quotations }:
           min="0"
           step="0.01"
           placeholder="Delivered qty"
-          className="rounded-xl border border-slate-200 px-3 py-2"
+          className="rounded-xl border border-slate-200 px-2.5 py-2 text-sm"
         />
 
         <input
@@ -93,14 +93,14 @@ export function SalesDeliveryForm({ branches, customers, products, quotations }:
           min="0"
           step="0.01"
           placeholder="Selling price"
-          className="rounded-xl border border-slate-200 px-3 py-2"
+          className="rounded-xl border border-slate-200 px-2.5 py-2 text-sm"
           required
         />
 
-        <input name="receiver" placeholder="Receiver" className="rounded-xl border border-slate-200 px-3 py-2" />
-        <input name="notes" placeholder="Notes" className="rounded-xl border border-slate-200 px-3 py-2 xl:col-span-2" />
+        <input name="receiver" placeholder="Receiver" className="rounded-xl border border-slate-200 px-2.5 py-2 text-sm" />
+        <input name="notes" placeholder="Notes" className="rounded-xl border border-slate-200 px-2.5 py-2 text-sm col-span-2 xl:col-span-2" />
 
-        <button type="submit" className="rounded-xl bg-slate-950 px-4 py-2 text-sm font-semibold text-white">
+        <button type="submit" className="rounded-xl bg-slate-950 px-4 py-2 text-sm font-semibold text-white col-span-2">
           Save Sales & Delivery
         </button>
       </form>
