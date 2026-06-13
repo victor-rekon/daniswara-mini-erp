@@ -120,7 +120,7 @@ function MobileNav() {
 
   return (
     <nav
-      className="mt-4 flex gap-1.5 overflow-x-auto pb-0.5 md:hidden [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+      className="mt-3 flex gap-1.5 overflow-x-auto pb-0.5 md:hidden [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
     >
       {navigationItems.map((item) => {
         const Icon = item.icon;
@@ -152,33 +152,22 @@ type AppShellProps = {
   children: ReactNode;
 };
 
-export function AppShell({ title, description, children }: AppShellProps) {
+export function AppShell({ title, children }: AppShellProps) {
   return (
     <div className="min-h-screen overflow-x-hidden bg-transparent text-slate-100">
       <Sidebar />
       <main className="md:pl-60">
-        {/* Navy header band - brand identity */}
-        <header className="relative z-10 border-b border-white/[0.06] bg-gradient-to-br from-[#141b42] via-[#0f1530] to-[#0a0e22] px-4 pb-4 pt-4 shadow-navy md:px-8 md:pb-5 md:pt-5">
-          <div className="flex items-center justify-between gap-4">
-            <div className="flex items-center gap-3">
-              <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-white shadow-card ring-1 ring-white/10 md:hidden">
-                <BrandMark size={22} />
+        <header className="relative z-10 border-b border-white/[0.06] bg-gradient-to-br from-[#141b42] via-[#0f1530] to-[#0a0e22] px-4 py-3 shadow-navy md:px-8 md:py-3.5">
+          <div className="flex items-center justify-between gap-3">
+            <div className="flex min-w-0 items-center gap-3">
+              <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-white shadow-card ring-1 ring-white/10 md:hidden">
+                <BrandMark size={20} />
               </div>
-              <div>
-                <p className="text-[10px] font-semibold uppercase tracking-[0.26em] text-[#d9b25c]">
-                  PT Daniswara Gas Indonesia
-                </p>
-                <h2 className="mt-1 text-[22px] font-semibold leading-tight tracking-tight text-white md:text-2xl">
-                  {title}
-                </h2>
-                {description ? (
-                  <p className="mt-1 hidden max-w-xl text-xs leading-relaxed text-[#8b95b3] md:block">
-                    {description}
-                  </p>
-                ) : null}
-              </div>
+              <h2 className="truncate text-base font-semibold leading-tight tracking-tight text-white md:text-lg">
+                {title}
+              </h2>
             </div>
-            <div className="flex shrink-0 items-center gap-1.5 rounded-full border border-[#d9b25c]/30 bg-[#d9b25c]/[0.08] px-3 py-1 text-[11px] font-semibold tracking-wide text-[#e8c878]">
+            <div className="flex shrink-0 items-center gap-1.5 rounded-full border border-[#d9b25c]/25 bg-[#d9b25c]/[0.07] px-2.5 py-1 text-[10px] font-semibold tracking-wide text-[#e8c878] md:text-[11px]">
               <span className="h-1.5 w-1.5 rounded-full bg-[#e8c878] shadow-[0_0_6px_rgba(232,200,120,0.8)]" />
               Phase 1
             </div>
