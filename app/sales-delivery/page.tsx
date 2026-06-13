@@ -1,30 +1,26 @@
-import { AppShell } from "@/components/layout/app-shell";
 import { ModuleCommandBar } from "@/components/commands/module-command-bar";
+import { AppShell } from "@/components/layout/app-shell";
+import { CollapsibleRecords } from "@/components/mobile/collapsible-records";
 import { SalesDeliveryForm } from "@/components/sales-delivery/sales-delivery-form";
 import { SalesDeliverySummaryCards } from "@/components/sales-delivery/sales-delivery-summary-cards";
 import { SalesDeliveryTable } from "@/components/sales-delivery/sales-delivery-table";
+import { FormFeedback } from "@/components/ui/form-feedback";
 import { enrichQuotations } from "@/lib/calculations/quotation";
 import { enrichSalesDeliveryRecords, summarizeSalesDelivery } from "@/lib/calculations/sales-delivery";
 import { createSupabaseAdmin } from "@/lib/supabase/admin";
 import type { Branch, Customer, Product } from "@/types/master-data";
 import type { Quotation, QuotationItem } from "@/types/quotation";
 import type { DeliveryRecord, SalesRecord } from "@/types/sales-delivery";
-import { CollapsibleRecords } from "@/components/mobile/collapsible-records";
 
-export const revalidate = 30;
+export const dynamic = "force-dynamic";
 
-export default async function SalesDeliveryPage() {
+type PageProps = { searchParams?: Promise<Record<string, string | string[] | undefined>> };
+
+export default async function SalesDeliveryPage({ searchParams }: PageProps) {
+  const params = await searchParams;
   const supabase = createSupabaseAdmin();
 
-  const [
-    branchesResult,
-    customersResult,
-    productsResult,
-    quotationsResult,
-    quotationItemsResult,
-    salesResult,
-    deliveriesResult
-  ] = await Promise.all([
+  const [branchesResult, customersResult, productsResult, quotationsResult, quotationItemsResult, salesResult, deliveriesResult] = await Promise.all([
     supabase.from("branches").select("*").order("created_at", { ascending: false }),
     supabase.from("customers").select("*").order("created_at", { ascending: false }),
     supabase.from("products").select("*").order("created_at", { ascending: false }),
@@ -53,9 +49,10 @@ export default async function SalesDeliveryPage() {
   return (
     <AppShell title="Sales & Delivery" description="Customer PO/SO and surat jalan tracking. Sales report follows delivery records.">
       <div className="grid gap-3 md:gap-4">
+        <FormFeedback success={params?.success} error={params?.error} />
         <ModuleCommandBar inputLabel="Input Sales / Surat Jalan" exportHref="/api/export/delivery" />
         <SalesDeliverySummaryCards summary={summary} />
-        <div id="input-data" className="grid scroll-mt-24 gap-3 md:gap-4 lg:grid-cols-[360px_minmax(0,1fr)] lg:items-start">
+        <div id="input-data" className="grid min-w-0 scroll-mt-24 gap-3 md:gap-4 lg:grid-cols-[360px_minmax(0,1fr)] lg:items-start">
           <SalesDeliveryForm branches={branches} customers={customers} products={products} quotations={enrichedQuotations} />
           <CollapsibleRecords title="Sales / Delivery Records" count={records.length}>
             <SalesDeliveryTable records={records} />
