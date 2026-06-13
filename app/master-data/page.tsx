@@ -2,6 +2,7 @@ import { AppShell } from "@/components/layout/app-shell";
 import { ModuleCommandBar } from "@/components/commands/module-command-bar";
 import { MasterDataSection } from "@/components/master-data/master-data-section";
 import { MasterDataTable } from "@/components/master-data/master-data-table";
+import { CollapsibleRecords } from "@/components/mobile/collapsible-records";
 import { createSupabaseAdmin } from "@/lib/supabase/admin";
 import type { Branch, ChartOfAccount, Customer, Product } from "@/types/master-data";
 import {
@@ -12,6 +13,9 @@ import {
 } from "./actions";
 
 export const revalidate = 30;
+
+const FIELD = "rounded-xl border border-slate-200 px-2.5 py-2 text-sm";
+const BTN = "col-span-2 rounded-xl bg-slate-950 px-4 py-2 text-sm font-semibold text-white active:scale-[0.98]";
 
 export default async function MasterDataPage() {
   const supabase = createSupabaseAdmin();
@@ -46,46 +50,46 @@ export default async function MasterDataPage() {
             title="Branches"
             description="Simple branch list only. No complex multi-branch accounting in Phase 1."
           >
-            <form action={createBranch} className="mb-5 grid gap-3 md:grid-cols-3">
-              <input name="branch_name" placeholder="Branch name" className="rounded-xl border border-slate-200 px-3 py-2" required />
-              <input name="location" placeholder="Location" className="rounded-xl border border-slate-200 px-3 py-2" />
-              <button className="rounded-xl bg-slate-950 px-4 py-2 text-sm font-semibold text-white" type="submit">
-                Add Branch
-              </button>
+            <form action={createBranch} className="mb-3 grid grid-cols-2 gap-2.5">
+              <input name="branch_name" placeholder="Branch name" className={FIELD} required />
+              <input name="location" placeholder="Location" className={FIELD} />
+              <button className={BTN} type="submit">Add Branch</button>
             </form>
-            <MasterDataTable<Branch>
-              columns={[
-                { key: "branch_name", label: "Branch" },
-                { key: "location", label: "Location" },
-              ]}
-              rows={branches}
-              emptyText="No branches yet."
-            />
+            <CollapsibleRecords title="Branch List" count={branches.length}>
+              <MasterDataTable<Branch>
+                columns={[
+                  { key: "branch_name", label: "Branch" },
+                  { key: "location", label: "Location" },
+                ]}
+                rows={branches}
+                emptyText="No branches yet."
+              />
+            </CollapsibleRecords>
           </MasterDataSection>
 
           <MasterDataSection title="Products" description="Product master used by production, quotation, sales, and delivery.">
-            <form action={createProduct} className="mb-5 grid gap-3 md:grid-cols-3">
-              <input name="product_name" placeholder="Product name" className="rounded-xl border border-slate-200 px-3 py-2" required />
-              <input name="unit" placeholder="Unit" className="rounded-xl border border-slate-200 px-3 py-2" required />
-              <button className="rounded-xl bg-slate-950 px-4 py-2 text-sm font-semibold text-white" type="submit">
-                Add Product
-              </button>
+            <form action={createProduct} className="mb-3 grid grid-cols-2 gap-2.5">
+              <input name="product_name" placeholder="Product name" className={FIELD} required />
+              <input name="unit" placeholder="Unit" className={FIELD} required />
+              <button className={BTN} type="submit">Add Product</button>
             </form>
-            <MasterDataTable<Product>
-              columns={[
-                { key: "product_name", label: "Product" },
-                { key: "unit", label: "Unit" },
-              ]}
-              rows={products}
-              emptyText="No products yet."
-            />
+            <CollapsibleRecords title="Product List" count={products.length}>
+              <MasterDataTable<Product>
+                columns={[
+                  { key: "product_name", label: "Product" },
+                  { key: "unit", label: "Unit" },
+                ]}
+                rows={products}
+                emptyText="No products yet."
+              />
+            </CollapsibleRecords>
           </MasterDataSection>
 
           <MasterDataSection title="Customers" description="Customer master used by quotations, customer PO/SO, delivery, and invoice.">
-            <form action={createCustomer} className="mb-5 grid gap-3 md:grid-cols-2 lg:grid-cols-5">
-              <input name="customer_name" placeholder="Customer name" className="rounded-xl border border-slate-200 px-3 py-2" required />
-              <input name="contact" placeholder="Contact" className="rounded-xl border border-slate-200 px-3 py-2" />
-              <select name="branch_id" className="rounded-xl border border-slate-200 px-3 py-2">
+            <form action={createCustomer} className="mb-3 grid grid-cols-2 gap-2.5">
+              <input name="customer_name" placeholder="Customer name" className={FIELD} required />
+              <input name="contact" placeholder="Contact" className={FIELD} />
+              <select name="branch_id" className={FIELD}>
                 <option value="">No branch</option>
                 {branches.map((branch) => (
                   <option key={branch.id} value={branch.id}>
@@ -93,30 +97,30 @@ export default async function MasterDataPage() {
                   </option>
                 ))}
               </select>
-              <input name="notes" placeholder="Notes" className="rounded-xl border border-slate-200 px-3 py-2" />
-              <button className="rounded-xl bg-slate-950 px-4 py-2 text-sm font-semibold text-white" type="submit">
-                Add Customer
-              </button>
+              <input name="notes" placeholder="Notes" className={FIELD} />
+              <button className={BTN} type="submit">Add Customer</button>
             </form>
-            <MasterDataTable<Customer>
-              columns={[
-                { key: "customer_name", label: "Customer" },
-                { key: "contact", label: "Contact" },
-                { key: "notes", label: "Notes" },
-              ]}
-              rows={customers}
-              emptyText="No customers yet."
-            />
+            <CollapsibleRecords title="Customer List" count={customers.length}>
+              <MasterDataTable<Customer>
+                columns={[
+                  { key: "customer_name", label: "Customer" },
+                  { key: "contact", label: "Contact" },
+                  { key: "notes", label: "Notes" },
+                ]}
+                rows={customers}
+                emptyText="No customers yet."
+              />
+            </CollapsibleRecords>
           </MasterDataSection>
 
           <MasterDataSection
             title="Chart of Accounts"
             description="Required for accounting light: manual journal and simple management P&L."
           >
-            <form action={createChartOfAccount} className="mb-5 grid gap-3 md:grid-cols-4">
-              <input name="account_code" placeholder="Code" className="rounded-xl border border-slate-200 px-3 py-2" required />
-              <input name="account_name" placeholder="Account name" className="rounded-xl border border-slate-200 px-3 py-2" required />
-              <select name="account_type" className="rounded-xl border border-slate-200 px-3 py-2" required>
+            <form action={createChartOfAccount} className="mb-3 grid grid-cols-2 gap-2.5">
+              <input name="account_code" placeholder="Code" className={FIELD} required />
+              <input name="account_name" placeholder="Account name" className={FIELD} required />
+              <select name="account_type" className="col-span-2 rounded-xl border border-slate-200 px-2.5 py-2 text-sm" required>
                 <option value="asset">Asset</option>
                 <option value="liability">Liability</option>
                 <option value="equity">Equity</option>
@@ -124,19 +128,19 @@ export default async function MasterDataPage() {
                 <option value="cost_of_goods_sold">Cost of Goods Sold</option>
                 <option value="expense">Expense</option>
               </select>
-              <button className="rounded-xl bg-slate-950 px-4 py-2 text-sm font-semibold text-white" type="submit">
-                Add Account
-              </button>
+              <button className={BTN} type="submit">Add Account</button>
             </form>
-            <MasterDataTable<ChartOfAccount>
-              columns={[
-                { key: "account_code", label: "Code" },
-                { key: "account_name", label: "Account" },
-                { key: "account_type", label: "Type" },
-              ]}
-              rows={accounts}
-              emptyText="No accounts yet."
-            />
+            <CollapsibleRecords title="Account List" count={accounts.length}>
+              <MasterDataTable<ChartOfAccount>
+                columns={[
+                  { key: "account_code", label: "Code" },
+                  { key: "account_name", label: "Account" },
+                  { key: "account_type", label: "Type" },
+                ]}
+                rows={accounts}
+                emptyText="No accounts yet."
+              />
+            </CollapsibleRecords>
           </MasterDataSection>
         </div>
       </div>
