@@ -64,6 +64,11 @@ export const navigationItems = [
     icon: ShieldCheck,
   },
   {
+    label: "System Test",
+    href: "/system-test",
+    icon: ShieldCheck,
+  },
+  {
     label: "Master Data",
     href: "/master-data",
     icon: TableProperties,
