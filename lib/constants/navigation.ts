@@ -3,6 +3,7 @@ import {
   ClipboardList,
   Factory,
   FileText,
+  History,
   LayoutDashboard,
   ReceiptText,
   Settings,
@@ -51,6 +52,11 @@ export const navigationItems = [
     label: "Reports",
     href: "/reports",
     icon: BarChart3,
+  },
+  {
+    label: "Activity Log",
+    href: "/activity-log",
+    icon: History,
   },
   {
     label: "System Status",
