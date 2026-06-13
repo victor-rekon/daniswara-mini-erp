@@ -9,6 +9,7 @@ import { createSupabaseAdmin } from "@/lib/supabase/admin";
 import type { Branch, Customer } from "@/types/master-data";
 import type { InvoiceRecord, PaymentRecord } from "@/types/invoice-payment";
 import type { DeliveryRecord } from "@/types/sales-delivery";
+import { CollapsibleRecords } from "@/components/mobile/collapsible-records";
 
 export const revalidate = 30;
 
@@ -52,7 +53,9 @@ export default async function InvoicePaymentPage() {
             <InvoiceForm branches={branches} customers={customers} deliveries={deliveries} />
             <PaymentForm invoices={enrichedInvoices} />
           </section>
-          <InvoicePaymentTable invoices={enrichedInvoices} />
+          <CollapsibleRecords title="Invoice Records" count={enrichedInvoices.length}>
+            <InvoicePaymentTable invoices={enrichedInvoices} />
+          </CollapsibleRecords>
         </div>
       </div>
     </AppShell>

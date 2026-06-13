@@ -9,6 +9,7 @@ import { createSupabaseAdmin } from "@/lib/supabase/admin";
 import type { Branch, Customer, Product } from "@/types/master-data";
 import type { Quotation, QuotationItem } from "@/types/quotation";
 import type { DeliveryRecord, SalesRecord } from "@/types/sales-delivery";
+import { CollapsibleRecords } from "@/components/mobile/collapsible-records";
 
 export const revalidate = 30;
 
@@ -56,7 +57,9 @@ export default async function SalesDeliveryPage() {
         <SalesDeliverySummaryCards summary={summary} />
         <div id="input-data" className="grid scroll-mt-24 gap-3 md:gap-4 lg:grid-cols-[360px_minmax(0,1fr)] lg:items-start">
           <SalesDeliveryForm branches={branches} customers={customers} products={products} quotations={enrichedQuotations} />
-          <SalesDeliveryTable records={records} />
+          <CollapsibleRecords title="Sales / Delivery Records" count={records.length}>
+            <SalesDeliveryTable records={records} />
+          </CollapsibleRecords>
         </div>
       </div>
     </AppShell>

@@ -7,6 +7,7 @@ import { enrichProductionRecords, summarizeProduction } from "@/lib/calculations
 import { createSupabaseAdmin } from "@/lib/supabase/admin";
 import type { Branch, Product } from "@/types/master-data";
 import type { ProductionRecord } from "@/types/production";
+import { CollapsibleRecords } from "@/components/mobile/collapsible-records";
 
 export const revalidate = 30;
 
@@ -47,7 +48,9 @@ export default async function ProductionPage() {
           <section id="input-data" className="scroll-mt-24">
             <ProductionForm branches={branches} products={products} />
           </section>
-          <ProductionRecordsTable records={enrichedRecords} />
+          <CollapsibleRecords title="Production Records" count={enrichedRecords.length}>
+            <ProductionRecordsTable records={enrichedRecords} />
+          </CollapsibleRecords>
         </div>
       </div>
     </AppShell>

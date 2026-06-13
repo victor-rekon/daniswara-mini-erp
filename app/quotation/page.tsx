@@ -7,6 +7,7 @@ import { enrichQuotations, summarizeQuotations } from "@/lib/calculations/quotat
 import { createSupabaseAdmin } from "@/lib/supabase/admin";
 import type { Branch, Customer, Product } from "@/types/master-data";
 import type { Quotation, QuotationItem } from "@/types/quotation";
+import { CollapsibleRecords } from "@/components/mobile/collapsible-records";
 
 export const revalidate = 30;
 
@@ -61,7 +62,9 @@ export default async function QuotationPage() {
           <section id="input-data" className="scroll-mt-24">
             <QuotationForm branches={branches} customers={customers} products={products} />
           </section>
-          <QuotationTable quotations={enrichedQuotations} />
+          <CollapsibleRecords title="Quotation Records" count={enrichedQuotations.length}>
+            <QuotationTable quotations={enrichedQuotations} />
+          </CollapsibleRecords>
         </div>
       </div>
     </AppShell>

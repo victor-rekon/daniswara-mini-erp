@@ -14,6 +14,7 @@ import type { InvoiceRecord, PaymentRecord } from "@/types/invoice-payment";
 import type { Branch, ChartOfAccount, Customer, Product } from "@/types/master-data";
 import type { ProductionRecord } from "@/types/production";
 import type { DeliveryRecord } from "@/types/sales-delivery";
+import { CollapsibleRecords } from "@/components/mobile/collapsible-records";
 
 export const revalidate = 30;
 
@@ -80,10 +81,12 @@ export default async function AccountingPage() {
             <ExpenseForm branches={branches} accounts={accounts} />
             <ManualJournalForm accounts={accounts} />
           </section>
-          <div className="grid gap-3 md:gap-4">
-            <ExpenseTable expenses={expenseViews} />
-            <JournalTable journals={journalViews} />
-          </div>
+          <CollapsibleRecords title="Expense & Journal Records" count={expenseViews.length + journalViews.length}>
+            <div className="grid gap-3 md:gap-4">
+              <ExpenseTable expenses={expenseViews} />
+              <JournalTable journals={journalViews} />
+            </div>
+          </CollapsibleRecords>
         </div>
       </div>
     </AppShell>
