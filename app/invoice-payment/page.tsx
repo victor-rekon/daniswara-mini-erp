@@ -1,28 +1,26 @@
-import { AppShell } from "@/components/layout/app-shell";
 import { ModuleCommandBar } from "@/components/commands/module-command-bar";
 import { InvoiceForm } from "@/components/invoice-payment/invoice-form";
 import { InvoicePaymentSummaryCards } from "@/components/invoice-payment/invoice-payment-summary-cards";
 import { InvoicePaymentTable } from "@/components/invoice-payment/invoice-payment-table";
 import { PaymentForm } from "@/components/invoice-payment/payment-form";
+import { AppShell } from "@/components/layout/app-shell";
+import { CollapsibleRecords } from "@/components/mobile/collapsible-records";
+import { FormFeedback } from "@/components/ui/form-feedback";
 import { enrichInvoices, summarizeInvoices } from "@/lib/calculations/invoice-payment";
 import { createSupabaseAdmin } from "@/lib/supabase/admin";
-import type { Branch, Customer } from "@/types/master-data";
 import type { InvoiceRecord, PaymentRecord } from "@/types/invoice-payment";
+import type { Branch, Customer } from "@/types/master-data";
 import type { DeliveryRecord } from "@/types/sales-delivery";
-import { CollapsibleRecords } from "@/components/mobile/collapsible-records";
 
-export const revalidate = 30;
+export const dynamic = "force-dynamic";
 
-export default async function InvoicePaymentPage() {
+type PageProps = { searchParams?: Promise<Record<string, string | string[] | undefined>> };
+
+export default async function InvoicePaymentPage({ searchParams }: PageProps) {
+  const params = await searchParams;
   const supabase = createSupabaseAdmin();
 
-  const [
-    branchesResult,
-    customersResult,
-    deliveriesResult,
-    invoicesResult,
-    paymentsResult
-  ] = await Promise.all([
+  const [branchesResult, customersResult, deliveriesResult, invoicesResult, paymentsResult] = await Promise.all([
     supabase.from("branches").select("*").order("created_at", { ascending: false }),
     supabase.from("customers").select("*").order("created_at", { ascending: false }),
     supabase.from("delivery_records").select("*").order("delivery_date", { ascending: false }),
@@ -46,9 +44,10 @@ export default async function InvoicePaymentPage() {
   return (
     <AppShell title="Invoice & Payment" description="Invoice, payment received, customer outstanding, and overdue tracking.">
       <div className="grid gap-3 md:gap-4">
+        <FormFeedback success={params?.success} error={params?.error} />
         <ModuleCommandBar inputLabel="Input Invoice / Payment" exportHref="/api/export/invoice-payment" />
         <InvoicePaymentSummaryCards summary={summary} />
-        <div className="grid gap-3 md:gap-4 lg:grid-cols-[360px_minmax(0,1fr)] lg:items-start">
+        <div className="grid min-w-0 gap-3 md:gap-4 lg:grid-cols-[360px_minmax(0,1fr)] lg:items-start">
           <section id="input-data" className="grid scroll-mt-24 gap-3 md:gap-4">
             <InvoiceForm branches={branches} customers={customers} deliveries={deliveries} />
             <PaymentForm invoices={enrichedInvoices} />
