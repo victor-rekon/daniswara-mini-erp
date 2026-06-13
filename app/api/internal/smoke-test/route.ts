@@ -56,7 +56,7 @@ function assertOk(condition: unknown, message: string) {
 async function insertOne<T extends { id: string }>(supabase: ReturnType<typeof createSupabaseAdmin>, table: string, payload: Record<string, unknown>, select = "id") {
   const { data, error } = await supabase.from(table).insert(payload).select(select).single();
   if (error) throw new Error(`${table}: ${error.message}`);
-  return data as T;
+  return data as unknown as T;
 }
 
 async function cleanup(supabase: ReturnType<typeof createSupabaseAdmin>, inserted: InsertedIds) {
