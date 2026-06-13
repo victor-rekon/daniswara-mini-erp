@@ -21,8 +21,8 @@ function formatCurrency(value: number) {
 export function ProductionRecordsTable({ records }: ProductionRecordsTableProps) {
   if (records.length === 0) {
     return (
-      <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-        <h3 className="text-lg font-semibold">Production Records</h3>
+      <section className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+        <h3 className="text-base font-semibold">Production Records</h3>
         <p className="mt-3 rounded-xl bg-slate-50 p-4 text-sm text-slate-500">
           No production records yet.
         </p>
@@ -31,9 +31,9 @@ export function ProductionRecordsTable({ records }: ProductionRecordsTableProps)
   }
 
   return (
-    <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-      <div className="mb-5">
-        <h3 className="text-lg font-semibold">Production Records</h3>
+    <section className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+      <div className="mb-3">
+        <h3 className="text-base font-semibold">Production Records</h3>
         <p className="mt-1 text-sm text-slate-500">
           Latest production records. HPP/unit uses: HPP base cost ÷ net quantity.
         </p>

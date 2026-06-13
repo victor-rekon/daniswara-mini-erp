@@ -29,8 +29,8 @@ function formatCurrency(value: number) {
 export function SalesDeliveryTable({ records }: SalesDeliveryTableProps) {
   if (records.length === 0) {
     return (
-      <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-        <h3 className="text-lg font-semibold">Sales & Delivery Tracker</h3>
+      <section className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+        <h3 className="text-base font-semibold">Sales & Delivery Tracker</h3>
         <p className="mt-3 rounded-xl bg-slate-50 p-4 text-sm text-slate-500">
           No sales or delivery records yet.
         </p>
@@ -39,9 +39,9 @@ export function SalesDeliveryTable({ records }: SalesDeliveryTableProps) {
   }
 
   return (
-    <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-      <div className="mb-5">
-        <h3 className="text-lg font-semibold">Sales & Delivery Tracker</h3>
+    <section className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+      <div className="mb-3">
+        <h3 className="text-base font-semibold">Sales & Delivery Tracker</h3>
         <p className="mt-1 text-sm text-slate-500">
           Tracks customer PO/SO against surat jalan and delivery quantity. Vendor purchase order is not included here.
         </p>

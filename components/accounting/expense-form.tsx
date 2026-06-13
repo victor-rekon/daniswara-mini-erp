@@ -10,9 +10,9 @@ export function ExpenseForm({ branches, accounts }: ExpenseFormProps) {
   const expenseAccounts = accounts.filter((account) => account.account_type === "expense");
 
   return (
-    <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-      <div className="mb-5">
-        <h3 className="text-lg font-semibold">Expense Input</h3>
+    <section className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+      <div className="mb-3">
+        <h3 className="text-base font-semibold">Expense Input</h3>
         <p className="mt-1 text-sm text-slate-500">Manual operating expense input. Not vendor outstanding or purchase approval.</p>
       </div>
 

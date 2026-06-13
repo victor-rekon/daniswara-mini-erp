@@ -15,7 +15,7 @@ export function ProductionSummaryCards({ summary }: { summary: ProductionSummary
     { label: "Avg HPP / Unit",      value: fmtCur(summary.average_hpp_per_unit), stripe: "bg-gradient-to-r from-[#c99a2e] to-[#d9b25c]", val: "text-[#b8860b]" },
   ];
   return (
-    <div className="grid grid-cols-2 gap-2.5 md:grid-cols-3 md:gap-3">
+    <div className="grid grid-cols-2 gap-2.5 md:grid-cols-3 md:gap-3 lg:grid-cols-6">
       {cards.map((c) => (
         <div key={c.label} className={CARD}>
           <div className={`absolute inset-x-0 top-0 h-[2.5px] ${c.stripe}`} />
