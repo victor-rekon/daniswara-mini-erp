@@ -2,6 +2,12 @@ import { AppShell } from "@/components/layout/app-shell";
 import { DashboardAttentionPanel } from "@/components/dashboard/dashboard-attention-panel";
 import { DashboardFlowSnapshot } from "@/components/dashboard/dashboard-flow-snapshot";
 import { DashboardMetricGrid } from "@/components/dashboard/dashboard-metric-grid";
+import { DashboardCharts } from "@/components/dashboard/dashboard-charts";
+import {
+  buildMonthlySales,
+  buildPaymentStatus,
+  buildProductDelivered,
+} from "@/lib/calculations/dashboard-charts-data";
 import { enrichExpenses, summarizeProfitLoss } from "@/lib/calculations/accounting";
 import { buildDashboardMetrics, buildDashboardSummary } from "@/lib/calculations/dashboard";
 import { enrichInvoices, summarizeInvoices } from "@/lib/calculations/invoice-payment";
@@ -100,11 +106,20 @@ export default async function DashboardPage() {
 
   const metrics = buildDashboardMetrics(summary);
 
+  const monthlySales = buildMonthlySales(sales);
+  const paymentStatus = buildPaymentStatus(invoices);
+  const productDelivered = buildProductDelivered(deliveries, productLookup);
+
   return (
     <AppShell title="Owner Dashboard" description="High-level operational summary. Every number is traceable to source module data.">
       <div className="grid gap-3 md:gap-4">
         <DashboardMetricGrid metrics={metrics} />
         <DashboardAttentionPanel summary={summary} />
+        <DashboardCharts
+          monthlySales={monthlySales}
+          paymentStatus={paymentStatus}
+          productDelivered={productDelivered}
+        />
         <DashboardFlowSnapshot
           productionCount={production.length}
           quotationCount={quotations.length}
