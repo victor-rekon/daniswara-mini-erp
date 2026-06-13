@@ -18,7 +18,18 @@ export function parseCurrencyInput(value: unknown) {
   return Number.isFinite(parsed) ? parsed : 0;
 }
 
+function isNextRedirect(error: unknown) {
+  if (!error || typeof error !== "object") return false;
+
+  const digest = "digest" in error ? String((error as { digest?: unknown }).digest ?? "") : "";
+  const message = error instanceof Error ? error.message : "";
+
+  return digest.startsWith("NEXT_REDIRECT") || message === "NEXT_REDIRECT";
+}
+
 export function getActionErrorMessage(error: unknown) {
+  if (isNextRedirect(error)) throw error;
+
   if (error && typeof error === "object" && "issues" in error) {
     const issues = (error as { issues?: Array<{ message?: string }> }).issues;
     const message = issues?.[0]?.message;
@@ -40,5 +51,6 @@ export function redirectSuccess(path: string, message: string): never {
 }
 
 export function redirectError(path: string, error: unknown): never {
+  if (isNextRedirect(error)) throw error;
   redirect(buildRedirectUrl(path, "error", getActionErrorMessage(error)));
 }
