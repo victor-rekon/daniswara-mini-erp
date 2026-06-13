@@ -1,20 +1,17 @@
-import { AppShell } from "@/components/layout/app-shell";
 import { DashboardAttentionPanel } from "@/components/dashboard/dashboard-attention-panel";
+import { DashboardCharts } from "@/components/dashboard/dashboard-charts";
 import { DashboardFlowSnapshot } from "@/components/dashboard/dashboard-flow-snapshot";
 import { DashboardMetricGrid } from "@/components/dashboard/dashboard-metric-grid";
-import { DashboardCharts } from "@/components/dashboard/dashboard-charts";
-import {
-  buildMonthlySales,
-  buildPaymentStatus,
-  buildProductDelivered,
-} from "@/lib/calculations/dashboard-charts-data";
+import { AppShell } from "@/components/layout/app-shell";
 import { enrichExpenses, summarizeProfitLoss } from "@/lib/calculations/accounting";
 import { buildDashboardMetrics, buildDashboardSummary } from "@/lib/calculations/dashboard";
+import { buildMonthlySales, buildPaymentStatus, buildProductDelivered } from "@/lib/calculations/dashboard-charts-data";
 import { enrichInvoices, summarizeInvoices } from "@/lib/calculations/invoice-payment";
 import { enrichProductionRecords, summarizeProduction } from "@/lib/calculations/production";
 import { enrichQuotations, summarizeQuotations } from "@/lib/calculations/quotation";
 import { enrichSalesDeliveryRecords, summarizeSalesDelivery } from "@/lib/calculations/sales-delivery";
 import { createSupabaseAdmin } from "@/lib/supabase/admin";
+import type { DashboardSummary } from "@/types/dashboard";
 import type { ExpenseRecord } from "@/types/accounting";
 import type { InvoiceRecord, PaymentRecord } from "@/types/invoice-payment";
 import type { Branch, ChartOfAccount, Customer, Product } from "@/types/master-data";
@@ -27,20 +24,7 @@ export const dynamic = "force-dynamic";
 export default async function DashboardPage() {
   const supabase = createSupabaseAdmin();
 
-  const [
-    branchesResult,
-    customersResult,
-    productsResult,
-    accountsResult,
-    productionResult,
-    quotationsResult,
-    quotationItemsResult,
-    salesResult,
-    deliveriesResult,
-    invoicesResult,
-    paymentsResult,
-    expensesResult
-  ] = await Promise.all([
+  const [branchesResult, customersResult, productsResult, accountsResult, productionResult, quotationsResult, quotationItemsResult, salesResult, deliveriesResult, invoicesResult, paymentsResult, expensesResult] = await Promise.all([
     supabase.from("branches").select("*"),
     supabase.from("customers").select("*"),
     supabase.from("products").select("*"),
@@ -85,8 +69,23 @@ export default async function DashboardPage() {
   const salesDeliverySummary = summarizeSalesDelivery(salesDeliveryViews);
   const invoiceSummary = summarizeInvoices(invoiceViews);
   const profitLossSummary = summarizeProfitLoss(invoiceViews, productionViews, expenseViews);
-  const metrics = buildDashboardMetrics(productionSummary, quotationSummary, salesDeliverySummary, invoiceSummary, profitLossSummary);
-  const attention = buildDashboardSummary(salesDeliverySummary, invoiceSummary);
+
+  const summary: DashboardSummary = buildDashboardSummary({
+    total_produced: productionSummary.total_produced,
+    losses_percentage: productionSummary.losses_percentage,
+    hpp_base_cost: productionSummary.total_hpp_base_cost,
+    quotation_value: quotationSummary.total_value,
+    sales_value: salesDeliverySummary.total_sales_value,
+    invoice_value: invoiceSummary.total_invoice_value,
+    payment_received: invoiceSummary.total_payment_received,
+    outstanding: invoiceSummary.total_outstanding,
+    operating_expense: profitLossSummary.operating_expense,
+    net_profit: profitLossSummary.net_profit,
+    pending_delivery_count: salesDeliverySummary.pending_delivery_count,
+    overdue_invoice_count: invoiceSummary.overdue_count,
+  });
+
+  const metrics = buildDashboardMetrics(summary);
   const monthlySales = buildMonthlySales(salesDeliveryViews);
   const paymentStatus = buildPaymentStatus(invoiceViews);
   const productDelivered = buildProductDelivered(salesDeliveryViews);
@@ -95,9 +94,9 @@ export default async function DashboardPage() {
     <AppShell title="Owner Dashboard" description="High-level operational summary. Every number is traceable to source module data.">
       <div className="grid gap-4 md:gap-5">
         <DashboardMetricGrid metrics={metrics} />
-        <DashboardAttentionPanel attention={attention} />
+        <DashboardAttentionPanel summary={summary} />
         <DashboardCharts monthlySales={monthlySales} paymentStatus={paymentStatus} productDelivered={productDelivered} />
-        <DashboardFlowSnapshot productionCount={productionViews.length} quotationCount={quotationViews.length} salesDeliveryCount={salesDeliveryViews.length} invoiceCount={invoiceViews.length} paymentCount={payments.length} />
+        <DashboardFlowSnapshot productionCount={productionViews.length} quotationCount={quotationViews.length} salesCount={salesDeliveryViews.length} invoiceCount={invoiceViews.length} paymentCount={payments.length} />
       </div>
     </AppShell>
   );
