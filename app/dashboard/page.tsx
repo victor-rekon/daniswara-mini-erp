@@ -22,7 +22,7 @@ import type { ProductionRecord } from "@/types/production";
 import type { Quotation, QuotationItem } from "@/types/quotation";
 import type { DeliveryRecord, SalesRecord } from "@/types/sales-delivery";
 
-export const revalidate = 30;
+export const dynamic = "force-dynamic";
 
 export default async function DashboardPage() {
   const supabase = createSupabaseAdmin();
@@ -59,11 +59,11 @@ export default async function DashboardPage() {
   const customers = (customersResult.data ?? []) as Customer[];
   const products = (productsResult.data ?? []) as Product[];
   const accounts = (accountsResult.data ?? []) as ChartOfAccount[];
-  const production = (productionResult.data ?? []) as ProductionRecord[];
+  const productionRecords = (productionResult.data ?? []) as ProductionRecord[];
   const quotations = (quotationsResult.data ?? []) as Quotation[];
   const quotationItems = (quotationItemsResult.data ?? []) as QuotationItem[];
-  const sales = (salesResult.data ?? []) as SalesRecord[];
-  const deliveries = (deliveriesResult.data ?? []) as DeliveryRecord[];
+  const salesRecords = (salesResult.data ?? []) as SalesRecord[];
+  const deliveryRecords = (deliveriesResult.data ?? []) as DeliveryRecord[];
   const invoices = (invoicesResult.data ?? []) as InvoiceRecord[];
   const payments = (paymentsResult.data ?? []) as PaymentRecord[];
   const expenses = (expensesResult.data ?? []) as ExpenseRecord[];
@@ -72,61 +72,32 @@ export default async function DashboardPage() {
   const customerLookup = Object.fromEntries(customers.map((customer) => [customer.id, customer]));
   const productLookup = Object.fromEntries(products.map((product) => [product.id, product]));
   const accountLookup = Object.fromEntries(accounts.map((account) => [account.id, account]));
-  const deliveryLookup = Object.fromEntries(deliveries.map((delivery) => [delivery.id, delivery]));
+  const deliveryLookup = Object.fromEntries(deliveryRecords.map((delivery) => [delivery.id, delivery]));
 
-  const productionViews = enrichProductionRecords(production, productLookup, branchLookup);
-  const productionSummary = summarizeProduction(productionViews);
-
+  const productionViews = enrichProductionRecords(productionRecords, productLookup, branchLookup);
   const quotationViews = enrichQuotations(quotations, quotationItems, customerLookup, branchLookup, productLookup);
-  const quotationSummary = summarizeQuotations(quotationViews);
-
-  const salesViews = enrichSalesDeliveryRecords(sales, deliveries, customerLookup, branchLookup, productLookup);
-  const salesSummary = summarizeSalesDelivery(salesViews);
-
+  const salesDeliveryViews = enrichSalesDeliveryRecords(salesRecords, deliveryRecords, customerLookup, branchLookup, productLookup);
   const invoiceViews = enrichInvoices(invoices, payments, customerLookup, branchLookup, deliveryLookup);
-  const invoiceSummary = summarizeInvoices(invoiceViews);
-
   const expenseViews = enrichExpenses(expenses, accountLookup, branchLookup);
-  const profitLoss = summarizeProfitLoss(invoiceViews, productionViews, expenseViews);
 
-  const summary = buildDashboardSummary({
-    total_produced: productionSummary.total_produced,
-    losses_percentage: productionSummary.losses_percentage,
-    hpp_base_cost: productionSummary.total_hpp_base_cost,
-    quotation_value: quotationSummary.total_value,
-    sales_value: salesSummary.total_sales_value,
-    invoice_value: invoiceSummary.total_invoice_value,
-    payment_received: invoiceSummary.total_payment_received,
-    outstanding: invoiceSummary.total_outstanding,
-    operating_expense: profitLoss.operating_expense,
-    net_profit: profitLoss.net_profit,
-    pending_delivery_count: salesSummary.pending_delivery_count,
-    overdue_invoice_count: invoiceSummary.overdue_count,
-  });
-
-  const metrics = buildDashboardMetrics(summary);
-
-  const monthlySales = buildMonthlySales(sales);
-  const paymentStatus = buildPaymentStatus(invoices);
-  const productDelivered = buildProductDelivered(deliveries, productLookup);
+  const productionSummary = summarizeProduction(productionViews);
+  const quotationSummary = summarizeQuotations(quotationViews);
+  const salesDeliverySummary = summarizeSalesDelivery(salesDeliveryViews);
+  const invoiceSummary = summarizeInvoices(invoiceViews);
+  const profitLossSummary = summarizeProfitLoss(invoiceViews, productionViews, expenseViews);
+  const metrics = buildDashboardMetrics(productionSummary, quotationSummary, salesDeliverySummary, invoiceSummary, profitLossSummary);
+  const attention = buildDashboardSummary(salesDeliverySummary, invoiceSummary);
+  const monthlySales = buildMonthlySales(salesDeliveryViews);
+  const paymentStatus = buildPaymentStatus(invoiceViews);
+  const productDelivered = buildProductDelivered(salesDeliveryViews);
 
   return (
     <AppShell title="Owner Dashboard" description="High-level operational summary. Every number is traceable to source module data.">
-      <div className="grid gap-3 md:gap-4">
+      <div className="grid gap-4 md:gap-5">
         <DashboardMetricGrid metrics={metrics} />
-        <DashboardAttentionPanel summary={summary} />
-        <DashboardCharts
-          monthlySales={monthlySales}
-          paymentStatus={paymentStatus}
-          productDelivered={productDelivered}
-        />
-        <DashboardFlowSnapshot
-          productionCount={production.length}
-          quotationCount={quotations.length}
-          salesCount={sales.length}
-          invoiceCount={invoices.length}
-          paymentCount={payments.length}
-        />
+        <DashboardAttentionPanel attention={attention} />
+        <DashboardCharts monthlySales={monthlySales} paymentStatus={paymentStatus} productDelivered={productDelivered} />
+        <DashboardFlowSnapshot productionCount={productionViews.length} quotationCount={quotationViews.length} salesDeliveryCount={salesDeliveryViews.length} invoiceCount={invoiceViews.length} paymentCount={payments.length} />
       </div>
     </AppShell>
   );
