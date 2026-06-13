@@ -15,13 +15,13 @@ export function MasterDataTable<T extends { id?: string }>({
   emptyText,
 }: MasterDataTableProps<T>) {
   if (rows.length === 0) {
-    return <p className="rounded-xl bg-slate-50 p-4 text-sm text-slate-500">{emptyText}</p>;
+    return <p className="rounded-xl bg-white/[0.04] p-4 text-sm text-slate-400">{emptyText}</p>;
   }
 
   return (
-    <div className="overflow-x-auto rounded-xl border border-slate-200">
+    <div className="overflow-x-auto rounded-xl border border-white/[0.08]">
       <table className="w-full min-w-[524px] text-left text-sm">
-        <thead className="bg-slate-50 text-slate-500">
+        <thead className="bg-white/[0.04] text-slate-400">
           <tr>
             {columns.map((column) => (
               <th key={String(column.key)} className="px-3 py-2 font-medium">
@@ -30,13 +30,13 @@ export function MasterDataTable<T extends { id?: string }>({
             ))}
           </tr>
         </thead>
-        <tbody className="divide-y divide-slate-200">
+        <tbody className="divide-y divide-white/[0.06]">
           {rows.map((row, index) => (
             <tr key={row.id ?? String(index)}>
               {columns.map((column) => {
                 const value = row[column.key];
                 return (
-                  <td key={String(column.key)} className="px-3 py-2 text-slate-700">
+                  <td key={String(column.key)} className="px-3 py-2 text-slate-200">
                     {value === null || value === undefined || value === "" ? "-" : String(value)}
                   </td>
                 );

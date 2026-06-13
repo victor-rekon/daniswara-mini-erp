@@ -16,25 +16,25 @@ function getVariant(label: string): V {
 const stripe: Record<V, string> = {
   navy:  "bg-gradient-to-r from-[#2f4a9e] via-[#3d5cc4] to-[#2f4a9e]",
   gold:  "bg-gradient-to-r from-[#c99a2e] via-[#e8c878] to-[#d9b25c]",
-  green: "bg-gradient-to-r from-[#15803d] via-[#22a350] to-[#15803d]",
-  red:   "bg-gradient-to-r from-[#b91c1c] via-[#dc4646] to-[#b91c1c]",
+  green: "bg-gradient-to-r from-[#34d399] via-[#22a350] to-[#34d399]",
+  red:   "bg-gradient-to-r from-[#f87171] via-[#dc4646] to-[#f87171]",
   amber: "bg-gradient-to-r from-[#d97706] via-[#f0a035] to-[#d97706]",
 };
 
 const valColor: Record<V, string> = {
-  navy:  "text-[#233575]",
-  gold:  "text-[#b8860b]",
-  green: "text-[#15803d]",
-  red:   "text-[#b91c1c]",
-  amber: "text-[#b45309]",
+  navy:  "text-[#e2e8f0]",
+  gold:  "text-[#e8c878]",
+  green: "text-[#34d399]",
+  red:   "text-[#f87171]",
+  amber: "text-[#fbbf24]",
 };
 
 /* Faint corner glow per variant - reinforces meaning without shouting */
 const glow: Record<V, string> = {
   navy:  "from-[#2f4a9e]/[0.05]",
   gold:  "from-[#d9b25c]/[0.07]",
-  green: "from-[#15803d]/[0.05]",
-  red:   "from-[#b91c1c]/[0.05]",
+  green: "from-[#34d399]/[0.05]",
+  red:   "from-[#f87171]/[0.05]",
   amber: "from-[#d97706]/[0.05]",
 };
 
@@ -50,20 +50,20 @@ export function DashboardMetricGrid({ metrics }: DashboardMetricGridProps) {
         return (
           <div
             key={metric.label}
-            className="group relative cursor-pointer overflow-hidden rounded-[14px] border border-[#e6e8ef] bg-white shadow-card transition-[transform,box-shadow] duration-200 hover:-translate-y-0.5 hover:shadow-card-hover active:scale-[0.98]"
+            className="group relative cursor-pointer overflow-hidden rounded-[14px] border border-[rgba(255,255,255,0.08)] bg-[#12151f] shadow-card transition-[transform,box-shadow] duration-200 hover:-translate-y-0.5 hover:shadow-card-hover active:scale-[0.98]"
           >
             <div
               className={`pointer-events-none absolute -right-6 -top-6 h-24 w-24 rounded-full bg-gradient-to-br ${glow[v]} to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100`}
             />
             <div className={`absolute inset-x-0 top-0 h-[3px] ${stripe[v]}`} />
             <div className="relative px-2.5 pb-2 pt-2.5 md:px-3.5 md:pb-3 md:pt-3.5">
-              <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-[#7a829b]">
+              <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-[#94a3b8]">
                 {metric.label}
               </p>
               <p className={`mt-1 text-base font-bold md:mt-1.5 md:text-lg tabular-nums leading-tight tracking-tight ${valColor[v]}`}>
                 {metric.value}
               </p>
-              <p className="mt-0.5 hidden text-[10px] leading-snug text-[#a4aabe] md:mt-1 md:block">
+              <p className="mt-0.5 hidden text-[10px] leading-snug text-[#64748b] md:mt-1 md:block">
                 {metric.helper}
               </p>
             </div>

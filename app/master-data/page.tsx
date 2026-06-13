@@ -14,8 +14,8 @@ import {
 
 export const revalidate = 30;
 
-const FIELD = "rounded-xl border border-slate-200 px-2.5 py-2 text-sm";
-const BTN = "col-span-2 rounded-xl bg-slate-950 px-4 py-2 text-sm font-semibold text-white active:scale-[0.98]";
+const FIELD = "rounded-xl border border-white/[0.08] bg-white/[0.04] px-2.5 py-2 text-sm text-slate-100 placeholder:text-slate-400";
+const BTN = "col-span-2 rounded-xl bg-gradient-to-br from-[#e8c878] via-[#d9b25c] to-[#c99a2e] px-4 py-2 text-sm font-bold text-[#1a2456] shadow-[0_2px_10px_-2px_rgba(217,178,92,0.45)] active:scale-[0.98]";
 
 export default async function MasterDataPage() {
   const supabase = createSupabaseAdmin();
@@ -120,7 +120,7 @@ export default async function MasterDataPage() {
             <form action={createChartOfAccount} className="mb-3 grid grid-cols-2 gap-2.5">
               <input name="account_code" placeholder="Code" className={FIELD} required />
               <input name="account_name" placeholder="Account name" className={FIELD} required />
-              <select name="account_type" className="col-span-2 rounded-xl border border-slate-200 px-2.5 py-2 text-sm" required>
+              <select name="account_type" className="col-span-2 rounded-xl border border-white/[0.08] bg-white/[0.04] px-2.5 py-2 text-sm text-slate-100 placeholder:text-slate-400" required>
                 <option value="asset">Asset</option>
                 <option value="liability">Liability</option>
                 <option value="equity">Equity</option>

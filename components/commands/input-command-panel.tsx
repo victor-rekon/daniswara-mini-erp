@@ -41,13 +41,13 @@ const inputCommands = [
 
 export function InputCommandPanel() {
   return (
-    <section className="rounded-2xl border border-[#e6e8ef] bg-white p-4 shadow-[0_1px_3px_rgba(26,36,86,0.05)] md:p-5">
+    <section className="rounded-2xl border border-[rgba(255,255,255,0.08)] bg-[#12151f] p-4 shadow-card md:p-5">
       <div className="mb-3 flex flex-col gap-1 md:flex-row md:items-end md:justify-between">
         <div>
-          <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#b8860b]">Input Command</p>
-          <h3 className="text-base font-bold tracking-tight text-[#233575]">Where Staff Enters Data</h3>
+          <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#e8c878]">Input Command</p>
+          <h3 className="text-base font-bold tracking-tight text-[#e2e8f0]">Where Staff Enters Data</h3>
         </div>
-        <p className="text-xs text-[#7a829b]">Dashboard is output only. Use these commands to input operational data.</p>
+        <p className="text-xs text-[#94a3b8]">Dashboard is output only. Use these commands to input operational data.</p>
       </div>
 
       <div className="grid gap-2 md:grid-cols-2 xl:grid-cols-3">
@@ -55,18 +55,18 @@ export function InputCommandPanel() {
           <Link
             key={command.href}
             href={command.href}
-            className="group rounded-xl border border-[#e6e8ef] bg-[#fafbfd] p-3 transition-colors duration-150 hover:border-[#d9b25c]/60 hover:bg-[#fdf9ef] active:scale-[0.98]"
+            className="group rounded-xl border border-[rgba(255,255,255,0.08)] bg-[#161a26] p-3 transition-colors duration-150 hover:border-[#d9b25c]/60 hover:bg-[#d9b25c]/[0.08] active:scale-[0.98]"
           >
             <div className="flex items-start justify-between gap-3">
               <div className="min-w-0">
-                <p className="text-sm font-bold text-[#233575]">{command.title}</p>
-                <p className="mt-1 text-[11px] leading-relaxed text-[#7a829b]">{command.description}</p>
+                <p className="text-sm font-bold text-[#e2e8f0]">{command.title}</p>
+                <p className="mt-1 text-[11px] leading-relaxed text-[#94a3b8]">{command.description}</p>
               </div>
-              <span className="shrink-0 rounded-full bg-[#1a2456] px-2.5 py-1 text-[10px] font-bold text-[#d9b25c] transition-colors group-hover:bg-[#233575]">
+              <span className="shrink-0 rounded-full bg-[#1a2456] px-2.5 py-1 text-[10px] font-bold text-[#d9b25c] transition-colors group-hover:bg-[#e2e8f0]">
                 Input
               </span>
             </div>
-            <p className="mt-3 text-xs font-bold text-[#b8860b]">{command.cta} →</p>
+            <p className="mt-3 text-xs font-bold text-[#e8c878]">{command.cta} →</p>
           </Link>
         ))}
       </div>

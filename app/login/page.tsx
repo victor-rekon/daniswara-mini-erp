@@ -13,31 +13,31 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
   const hasError = params?.error === "1";
 
   return (
-    <main className="flex min-h-screen items-center justify-center bg-[#f6f7fa] px-4 py-10 text-[#1a2456]">
-      <section className="w-full max-w-md rounded-2xl border border-[#e6e8ef] bg-white p-6 shadow-[0_12px_30px_rgba(26,36,86,0.08)]">
+    <main className="flex min-h-screen items-center justify-center bg-transparent px-4 py-10 text-slate-100">
+      <section className="w-full max-w-md rounded-2xl border border-[rgba(255,255,255,0.08)] bg-[#12151f] p-6 shadow-card">
         <div className="mb-6">
-          <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#b8860b]">Internal</p>
-          <h1 className="text-lg font-bold tracking-tight text-[#233575]">Daniswara Mini ERP</h1>
-          <p className="mt-1 text-xs text-[#7a829b]">Enter the internal code to continue.</p>
+          <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#e8c878]">Internal</p>
+          <h1 className="text-lg font-bold tracking-tight text-[#e2e8f0]">Daniswara Mini ERP</h1>
+          <p className="mt-1 text-xs text-[#94a3b8]">Enter the internal code to continue.</p>
         </div>
 
         <form action={submitAccess} className="grid gap-4">
           <input type="hidden" name="next" value={nextPath} />
           <div>
-            <label htmlFor="access_code" className="text-xs font-bold uppercase tracking-[0.12em] text-[#7a829b]">
+            <label htmlFor="access_code" className="text-xs font-bold uppercase tracking-[0.12em] text-[#94a3b8]">
               Internal Code
             </label>
             <input
               id="access_code"
               name="access_code"
               type="password"
-              className="mt-2 w-full rounded-xl border border-[#e6e8ef] bg-white px-3 py-2.5 text-sm outline-none focus:border-[#d9b25c]"
+              className="mt-2 w-full rounded-xl border border-[rgba(255,255,255,0.08)] bg-white/[0.04] px-3 py-2.5 text-sm text-slate-100 outline-none focus:border-[#d9b25c]"
               required
             />
-            {hasError ? <p className="mt-2 text-xs font-semibold text-red-700">Incorrect code.</p> : null}
+            {hasError ? <p className="mt-2 text-xs font-semibold text-red-400">Incorrect code.</p> : null}
           </div>
 
-          <button type="submit" className="rounded-xl bg-[#d9b25c] px-4 py-2.5 text-sm font-bold text-[#1a2456]">
+          <button type="submit" className="rounded-xl bg-gradient-to-br from-[#e8c878] via-[#d9b25c] to-[#c99a2e] px-4 py-2.5 text-sm font-bold text-[#1a2456] shadow-[0_2px_10px_-2px_rgba(217,178,92,0.45)]">
             Enter System
           </button>
         </form>

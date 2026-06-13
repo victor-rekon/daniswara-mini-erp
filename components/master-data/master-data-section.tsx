@@ -8,10 +8,10 @@ type MasterDataSectionProps = {
 
 export function MasterDataSection({ title, description, children }: MasterDataSectionProps) {
   return (
-    <section className="rounded-2xl border border-[#e6e8ef] bg-white p-4 shadow-[0_1px_3px_rgba(26,36,86,0.05)] md:p-5">
+    <section className="rounded-2xl border border-[rgba(255,255,255,0.08)] bg-[#12151f] p-4 shadow-card md:p-5">
       <div className="mb-3">
-        <h3 className="text-base font-semibold text-[#233575]">{title}</h3>
-        <p className="mt-0.5 text-xs text-[#7a829b]">{description}</p>
+        <h3 className="text-base font-semibold text-[#e2e8f0]">{title}</h3>
+        <p className="mt-0.5 text-xs text-[#94a3b8]">{description}</p>
       </div>
       {children}
     </section>

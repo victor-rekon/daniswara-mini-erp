@@ -1,20 +1,29 @@
 @import "tailwindcss";
 
-/* -- Daniswara brand tokens (from logo) ----------------- */
+/* -- Daniswara brand tokens (elegant black theme) --------- */
 :root {
   --navy-900: #1a2456;
-  --navy-700: #233575;
+  --navy-700: #e2e8f0;
   --navy-500: #2f4a9e;
   --blue-400: #2b6cb8;
-  --gold-500: #b8860b;
+  --gold-500: #e8c878;
   --gold-400: #c99a2e;
   --gold-300: #d9b25c;
-  --background: #f6f7fa;
-  --foreground: #1a2456;
+  --background: #07080d;
+  --foreground: #e9ecf3;
+}
+
+html {
+  background: var(--background);
 }
 
 body {
-  background: var(--background);
+  /* Elegant black with a faint navy radial glow for depth, not flat black */
+  background:
+    radial-gradient(ellipse 1200px 800px at 15% -10%, rgba(47, 74, 158, 0.16), transparent 60%),
+    radial-gradient(ellipse 900px 700px at 100% 0%, rgba(217, 178, 92, 0.05), transparent 55%),
+    var(--background);
+  background-attachment: fixed;
   color: var(--foreground);
   font-family: var(--font-lexend), var(--font-inter), system-ui, -apple-system,
     sans-serif;
@@ -42,6 +51,13 @@ button {
   font: inherit;
 }
 
+/* Date/time picker icon needs to be visible on dark inputs */
+input[type="date"]::-webkit-calendar-picker-indicator,
+input[type="time"]::-webkit-calendar-picker-indicator {
+  filter: invert(1) brightness(1.6);
+  opacity: 0.7;
+}
+
 ::-webkit-scrollbar {
   width: 4px;
   height: 4px;
@@ -50,11 +66,11 @@ button {
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: #c5cad9;
+  background: rgba(255, 255, 255, 0.15);
   border-radius: 2px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #9aa3c0;
+  background: rgba(255, 255, 255, 0.28);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -66,23 +82,26 @@ button {
   }
 }
 
-/* ── Depth system: layered shadows + brand glows ──────── */
+/* -- Depth system: layered shadows + brand glows on black -- */
 .shadow-card {
   box-shadow:
-    0 1px 2px rgba(26, 36, 86, 0.04),
-    0 8px 20px -12px rgba(26, 36, 86, 0.12);
+    inset 0 1px 0 rgba(255, 255, 255, 0.04),
+    0 1px 2px rgba(0, 0, 0, 0.6),
+    0 12px 28px -16px rgba(0, 0, 0, 0.65);
 }
 .shadow-card-hover {
   box-shadow:
-    0 2px 4px rgba(26, 36, 86, 0.06),
-    0 16px 32px -16px rgba(26, 36, 86, 0.18);
+    inset 0 1px 0 rgba(255, 255, 255, 0.06),
+    0 2px 4px rgba(0, 0, 0, 0.7),
+    0 20px 40px -18px rgba(0, 0, 0, 0.75),
+    0 0 0 1px rgba(217, 178, 92, 0.12);
 }
 .shadow-navy {
   box-shadow:
-    0 4px 12px -4px rgba(26, 36, 86, 0.35),
-    0 12px 32px -16px rgba(26, 36, 86, 0.45);
+    0 4px 16px -4px rgba(0, 0, 0, 0.6),
+    0 16px 40px -16px rgba(0, 0, 0, 0.7);
 }
 .bg-grain {
-  background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,0.035) 1px, transparent 0);
+  background-image: radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.035) 1px, transparent 0);
   background-size: 22px 22px;
 }

@@ -15,7 +15,7 @@ function BrandMark({ size = 26 }: { size?: number }) {
 
 export default function Loading() {
   return (
-    <div className="min-h-screen overflow-x-hidden bg-[#f6f7fa]">
+    <div className="min-h-screen overflow-x-hidden bg-transparent">
       <div className="md:pl-60">
         {/* Navy header band with gold progress shimmer */}
         <div className="relative overflow-hidden bg-[#1a2456] px-4 pb-4 pt-4 md:px-8 md:pb-5">
@@ -43,19 +43,19 @@ export default function Loading() {
             {[0, 1, 2, 3, 4, 5, 6].map((i) => (
               <div
                 key={i}
-                className="relative h-[78px] animate-pulse overflow-hidden rounded-[14px] border border-[#e6e8ef] bg-white"
+                className="relative h-[78px] animate-pulse overflow-hidden rounded-[14px] border border-[rgba(255,255,255,0.08)] bg-[#12151f]"
               >
-                <div className="absolute inset-x-0 top-0 h-[2.5px] bg-[#e6e8ef]" />
+                <div className="absolute inset-x-0 top-0 h-[2.5px] bg-[rgba(255,255,255,0.08)]" />
                 <div className="px-3.5 pt-3.5">
-                  <div className="h-2 w-16 rounded bg-[#eef0f5]" />
-                  <div className="mt-2.5 h-4 w-12 rounded bg-[#e6e8ef]" />
+                  <div className="h-2 w-16 rounded bg-[rgba(255,255,255,0.06)]" />
+                  <div className="mt-2.5 h-4 w-12 rounded bg-[rgba(255,255,255,0.08)]" />
                 </div>
               </div>
             ))}
           </div>
           <div className="mt-3 grid gap-3 md:gap-4 xl:grid-cols-[420px_minmax(0,1fr)]">
-            <div className="h-72 animate-pulse rounded-2xl border border-[#e6e8ef] bg-white" />
-            <div className="h-72 animate-pulse rounded-2xl border border-[#e6e8ef] bg-white" />
+            <div className="h-72 animate-pulse rounded-2xl border border-[rgba(255,255,255,0.08)] bg-[#12151f]" />
+            <div className="h-72 animate-pulse rounded-2xl border border-[rgba(255,255,255,0.08)] bg-[#12151f]" />
           </div>
         </div>
       </div>

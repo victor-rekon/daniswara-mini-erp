@@ -31,7 +31,7 @@ function Sidebar() {
     <aside className="fixed inset-y-0 left-0 hidden w-60 flex-col bg-gradient-to-b from-[#1f2c63] via-[#1a2456] to-[#161f47] md:flex">
       {/* Brand */}
       <div className="flex items-center gap-3 border-b border-white/10 px-4 py-5">
-        <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-white shadow-card ring-1 ring-black/5">
+        <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-white shadow-card ring-1 ring-white/10">
           <BrandMark size={22} />
         </div>
         <div className="min-w-0">
@@ -44,7 +44,7 @@ function Sidebar() {
 
       {/* Nav */}
       <nav className="flex-1 overflow-y-auto px-2 py-4">
-        <p className="mb-2 px-3 text-[10px] font-semibold uppercase tracking-[0.16em] text-[#5a6594]">
+        <p className="mb-2 px-3 text-[10px] font-semibold uppercase tracking-[0.16em] text-[#64748b]">
           Modules
         </p>
         {mainNav.map((item) => {
@@ -96,7 +96,7 @@ function Sidebar() {
           <p className="text-[10px] font-semibold text-[#9aa3c0]">
             PT Daniswara Gas Indonesia
           </p>
-          <p className="mt-0.5 text-[10px] text-[#5a6594]">
+          <p className="mt-0.5 text-[10px] text-[#64748b]">
             Phase 1 &middot; Operations
           </p>
         </div>
@@ -154,14 +154,14 @@ type AppShellProps = {
 
 export function AppShell({ title, description, children }: AppShellProps) {
   return (
-    <div className="min-h-screen overflow-x-hidden bg-[#f6f7fa] text-[#1a2456]">
+    <div className="min-h-screen overflow-x-hidden bg-transparent text-slate-100">
       <Sidebar />
       <main className="md:pl-60">
         {/* Navy header band - brand identity */}
         <header className="relative z-10 bg-gradient-to-br from-[#1f2c63] via-[#1a2456] to-[#161f47] px-4 pb-4 pt-4 shadow-navy md:rounded-none md:px-8 md:pb-5">
           <div className="flex items-center justify-between gap-4">
             <div className="flex items-center gap-3">
-              <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-white shadow-card ring-1 ring-black/5 md:hidden">
+              <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-white shadow-card ring-1 ring-white/10 md:hidden">
                 <BrandMark size={22} />
               </div>
               <div>

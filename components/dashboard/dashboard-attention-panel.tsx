@@ -32,9 +32,9 @@ export function DashboardAttentionPanel({ summary }: DashboardAttentionPanelProp
   ];
 
   return (
-    <section className="rounded-2xl border border-[#e6e8ef] bg-white p-4 shadow-card md:p-5">
-      <h3 className="mb-3 text-[11px] font-bold uppercase tracking-[0.14em] text-[#233575]">
-        Owner <span className="text-[#b8860b]">Attention</span>
+    <section className="rounded-2xl border border-[rgba(255,255,255,0.08)] bg-[#12151f] p-4 shadow-card md:p-5">
+      <h3 className="mb-3 text-[11px] font-bold uppercase tracking-[0.14em] text-[#e2e8f0]">
+        Owner <span className="text-[#e8c878]">Attention</span>
       </h3>
       <div className="grid grid-cols-1 gap-2 md:grid-cols-3">
         {items.map((item) => (
@@ -42,31 +42,31 @@ export function DashboardAttentionPanel({ summary }: DashboardAttentionPanelProp
             key={item.label}
             className={`relative flex items-start gap-3 overflow-hidden rounded-xl border p-3.5 transition-shadow duration-200 ${
               item.isAlert
-                ? "border-[#f3e3bd] bg-gradient-to-br from-[#fdf9ef] to-[#fcf3de] shadow-[inset_0_1px_0_rgba(255,255,255,0.6),0_2px_8px_-4px_rgba(217,178,92,0.25)]"
-                : "border-[#d3eedb] bg-gradient-to-br from-[#f0faf3] to-[#e6f7ec] shadow-[inset_0_1px_0_rgba(255,255,255,0.6),0_2px_8px_-4px_rgba(21,128,61,0.15)]"
+                ? "border-[#d9b25c]/25 bg-gradient-to-br from-[#d9b25c]/[0.10] to-[#c99a2e]/[0.06] shadow-[inset_0_1px_0_rgba(255,255,255,0.6),0_2px_8px_-4px_rgba(217,178,92,0.25)]"
+                : "border-emerald-400/25 bg-gradient-to-br from-emerald-400/[0.10] to-emerald-400/[0.05] shadow-[inset_0_1px_0_rgba(255,255,255,0.6),0_2px_8px_-4px_rgba(21,128,61,0.15)]"
             }`}
           >
             <div
               className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-lg ${
                 item.isAlert
                   ? "bg-gradient-to-br from-[#e8c878] to-[#c99a2e] text-[#1a2456] shadow-[0_2px_6px_-2px_rgba(201,154,46,0.5)]"
-                  : "bg-gradient-to-br from-[#15803d]/15 to-[#15803d]/5 text-[#15803d] ring-1 ring-[#15803d]/10"
+                  : "bg-gradient-to-br from-[#34d399]/15 to-[#34d399]/5 text-[#34d399] ring-1 ring-[#34d399]/10"
               }`}
             >
               <item.Icon className="h-4 w-4" aria-hidden="true" />
             </div>
             <div className="min-w-0">
-              <p className="text-[10px] font-bold uppercase tracking-wide text-[#7a829b]">
+              <p className="text-[10px] font-bold uppercase tracking-wide text-[#94a3b8]">
                 {item.label}
               </p>
               <p
                 className={`mt-0.5 text-base font-bold tabular-nums leading-tight ${
-                  item.isAlert ? "text-[#b8860b]" : "text-[#15803d]"
+                  item.isAlert ? "text-[#e8c878]" : "text-[#34d399]"
                 }`}
               >
                 {item.value}
               </p>
-              <p className="mt-1 text-[10px] leading-relaxed text-[#7a829b]">
+              <p className="mt-1 text-[10px] leading-relaxed text-[#94a3b8]">
                 {item.note}
               </p>
             </div>

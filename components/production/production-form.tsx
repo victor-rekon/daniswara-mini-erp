@@ -8,10 +8,10 @@ type ProductionFormProps = {
 
 export function ProductionForm({ branches, products }: ProductionFormProps) {
   return (
-    <section className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+    <section className="rounded-2xl border border-white/[0.08] bg-[#12151f] p-4 shadow-sm">
       <div className="mb-3">
         <h3 className="text-base font-semibold">Input Produksi</h3>
-        <p className="mt-1 text-sm text-slate-500">
+        <p className="mt-1 text-sm text-slate-400">
           Input produksi, losses/susut, dan HPP dasar. Formula accounting tetap harus dikonfirmasi client.
         </p>
       </div>
@@ -20,11 +20,11 @@ export function ProductionForm({ branches, products }: ProductionFormProps) {
         <input
           name="production_date"
           type="date"
-          className="rounded-xl border border-slate-200 px-2.5 py-2 text-sm"
+          className="rounded-xl border border-white/[0.08] bg-white/[0.04] px-2.5 py-2 text-sm text-slate-100 placeholder:text-slate-400"
           required
         />
 
-        <select name="branch_id" className="rounded-xl border border-slate-200 px-2.5 py-2 text-sm">
+        <select name="branch_id" className="rounded-xl border border-white/[0.08] bg-white/[0.04] px-2.5 py-2 text-sm text-slate-100 placeholder:text-slate-400">
           <option value="">No branch</option>
           {branches.map((branch) => (
             <option key={branch.id} value={branch.id}>
@@ -33,7 +33,7 @@ export function ProductionForm({ branches, products }: ProductionFormProps) {
           ))}
         </select>
 
-        <select name="product_id" className="rounded-xl border border-slate-200 px-2.5 py-2 text-sm" required>
+        <select name="product_id" className="rounded-xl border border-white/[0.08] bg-white/[0.04] px-2.5 py-2 text-sm text-slate-100 placeholder:text-slate-400" required>
           <option value="">Select product</option>
           {products.map((product) => (
             <option key={product.id} value={product.id}>
@@ -45,7 +45,7 @@ export function ProductionForm({ branches, products }: ProductionFormProps) {
         <input
           name="batch_code"
           placeholder="Batch code"
-          className="rounded-xl border border-slate-200 px-2.5 py-2 text-sm"
+          className="rounded-xl border border-white/[0.08] bg-white/[0.04] px-2.5 py-2 text-sm text-slate-100 placeholder:text-slate-400"
         />
 
         <input
@@ -54,14 +54,14 @@ export function ProductionForm({ branches, products }: ProductionFormProps) {
           min="0"
           step="0.01"
           placeholder="Quantity produced"
-          className="rounded-xl border border-slate-200 px-2.5 py-2 text-sm"
+          className="rounded-xl border border-white/[0.08] bg-white/[0.04] px-2.5 py-2 text-sm text-slate-100 placeholder:text-slate-400"
           required
         />
 
         <input
           name="unit"
           placeholder="Unit"
-          className="rounded-xl border border-slate-200 px-2.5 py-2 text-sm"
+          className="rounded-xl border border-white/[0.08] bg-white/[0.04] px-2.5 py-2 text-sm text-slate-100 placeholder:text-slate-400"
           required
         />
 
@@ -71,7 +71,7 @@ export function ProductionForm({ branches, products }: ProductionFormProps) {
           min="0"
           step="0.01"
           placeholder="Losses / susut"
-          className="rounded-xl border border-slate-200 px-2.5 py-2 text-sm"
+          className="rounded-xl border border-white/[0.08] bg-white/[0.04] px-2.5 py-2 text-sm text-slate-100 placeholder:text-slate-400"
         />
 
         <input
@@ -80,18 +80,18 @@ export function ProductionForm({ branches, products }: ProductionFormProps) {
           min="0"
           step="0.01"
           placeholder="HPP base cost"
-          className="rounded-xl border border-slate-200 px-2.5 py-2 text-sm"
+          className="rounded-xl border border-white/[0.08] bg-white/[0.04] px-2.5 py-2 text-sm text-slate-100 placeholder:text-slate-400"
         />
 
         <input
           name="notes"
           placeholder="Notes"
-          className="rounded-xl border border-slate-200 px-2.5 py-2 text-sm col-span-2 xl:col-span-3"
+          className="rounded-xl border border-white/[0.08] bg-white/[0.04] px-2.5 py-2 text-sm text-slate-100 placeholder:text-slate-400 col-span-2 xl:col-span-3"
         />
 
         <button
           type="submit"
-          className="rounded-xl bg-slate-950 px-4 py-2 text-sm font-semibold text-white col-span-2"
+          className="rounded-xl bg-gradient-to-br from-[#e8c878] via-[#d9b25c] to-[#c99a2e] px-4 py-2 text-sm font-bold text-[#1a2456] shadow-[0_2px_10px_-2px_rgba(217,178,92,0.45)] col-span-2"
         >
           Save Production
         </button>
