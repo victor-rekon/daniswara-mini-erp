@@ -45,7 +45,7 @@ export const navigationItems = [
     icon: ReceiptText,
   },
   {
-    label: "Accounting Light",
+    label: "Accounting",
     href: "/accounting",
     icon: ClipboardList,
   },
