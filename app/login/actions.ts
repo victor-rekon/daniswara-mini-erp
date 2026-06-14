@@ -4,6 +4,7 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { ACCESS_COOKIE_NAME, createAccessToken, getAccessPassword } from "@/lib/server/access-control";
 import { ROLE_COOKIE_NAME, normalizeRole } from "@/lib/access/roles";
+import { createSupabaseAdmin } from "@/lib/supabase/admin";
 
 function safeNext(value: FormDataEntryValue | null) {
   const fallback = "/dashboard";
@@ -18,13 +19,25 @@ function safeNext(value: FormDataEntryValue | null) {
 export async function submitAccess(formData: FormData) {
   const configuredCode = getAccessPassword();
   const nextPath = safeNext(formData.get("next"));
-  const selectedRole = normalizeRole(formData.get("role"));
+  let selectedRole = normalizeRole(formData.get("role"));
 
   if (!configuredCode) redirect(nextPath);
 
   const submittedCode = String(formData.get("access_code") ?? "");
   if (submittedCode !== configuredCode) {
     redirect(`/login?error=1&next=${encodeURIComponent(nextPath)}`);
+  }
+
+  const selectedUserId = String(formData.get("user_id") ?? "").trim();
+  if (selectedUserId) {
+    const supabase = createSupabaseAdmin();
+    const { data } = await supabase
+      .from("app_users")
+      .select("role")
+      .eq("id", selectedUserId)
+      .eq("is_active", true)
+      .maybeSingle();
+    if (data?.role) selectedRole = normalizeRole(data.role);
   }
 
   const cookieStore = await cookies();
