@@ -64,8 +64,8 @@ export const navigationItems = [
     icon: ShieldCheck,
   },
   {
-    label: "System Test",
-    href: "/system-test",
+    label: "QA Center",
+    href: "/qa-center",
     icon: ShieldCheck,
   },
   {
