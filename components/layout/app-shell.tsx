@@ -163,9 +163,14 @@ export function AppShell({ title, children }: AppShellProps) {
               <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-white shadow-card ring-1 ring-white/10 md:hidden">
                 <BrandMark size={20} />
               </div>
-              <h2 className="truncate text-base font-semibold leading-tight tracking-tight text-white md:text-lg">
-                {title}
-              </h2>
+              <div className="min-w-0">
+                <h2 className="truncate text-base font-semibold leading-tight tracking-tight text-white md:text-lg">
+                  {title}
+                </h2>
+                <p className="mt-0.5 truncate text-[10px] font-semibold uppercase tracking-[0.18em] text-[#d9b25c] md:hidden">
+                  PT Daniswara Gas Indonesia
+                </p>
+              </div>
             </div>
             <div className="flex shrink-0 items-center gap-1.5 rounded-full border border-[#d9b25c]/25 bg-[#d9b25c]/[0.07] px-2.5 py-1 text-[10px] font-semibold tracking-wide text-[#e8c878] md:text-[11px]">
               <span className="h-1.5 w-1.5 rounded-full bg-[#e8c878] shadow-[0_0_6px_rgba(232,200,120,0.8)]" />
