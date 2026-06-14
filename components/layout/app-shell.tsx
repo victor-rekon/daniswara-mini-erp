@@ -1,13 +1,32 @@
 "use client";
 
 import type { ReactNode } from "react";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { navigationItems } from "@/lib/constants/navigation";
+import { ROLE_COOKIE_NAME, canAccessHref, normalizeRole, type UserRole } from "@/lib/access/roles";
 
 const mainNav = navigationItems.filter((i) => i.href !== "/settings");
 const settingsNav = navigationItems.find((i) => i.href === "/settings");
+
+function getCookieValue(name: string) {
+  if (typeof document === "undefined") return null;
+  const match = document.cookie
+    .split("; ")
+    .find((row) => row.startsWith(`${name}=`));
+  return match ? decodeURIComponent(match.split("=").slice(1).join("=")) : null;
+}
+
+function useClientRole() {
+  const [role, setRole] = useState<UserRole>("owner");
+
+  useEffect(() => {
+    setRole(normalizeRole(getCookieValue(ROLE_COOKIE_NAME)));
+  }, []);
+
+  return role;
+}
 
 /* Daniswara flame-drop mark (navy + gold, from company logo) */
 function BrandMark({ size = 20 }: { size?: number }) {
@@ -27,6 +46,10 @@ function BrandMark({ size = 20 }: { size?: number }) {
 
 function Sidebar() {
   const pathname = usePathname();
+  const role = useClientRole();
+  const visibleMainNav = mainNav.filter((item) => canAccessHref(role, item.href));
+  const canSeeSettings = settingsNav ? canAccessHref(role, settingsNav.href) : false;
+
   return (
     <aside className="fixed inset-y-0 left-0 hidden w-60 flex-col bg-gradient-to-b from-[#141b42] via-[#0f1530] to-[#0a0e22] shadow-[inset_-1px_0_0_rgba(255,255,255,0.05)] md:flex">
       {/* Brand */}
@@ -47,7 +70,7 @@ function Sidebar() {
         <p className="mb-3 px-2 text-[9px] font-semibold uppercase tracking-[0.24em] text-[#5d6788]">
           Modules
         </p>
-        {mainNav.map((item) => {
+        {visibleMainNav.map((item) => {
           const Icon = item.icon;
           const isActive =
             pathname === item.href || pathname.startsWith(item.href + "/");
@@ -76,7 +99,7 @@ function Sidebar() {
 
       {/* Bottom */}
       <div className="border-t border-white/10 px-2 pb-4 pt-3">
-        {settingsNav && (
+        {settingsNav && canSeeSettings && (
           <Link
             href={settingsNav.href}
             className={`relative mb-2 flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors duration-150 active:bg-white/15 ${
@@ -97,7 +120,7 @@ function Sidebar() {
             PT Daniswara Gas Indonesia
           </p>
           <p className="mt-0.5 text-[9px] uppercase tracking-[0.14em] text-[#5d6788]">
-            Phase 1 &middot; Operations
+            {role.toUpperCase()} &middot; Phase 1
           </p>
         </div>
       </div>
@@ -107,7 +130,9 @@ function Sidebar() {
 
 function MobileNav() {
   const pathname = usePathname();
+  const role = useClientRole();
   const activeRef = useRef<HTMLAnchorElement>(null);
+  const visibleItems = navigationItems.filter((item) => canAccessHref(role, item.href));
 
   // Center the active pill on mount / route change so the user never has to
   // re-scroll the command bar after navigating.
@@ -122,7 +147,7 @@ function MobileNav() {
     <nav
       className="mt-3 flex gap-1.5 overflow-x-auto pb-0.5 md:hidden [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
     >
-      {navigationItems.map((item) => {
+      {visibleItems.map((item) => {
         const Icon = item.icon;
         const isActive =
           pathname === item.href || pathname.startsWith(item.href + "/");
