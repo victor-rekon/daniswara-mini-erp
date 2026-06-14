@@ -3,6 +3,7 @@
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { ACCESS_COOKIE_NAME, createAccessToken, getAccessPassword } from "@/lib/server/access-control";
+import { ROLE_COOKIE_NAME, normalizeRole } from "@/lib/access/roles";
 
 function safeNext(value: FormDataEntryValue | null) {
   const fallback = "/dashboard";
@@ -17,6 +18,7 @@ function safeNext(value: FormDataEntryValue | null) {
 export async function submitAccess(formData: FormData) {
   const configuredCode = getAccessPassword();
   const nextPath = safeNext(formData.get("next"));
+  const selectedRole = normalizeRole(formData.get("role"));
 
   if (!configuredCode) redirect(nextPath);
 
@@ -28,6 +30,13 @@ export async function submitAccess(formData: FormData) {
   const cookieStore = await cookies();
   cookieStore.set(ACCESS_COOKIE_NAME, await createAccessToken(configuredCode), {
     httpOnly: true,
+    sameSite: "lax",
+    secure: true,
+    path: "/",
+    maxAge: 60 * 60 * 8,
+  });
+  cookieStore.set(ROLE_COOKIE_NAME, selectedRole, {
+    httpOnly: false,
     sameSite: "lax",
     secure: true,
     path: "/",
