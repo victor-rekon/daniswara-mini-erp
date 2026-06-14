@@ -1,4 +1,5 @@
 import { createSupabaseAdmin } from "@/lib/supabase/admin";
+import { canAccessPath, roleAccessRulesForQa } from "@/lib/access/roles";
 
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
@@ -172,14 +173,31 @@ async function runValidation(request: Request) {
     },
   });
 
+  const roleChecks = [
+    { role: "owner", path: "/dashboard", expected: true },
+    { role: "admin", path: "/master-data", expected: true },
+    { role: "finance", path: "/invoice-payment", expected: true },
+    { role: "finance", path: "/dashboard", expected: false },
+    { role: "staff", path: "/production", expected: true },
+    { role: "staff", path: "/dashboard", expected: false },
+    { role: "staff", path: "/qa-center", expected: false },
+  ].map((check) => ({ ...check, actual: canAccessPath(check.role, check.path) }));
+  const failedRoleChecks = roleChecks.filter((check) => check.actual !== check.expected);
+
   results.push({
     suite_name: "Permission & Security Test",
-    status: envChecks.APP_ACCESS_PASSWORD ? "WARN" : "FAIL",
+    status: envChecks.APP_ACCESS_PASSWORD && failedRoleChecks.length === 0 ? "PASS" : "FAIL",
     issue_type: "security",
-    message: envChecks.APP_ACCESS_PASSWORD
-      ? "Basic app access password is configured. Full role-based access is not implemented yet."
-      : "App access password is missing. Full role-based access is not implemented yet.",
-    details: { roleBasedAccess: "not_implemented", appAccessPasswordConfigured: envChecks.APP_ACCESS_PASSWORD },
+    message: envChecks.APP_ACCESS_PASSWORD && failedRoleChecks.length === 0
+      ? "Basic access password and role-based page permissions are configured."
+      : "Permission/security validation failed. Check app access password and role access rules.",
+    details: {
+      appAccessPasswordConfigured: envChecks.APP_ACCESS_PASSWORD,
+      roleBasedAccess: "implemented_minimum_mvp",
+      roleRules: roleAccessRulesForQa(),
+      roleChecks,
+      failedRoleChecks,
+    },
   });
 
   const pagePaths = ["/dashboard", "/production", "/sales-delivery", "/invoice-payment", "/reports", "/qa-center"];
