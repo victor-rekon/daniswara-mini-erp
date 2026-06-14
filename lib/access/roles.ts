@@ -15,7 +15,7 @@ export function normalizeRole(value: unknown): UserRole {
 }
 
 const ACCESS_RULES: Array<{ prefix: string; roles: UserRole[] }> = [
-  { prefix: "/dashboard", roles: ["owner", "admin"] },
+  { prefix: "/dashboard", roles: ["owner", "admin", "finance", "staff"] },
   { prefix: "/input", roles: ["owner", "admin"] },
   { prefix: "/production", roles: ["owner", "admin", "staff"] },
   { prefix: "/quotation", roles: ["owner", "admin", "staff"] },
@@ -39,10 +39,7 @@ export function canAccessPath(roleValue: unknown, pathname: string) {
   return rule.roles.includes(role);
 }
 
-export function getFallbackPath(roleValue: unknown) {
-  const role = normalizeRole(roleValue);
-  if (role === "finance") return "/invoice-payment";
-  if (role === "staff") return "/production";
+export function getFallbackPath() {
   return "/dashboard";
 }
 
