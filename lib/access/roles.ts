@@ -39,7 +39,7 @@ export function canAccessPath(roleValue: unknown, pathname: string) {
   return rule.roles.includes(role);
 }
 
-export function getFallbackPath() {
+export function getFallbackPath(_roleValue?: unknown) {
   return "/dashboard";
 }
 
