@@ -1,5 +1,6 @@
 import { submitAccess } from "./actions";
-import { ROLE_LABELS, USER_ROLES } from "@/lib/access/roles";
+import { ROLE_LABELS, USER_ROLES, type UserRole } from "@/lib/access/roles";
+import { createSupabaseAdmin } from "@/lib/supabase/admin";
 
 type LoginPageProps = {
   searchParams?: Promise<{
@@ -8,10 +9,24 @@ type LoginPageProps = {
   }>;
 };
 
+type LoginUser = {
+  id: string;
+  name: string;
+  email: string;
+  role: UserRole;
+};
+
 export default async function LoginPage({ searchParams }: LoginPageProps) {
   const params = await searchParams;
   const nextPath = params?.next || "/dashboard";
   const hasError = params?.error === "1";
+  const supabase = createSupabaseAdmin();
+  const { data } = await supabase
+    .from("app_users")
+    .select("id, name, email, role")
+    .eq("is_active", true)
+    .order("created_at", { ascending: true });
+  const users = (data ?? []) as LoginUser[];
 
   return (
     <main className="flex min-h-screen items-center justify-center bg-transparent px-4 py-10 text-slate-100">
@@ -19,7 +34,7 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
         <div className="mb-6">
           <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#e8c878]">Internal</p>
           <h1 className="text-lg font-bold tracking-tight text-[#e2e8f0]">Daniswara Mini ERP</h1>
-          <p className="mt-1 text-xs text-[#94a3b8]">Enter the internal code and choose the role to test.</p>
+          <p className="mt-1 text-xs text-[#94a3b8]">Enter the internal code and choose the test user.</p>
         </div>
 
         <form action={submitAccess} className="grid gap-4">
@@ -39,8 +54,25 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
           </div>
 
           <div>
+            <label htmlFor="user_id" className="text-xs font-bold uppercase tracking-[0.12em] text-[#94a3b8]">
+              Registered User
+            </label>
+            <select
+              id="user_id"
+              name="user_id"
+              className="mt-2 w-full rounded-xl border border-[rgba(255,255,255,0.08)] bg-white/[0.04] px-3 py-2.5 text-sm text-slate-100 outline-none focus:border-[#d9b25c]"
+            >
+              {users.map((user) => (
+                <option key={user.id} value={user.id} className="bg-[#12151f] text-slate-100">
+                  {user.name} — {ROLE_LABELS[user.role]}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div>
             <label htmlFor="role" className="text-xs font-bold uppercase tracking-[0.12em] text-[#94a3b8]">
-              Login Role
+              Fallback Role
             </label>
             <select
               id="role"
@@ -55,7 +87,7 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
               ))}
             </select>
             <p className="mt-2 text-[11px] leading-relaxed text-[#94a3b8]">
-              Role selector is for internal QA/UAT permission testing.
+              The selected registered user controls the active role. Fallback role is used only if no user is selected.
             </p>
           </div>
 
