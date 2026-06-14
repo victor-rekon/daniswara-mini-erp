@@ -1,4 +1,5 @@
 import { submitAccess } from "./actions";
+import { ROLE_LABELS, USER_ROLES } from "@/lib/access/roles";
 
 type LoginPageProps = {
   searchParams?: Promise<{
@@ -18,7 +19,7 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
         <div className="mb-6">
           <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#e8c878]">Internal</p>
           <h1 className="text-lg font-bold tracking-tight text-[#e2e8f0]">Daniswara Mini ERP</h1>
-          <p className="mt-1 text-xs text-[#94a3b8]">Enter the internal code to continue.</p>
+          <p className="mt-1 text-xs text-[#94a3b8]">Enter the internal code and choose the role to test.</p>
         </div>
 
         <form action={submitAccess} className="grid gap-4">
@@ -35,6 +36,27 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
               required
             />
             {hasError ? <p className="mt-2 text-xs font-semibold text-red-400">Incorrect code.</p> : null}
+          </div>
+
+          <div>
+            <label htmlFor="role" className="text-xs font-bold uppercase tracking-[0.12em] text-[#94a3b8]">
+              Login Role
+            </label>
+            <select
+              id="role"
+              name="role"
+              defaultValue="owner"
+              className="mt-2 w-full rounded-xl border border-[rgba(255,255,255,0.08)] bg-white/[0.04] px-3 py-2.5 text-sm text-slate-100 outline-none focus:border-[#d9b25c]"
+            >
+              {USER_ROLES.map((role) => (
+                <option key={role} value={role} className="bg-[#12151f] text-slate-100">
+                  {ROLE_LABELS[role]}
+                </option>
+              ))}
+            </select>
+            <p className="mt-2 text-[11px] leading-relaxed text-[#94a3b8]">
+              Role selector is for internal QA/UAT permission testing.
+            </p>
           </div>
 
           <button type="submit" className="rounded-xl bg-gradient-to-br from-[#e8c878] via-[#d9b25c] to-[#c99a2e] px-4 py-2.5 text-sm font-bold text-[#1a2456] shadow-[0_2px_10px_-2px_rgba(217,178,92,0.45)]">
