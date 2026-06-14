@@ -73,7 +73,7 @@ export default async function AccountingPage() {
   const profitLoss = summarizeProfitLoss(invoiceViews, productionViews, expenseViews);
 
   return (
-    <AppShell title="Accounting Light" description="Simple journal, expense input, and management P&L only.">
+    <AppShell title="Accounting" description="Finance, journal, expense, receivable, and management reporting.">
       <div className="grid gap-3 md:gap-4">
         <ModuleCommandBar inputLabel="Input Expense / Journal" exportHref="/api/export/accounting" />
         <AccountingManagementDashboard
