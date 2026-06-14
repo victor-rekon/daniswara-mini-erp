@@ -1,5 +1,14 @@
-import type { ExpenseRecord, ExpenseView, JournalEntry, JournalLine, JournalView, ProfitLossSummary } from "@/types/accounting";
-import type { InvoicePaymentView } from "@/types/invoice-payment";
+import type {
+  AccountingReports,
+  ExpenseRecord,
+  ExpenseView,
+  JournalEntry,
+  JournalLine,
+  JournalView,
+  LedgerAccountSummary,
+  ProfitLossSummary,
+} from "@/types/accounting";
+import type { InvoicePaymentView, PaymentRecord } from "@/types/invoice-payment";
 import type { Branch, ChartOfAccount } from "@/types/master-data";
 import type { ProductionRecordView } from "@/types/production";
 
@@ -13,6 +22,10 @@ function safeNumber(value: unknown): number {
 
 function roundTwo(value: number): number {
   return Math.round(value * 100) / 100;
+}
+
+function normalBalance(accountType: string) {
+  return accountType === "asset" || accountType === "expense" || accountType === "cost_of_goods_sold" ? "debit" : "credit";
 }
 
 export function enrichExpenses(expenses: ExpenseRecord[], accounts: AccountLookup, branches: BranchLookup): ExpenseView[] {
@@ -68,5 +81,83 @@ export function summarizeProfitLoss(
     gross_profit: roundTwo(grossProfit),
     operating_expense: roundTwo(operatingExpense),
     net_profit: roundTwo(grossProfit - operatingExpense),
+  };
+}
+
+export function buildAccountingReports({
+  accounts,
+  journalLines,
+  profitLoss,
+  payments,
+  expenses,
+}: {
+  accounts: ChartOfAccount[];
+  journalLines: JournalLine[];
+  profitLoss: ProfitLossSummary;
+  payments: PaymentRecord[];
+  expenses: ExpenseView[];
+}): AccountingReports {
+  const ledger = accounts.map<LedgerAccountSummary>((account) => {
+    const lines = journalLines.filter((line) => line.account_id === account.id);
+    const debitTotal = lines.reduce((sum, line) => sum + safeNumber(line.debit_amount), 0);
+    const creditTotal = lines.reduce((sum, line) => sum + safeNumber(line.credit_amount), 0);
+    const debitBalance = Math.max(debitTotal - creditTotal, 0);
+    const creditBalance = Math.max(creditTotal - debitTotal, 0);
+
+    return {
+      account_id: account.id,
+      account_code: account.account_code,
+      account_name: account.account_name,
+      account_type: account.account_type,
+      debit_total: roundTwo(debitTotal),
+      credit_total: roundTwo(creditTotal),
+      net_balance: roundTwo(debitTotal - creditTotal),
+      debit_balance: roundTwo(debitBalance),
+      credit_balance: roundTwo(creditBalance),
+      line_count: lines.length,
+    };
+  }).sort((a, b) => a.account_code.localeCompare(b.account_code));
+
+  const totalDebit = ledger.reduce((sum, account) => sum + account.debit_total, 0);
+  const totalCredit = ledger.reduce((sum, account) => sum + account.credit_total, 0);
+
+  const balanceFor = (type: string) => ledger
+    .filter((account) => account.account_type === type)
+    .reduce((sum, account) => {
+      const normal = normalBalance(account.account_type);
+      return sum + (normal === "debit" ? account.debit_balance - account.credit_balance : account.credit_balance - account.debit_balance);
+    }, 0);
+
+  const assets = balanceFor("asset");
+  const liabilities = balanceFor("liability");
+  const equity = balanceFor("equity");
+  const retainedEarnings = profitLoss.net_profit;
+  const totalLiabilityEquity = liabilities + equity + retainedEarnings;
+
+  const cashIn = payments.reduce((sum, payment) => sum + safeNumber(payment.amount), 0);
+  const cashOut = expenses.reduce((sum, expense) => sum + safeNumber(expense.amount), 0);
+
+  return {
+    ledger,
+    trial_balance: {
+      accounts: ledger,
+      total_debit: roundTwo(totalDebit),
+      total_credit: roundTwo(totalCredit),
+      variance: roundTwo(totalDebit - totalCredit),
+      is_balanced: roundTwo(totalDebit) === roundTwo(totalCredit),
+    },
+    balance_sheet: {
+      assets: roundTwo(assets),
+      liabilities: roundTwo(liabilities),
+      equity: roundTwo(equity),
+      retained_earnings: roundTwo(retainedEarnings),
+      total_liability_equity: roundTwo(totalLiabilityEquity),
+      variance: roundTwo(assets - totalLiabilityEquity),
+    },
+    cash_flow: {
+      cash_in: roundTwo(cashIn),
+      cash_out: roundTwo(cashOut),
+      net_cash_flow: roundTwo(cashIn - cashOut),
+    },
   };
 }
