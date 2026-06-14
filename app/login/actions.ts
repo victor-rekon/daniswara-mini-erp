@@ -19,27 +19,34 @@ function safeNext(value: FormDataEntryValue | null) {
 export async function submitAccess(formData: FormData) {
   const configuredCode = getAccessPassword();
   const nextPath = safeNext(formData.get("next"));
-  let selectedRole = normalizeRole(formData.get("role"));
 
   if (!configuredCode) redirect(nextPath);
 
-  const submittedCode = String(formData.get("access_code") ?? "");
-  if (submittedCode !== configuredCode) {
+  const username = String(formData.get("username") ?? "").trim().toLowerCase();
+  const submittedPassword = String(formData.get("password") ?? "");
+
+  if (!username || submittedPassword !== configuredCode) {
     redirect(`/login?error=1&next=${encodeURIComponent(nextPath)}`);
   }
 
-  const selectedUserId = String(formData.get("user_id") ?? "").trim();
-  if (selectedUserId) {
-    const supabase = createSupabaseAdmin();
-    const { data } = await supabase
-      .from("app_users")
-      .select("role")
-      .eq("id", selectedUserId)
-      .eq("is_active", true)
-      .maybeSingle();
-    if (data?.role) selectedRole = normalizeRole(data.role);
+  const supabase = createSupabaseAdmin();
+  const { data: user } = await supabase
+    .from("app_users")
+    .select("id, name, username, role")
+    .ilike("username", username)
+    .eq("is_active", true)
+    .maybeSingle();
+
+  if (!user?.role) {
+    redirect(`/login?error=1&next=${encodeURIComponent(nextPath)}`);
   }
 
+  await supabase
+    .from("app_users")
+    .update({ last_login_at: new Date().toISOString(), updated_at: new Date().toISOString() })
+    .eq("id", user.id);
+
+  const selectedRole = normalizeRole(user.role);
   const cookieStore = await cookies();
   cookieStore.set(ACCESS_COOKIE_NAME, await createAccessToken(configuredCode), {
     httpOnly: true,
