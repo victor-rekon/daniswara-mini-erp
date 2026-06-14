@@ -10,6 +10,7 @@ import {
   ShieldCheck,
   TableProperties,
   Truck,
+  Users,
 } from "lucide-react";
 
 export const navigationItems = [
@@ -67,6 +68,11 @@ export const navigationItems = [
     label: "QA Center",
     href: "/qa-center",
     icon: ShieldCheck,
+  },
+  {
+    label: "Users",
+    href: "/users",
+    icon: Users,
   },
   {
     label: "Master Data",
