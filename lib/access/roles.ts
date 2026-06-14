@@ -27,6 +27,7 @@ const ACCESS_RULES: Array<{ prefix: string; roles: UserRole[] }> = [
   { prefix: "/system-status", roles: ["owner", "admin"] },
   { prefix: "/system-test", roles: ["owner", "admin"] },
   { prefix: "/qa-center", roles: ["owner", "admin"] },
+  { prefix: "/users", roles: ["owner", "admin"] },
   { prefix: "/master-data", roles: ["owner", "admin"] },
   { prefix: "/settings", roles: ["owner", "admin"] },
 ];
