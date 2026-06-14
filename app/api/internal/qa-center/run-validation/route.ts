@@ -176,10 +176,11 @@ async function runValidation(request: Request) {
   const roleChecks = [
     { role: "owner", path: "/dashboard", expected: true },
     { role: "admin", path: "/master-data", expected: true },
+    { role: "finance", path: "/dashboard", expected: true },
     { role: "finance", path: "/invoice-payment", expected: true },
-    { role: "finance", path: "/dashboard", expected: false },
+    { role: "finance", path: "/qa-center", expected: false },
+    { role: "staff", path: "/dashboard", expected: true },
     { role: "staff", path: "/production", expected: true },
-    { role: "staff", path: "/dashboard", expected: false },
     { role: "staff", path: "/qa-center", expected: false },
   ].map((check) => ({ ...check, actual: canAccessPath(check.role, check.path) }));
   const failedRoleChecks = roleChecks.filter((check) => check.actual !== check.expected);
