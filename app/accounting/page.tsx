@@ -6,7 +6,8 @@ import { JournalTable } from "@/components/accounting/journal-table";
 import { ManualJournalForm } from "@/components/accounting/manual-journal-form";
 import { ProfitLossSummaryCards } from "@/components/accounting/profit-loss-summary-cards";
 import { AccountingManagementDashboard } from "@/components/accounting/accounting-management-dashboard";
-import { enrichExpenses, enrichJournals, summarizeProfitLoss } from "@/lib/calculations/accounting";
+import { AccountingReportsPanel } from "@/components/accounting/accounting-reports-panel";
+import { buildAccountingReports, enrichExpenses, enrichJournals, summarizeProfitLoss } from "@/lib/calculations/accounting";
 import { enrichInvoices } from "@/lib/calculations/invoice-payment";
 import { enrichProductionRecords } from "@/lib/calculations/production";
 import { createSupabaseAdmin } from "@/lib/supabase/admin";
@@ -71,6 +72,13 @@ export default async function AccountingPage() {
   const invoiceViews = enrichInvoices(invoices, payments, customerLookup, branchLookup, deliveryLookup);
   const productionViews = enrichProductionRecords(productionRecords, productLookup, branchLookup);
   const profitLoss = summarizeProfitLoss(invoiceViews, productionViews, expenseViews);
+  const accountingReports = buildAccountingReports({
+    accounts,
+    journalLines,
+    profitLoss,
+    payments,
+    expenses: expenseViews,
+  });
 
   return (
     <AppShell title="Accounting" description="Finance, journal, expense, receivable, and management reporting.">
@@ -83,6 +91,7 @@ export default async function AccountingPage() {
           journals={journalViews}
           summary={profitLoss}
         />
+        <AccountingReportsPanel reports={accountingReports} />
         <ProfitLossSummaryCards summary={profitLoss} />
         <div className="grid gap-3 md:gap-4 lg:grid-cols-[360px_minmax(0,1fr)] lg:items-start">
           <section id="input-data" className="grid scroll-mt-24 gap-3 md:gap-4">
