@@ -5,6 +5,7 @@ import { ExpenseTable } from "@/components/accounting/expense-table";
 import { JournalTable } from "@/components/accounting/journal-table";
 import { ManualJournalForm } from "@/components/accounting/manual-journal-form";
 import { ProfitLossSummaryCards } from "@/components/accounting/profit-loss-summary-cards";
+import { AccountingManagementDashboard } from "@/components/accounting/accounting-management-dashboard";
 import { enrichExpenses, enrichJournals, summarizeProfitLoss } from "@/lib/calculations/accounting";
 import { enrichInvoices } from "@/lib/calculations/invoice-payment";
 import { enrichProductionRecords } from "@/lib/calculations/production";
@@ -75,6 +76,13 @@ export default async function AccountingPage() {
     <AppShell title="Accounting Light" description="Simple journal, expense input, and management P&L only.">
       <div className="grid gap-3 md:gap-4">
         <ModuleCommandBar inputLabel="Input Expense / Journal" exportHref="/api/export/accounting" />
+        <AccountingManagementDashboard
+          invoices={invoiceViews}
+          payments={payments}
+          expenses={expenseViews}
+          journals={journalViews}
+          summary={profitLoss}
+        />
         <ProfitLossSummaryCards summary={profitLoss} />
         <div className="grid gap-3 md:gap-4 lg:grid-cols-[360px_minmax(0,1fr)] lg:items-start">
           <section id="input-data" className="grid scroll-mt-24 gap-3 md:gap-4">
