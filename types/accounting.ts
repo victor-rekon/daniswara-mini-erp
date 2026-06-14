@@ -48,3 +48,46 @@ export type ProfitLossSummary = {
   operating_expense: number;
   net_profit: number;
 };
+
+export type LedgerAccountSummary = {
+  account_id: string;
+  account_code: string;
+  account_name: string;
+  account_type: string;
+  debit_total: number;
+  credit_total: number;
+  net_balance: number;
+  debit_balance: number;
+  credit_balance: number;
+  line_count: number;
+};
+
+export type TrialBalanceSummary = {
+  accounts: LedgerAccountSummary[];
+  total_debit: number;
+  total_credit: number;
+  variance: number;
+  is_balanced: boolean;
+};
+
+export type BalanceSheetSummary = {
+  assets: number;
+  liabilities: number;
+  equity: number;
+  retained_earnings: number;
+  total_liability_equity: number;
+  variance: number;
+};
+
+export type CashFlowSummary = {
+  cash_in: number;
+  cash_out: number;
+  net_cash_flow: number;
+};
+
+export type AccountingReports = {
+  ledger: LedgerAccountSummary[];
+  trial_balance: TrialBalanceSummary;
+  balance_sheet: BalanceSheetSummary;
+  cash_flow: CashFlowSummary;
+};
