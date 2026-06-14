@@ -81,13 +81,13 @@ export function AccountingManagementDashboard({
       <div className="flex flex-col gap-2 md:flex-row md:items-start md:justify-between">
         <div>
           <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-[#e8c878]">Accounting Control</p>
-          <h2 className="mt-1 text-lg font-bold text-[#e2e8f0]">Management Finance Snapshot</h2>
+          <h2 className="mt-1 text-lg font-bold text-[#e2e8f0]">Finance & Accounting Snapshot</h2>
           <p className="mt-1 max-w-3xl text-xs leading-relaxed text-[#94a3b8]">
-            Ringkasan piutang, kas masuk, expense, dan P&amp;L estimasi. Ini bukan laporan akuntansi resmi, pajak, atau audited financial statement.
+            Ringkasan piutang, kas masuk, expense, journal balance, dan P&amp;L. Formula/accounting treatment harus divalidasi oleh pihak accounting sebelum dipakai sebagai laporan resmi.
           </p>
         </div>
         <span className="rounded-full border border-[#d9b25c]/25 bg-[#d9b25c]/[0.08] px-3 py-1 text-[10px] font-bold uppercase tracking-[0.14em] text-[#e8c878]">
-          Accounting Light
+          Accounting
         </span>
       </div>
 
