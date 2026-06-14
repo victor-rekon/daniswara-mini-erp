@@ -1,5 +1,6 @@
 "use server";
 
+import { createHash } from "node:crypto";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { ACCESS_COOKIE_NAME, createAccessToken, getAccessPassword } from "@/lib/server/access-control";
@@ -16,6 +17,10 @@ function safeNext(value: FormDataEntryValue | null) {
   return nextValue;
 }
 
+function digestCredential(value: string) {
+  return createHash("sha256").update(value).digest("hex");
+}
+
 export async function submitAccess(formData: FormData) {
   const configuredCode = getAccessPassword();
   const nextPath = safeNext(formData.get("next"));
@@ -25,19 +30,28 @@ export async function submitAccess(formData: FormData) {
   const username = String(formData.get("username") ?? "").trim().toLowerCase();
   const submittedPassword = String(formData.get("password") ?? "");
 
-  if (!username || submittedPassword !== configuredCode) {
+  if (!username || !submittedPassword) {
     redirect(`/login?error=1&next=${encodeURIComponent(nextPath)}`);
   }
 
   const supabase = createSupabaseAdmin();
   const { data: user } = await supabase
     .from("app_users")
-    .select("id, name, username, role")
+    .select("id, name, username, role, login_hash")
     .ilike("username", username)
     .eq("is_active", true)
     .maybeSingle();
 
   if (!user?.role) {
+    redirect(`/login?error=1&next=${encodeURIComponent(nextPath)}`);
+  }
+
+  const expectedHash = typeof user.login_hash === "string" && user.login_hash.length > 0 ? user.login_hash : null;
+  const isValidPassword = expectedHash
+    ? digestCredential(submittedPassword) === expectedHash
+    : submittedPassword === configuredCode;
+
+  if (!isValidPassword) {
     redirect(`/login?error=1&next=${encodeURIComponent(nextPath)}`);
   }
 
