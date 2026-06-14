@@ -4,6 +4,7 @@ import type { ReactNode } from "react";
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { LogOut } from "lucide-react";
 import { navigationItems } from "@/lib/constants/navigation";
 import { ROLE_COOKIE_NAME, canAccessHref, normalizeRole, type UserRole } from "@/lib/access/roles";
 
@@ -28,6 +29,20 @@ function useClientRole() {
   return role;
 }
 
+function roleDashboardTitle(role: UserRole) {
+  if (role === "owner") return "Owner Dashboard";
+  if (role === "admin") return "Admin Dashboard";
+  if (role === "finance") return "Finance Dashboard";
+  return "Staff Dashboard";
+}
+
+function displayTitle(title: string, role: UserRole) {
+  if (title.toLowerCase() === "dashboard" || title.toLowerCase() === "owner dashboard") {
+    return roleDashboardTitle(role);
+  }
+  return title;
+}
+
 /* Daniswara flame-drop mark (navy + gold, from company logo) */
 function BrandMark({ size = 20 }: { size?: number }) {
   return (
@@ -41,6 +56,21 @@ function BrandMark({ size = 20 }: { size?: number }) {
         fill="#c99a2e"
       />
     </svg>
+  );
+}
+
+function LogoutButton({ compact = false }: { compact?: boolean }) {
+  return (
+    <Link
+      href="/logout"
+      className={compact
+        ? "flex shrink-0 items-center gap-1.5 rounded-full border border-white/[0.08] bg-white/[0.04] px-3 py-1.5 text-xs font-semibold text-[#cbd5e1] active:scale-95"
+        : "mt-2 flex items-center justify-center gap-2 rounded-lg border border-white/[0.08] px-3 py-2 text-xs font-semibold text-[#cbd5e1] transition-colors hover:border-red-400/35 hover:bg-red-400/[0.06] hover:text-red-200"
+      }
+    >
+      <LogOut className="h-3.5 w-3.5" aria-hidden="true" />
+      Logout
+    </Link>
   );
 }
 
@@ -123,6 +153,7 @@ function Sidebar() {
             {role.toUpperCase()} &middot; Phase 1
           </p>
         </div>
+        <LogoutButton />
       </div>
     </aside>
   );
@@ -134,8 +165,6 @@ function MobileNav() {
   const activeRef = useRef<HTMLAnchorElement>(null);
   const visibleItems = navigationItems.filter((item) => canAccessHref(role, item.href));
 
-  // Center the active pill on mount / route change so the user never has to
-  // re-scroll the command bar after navigating.
   useEffect(() => {
     const el = activeRef.current;
     if (el) {
@@ -178,6 +207,9 @@ type AppShellProps = {
 };
 
 export function AppShell({ title, children }: AppShellProps) {
+  const role = useClientRole();
+  const resolvedTitle = displayTitle(title, role);
+
   return (
     <div className="min-h-screen overflow-x-hidden bg-transparent text-slate-100">
       <Sidebar />
@@ -190,16 +222,19 @@ export function AppShell({ title, children }: AppShellProps) {
               </div>
               <div className="min-w-0">
                 <h2 className="truncate text-base font-semibold leading-tight tracking-tight text-white md:text-lg">
-                  {title}
+                  {resolvedTitle}
                 </h2>
                 <p className="mt-0.5 truncate text-[10px] font-semibold uppercase tracking-[0.18em] text-[#d9b25c] md:hidden">
                   PT Daniswara Gas Indonesia
                 </p>
               </div>
             </div>
-            <div className="flex shrink-0 items-center gap-1.5 rounded-full border border-[#d9b25c]/25 bg-[#d9b25c]/[0.07] px-2.5 py-1 text-[10px] font-semibold tracking-wide text-[#e8c878] md:text-[11px]">
-              <span className="h-1.5 w-1.5 rounded-full bg-[#e8c878] shadow-[0_0_6px_rgba(232,200,120,0.8)]" />
-              Phase 1
+            <div className="flex shrink-0 items-center gap-2">
+              <LogoutButton compact />
+              <div className="flex shrink-0 items-center gap-1.5 rounded-full border border-[#d9b25c]/25 bg-[#d9b25c]/[0.07] px-2.5 py-1 text-[10px] font-semibold tracking-wide text-[#e8c878] md:text-[11px]">
+                <span className="h-1.5 w-1.5 rounded-full bg-[#e8c878] shadow-[0_0_6px_rgba(232,200,120,0.8)]" />
+                Phase 1
+              </div>
             </div>
           </div>
           <MobileNav />
